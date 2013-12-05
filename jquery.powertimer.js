@@ -1,6 +1,14 @@
+/*  Publishing reminder:
+      1. Change the version number in all the files.
+      2. git commit -am 'message'
+      3. git push origin master
+      4. git tag 1.1.1
+      5. git push origin --tags
+*/
+
 /*
    Author: Conan C. Albrecht <ca@byu.edu>
-   Version: 1.1.3 (December 2013)
+   Version: 1.1.4 (December 2013)
    License: MIT
  
    A jQuery plugin that provides the following types of timers:
