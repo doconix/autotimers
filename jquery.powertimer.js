@@ -1,14 +1,16 @@
-/*  Publishing reminder:
-      1. Change the version number in all the files.
-      2. git commit -am 'message'
-      4. git tag 1.1.5
-      5. git push origin --tags
-      3. git push origin master
+/*  
+   Publishing reminder:
+
+Change the version number in all the files.
+git tag 1.1.6
+git push origin --tags
+git commit -am 'message'
+git push origin master
 */
 
 /*
    Author: Conan C. Albrecht <ca@byu.edu>
-   Version: 1.1.5 (December 2013)
+   Version: 1.1.6 (December 2013)
    License: MIT
  
    A jQuery plugin that provides the following types of timers:
