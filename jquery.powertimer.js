@@ -2,10 +2,11 @@
    Publishing reminder:
 
 Change the version number in all the files.
-git tag 1.1.6
-git push origin --tags
 git commit -am 'message'
 git push origin master
+git tag 1.1.6
+git push origin --tags
+
 */
 
 /*
