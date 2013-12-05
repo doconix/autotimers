@@ -4,7 +4,7 @@ jquery.powertimer.js
 Javascript timers on steroids (and easier to boot)!
 
  Author: Conan C. Albrecht <ca@byu.edu>
- Version: 1.1.2 (December 2013)
+ Version: 1.1.3 (December 2013)
  License: MIT
 
  A jQuery plugin that provides the following types of timers:
