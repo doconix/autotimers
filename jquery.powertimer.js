@@ -4,14 +4,14 @@
 Change the version number in all the files.
 git commit -am 'message'
 git push origin master
-git tag 1.1.9
+git tag 1.1.10
 git push origin --tags
 
 */
 
 /*
    Author: Conan C. Albrecht <ca@byu.edu>
-   Version: 1.1.9 (December 2013)
+   Version: 1.1.10 (December 2013)
    License: MIT
  
    A jQuery plugin that provides the following types of timers:
@@ -41,18 +41,17 @@ git push origin --tags
 
    Here's just one example.  Suppose you want a function to run when the user
    scrolls the web page.  But, you only want it to run when the user is 
-   *finished* scrolling, not every pixel that gets scrolled.  Since powertimers 
+   *finished* scrolling, not on every pixel that gets scrolled.  Since powertimers 
    automatically clear earlier timers on elements, simply start a new timer in 
    the scroll event.  The function will *only* run once the user has stopped 
    scrolling for 500 ms.
 
      $(window).scroll(function() {
-       $('#someid').powerTimer({
+       $(document).powerTimer({
           delay: 500,
           name: 'scroll watcher',
           func: function() {
-            // this will run only after the user has stopped
-            // scrolling for 500ms
+            // this will run only after the user has stopped scrolling for 500ms
           },
        });
      });
