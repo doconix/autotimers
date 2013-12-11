@@ -4,7 +4,7 @@ jquery.powertimer.js
 Javascript timers on steroids (and easier to boot)!
 
  Author: Conan C. Albrecht <ca@byu.edu>
- Version: 1.1.7 (December 2013)
+ Version: 1.1.8 (December 2013)
  License: MIT
 
  A jQuery plugin that provides the following types of timers:
@@ -32,7 +32,23 @@ Javascript timers on steroids (and easier to boot)!
    - Allows parameter passing in both all browsers, including IE which normally doesn't pass parameters nicely
    - Returning of timer options, which provides access to the timer function, etc.
 
+  Here's just one example.  Suppose you want a function to run when the user scrolls the web page.
+  But, you only want it to run when the user is *finished* scrolling, not every pixel that gets scrolled.
+  Since powertimers automatically clear earlier timers on elements, simply start a new timer in the 
+  scroll event.  The function will *only* run once the user has stopped scrolling for 500 ms.
 
+    $(window).scroll(function() {
+      $('#someid').powerTimer({
+         delay: 500,
+         name: 'scroll watcher',
+         func: function() {
+           // this will run only after the user has stopped
+           // scrolling for 500ms
+         },
+      });
+    });
+     
+     
  A few things to keep in mind when using timers and this plugin:
 
    1. If the given JQuery array has multiple elements in it, a timer will be set
