@@ -4,7 +4,7 @@ jquery.powertimer.js
 Javascript timers on steroids (and easier to boot)!
 
  Author: Conan C. Albrecht <ca@byu.edu>
- Version: 1.1.10 (December 2013)
+ Version: 1.2.1 (April 2016)
  License: MIT
 
  A jQuery plugin that provides the following types of timers:
@@ -33,10 +33,10 @@ Javascript timers on steroids (and easier to boot)!
    - Returning of timer options, which provides access to the timer function, etc.
 
   Here's just one example.  Suppose you want a function to run when the user
-  scrolls the web page.  But, you only want it to run when the user is 
-  *finished* scrolling, not on every pixel that gets scrolled.  Since powertimers 
-  automatically clear earlier timers on elements, simply start a new timer in 
-  the scroll event.  The function will *only* run once the user has stopped 
+  scrolls the web page.  But, you only want it to run when the user is
+  *finished* scrolling, not on every pixel that gets scrolled.  Since powertimers
+  automatically clear earlier timers on elements, simply start a new timer in
+  the scroll event.  The function will *only* run once the user has stopped
   scrolling for 500 ms.
 
     $(window).scroll(function() {
@@ -50,8 +50,8 @@ Javascript timers on steroids (and easier to boot)!
     });
 
 
-     
-     
+
+
  A few things to keep in mind when using timers and this plugin:
 
    1. If the given JQuery array has multiple elements in it, a timer will be set
@@ -71,19 +71,19 @@ Javascript timers on steroids (and easier to boot)!
         });
 
    3. If you remove DOM elements that have running timers attached to them,
-      the plugin will clear the timers automatically. 
+      the plugin will clear the timers automatically.
 
-   4. The "this" variable is set to the related DOM element during your function call, 
+   4. The "this" variable is set to the related DOM element during your function call,
       the same way JQuery events work.  See #2 example above.
 
    5. Normally you only need one timer attached to an element, so there's no reason
       to name the timer (it just uses the default name).  If you need additional timers
       on an element, you may want to name them so you can stop/pause/continue the
-      timers individually. 
+      timers individually.
 
    7. .powerTimer('pause') and .powerTimer('continue') are really useful when doing asynchronous
       Ajax calls.  Pause your timer when the ajax call is made, then continue it
-      when the response comes back.  
+      when the response comes back.
 
 
  See the options comments at the start of the code for detail on the available options.
@@ -120,8 +120,8 @@ Javascript timers on steroids (and easier to boot)!
 
 
  Example: Set a timer to run repeatedly every 2 seconds, with an immediate
-       initial run.  Note below, however, since the function removes the element 
-       from the document on the first run, the timer only runs one time.  
+       initial run.  Note below, however, since the function removes the element
+       from the document on the first run, the timer only runs one time.
        The timer is cleared from the queue and never runs again.
 
  <div id="someid">Element here</div>
@@ -149,7 +149,7 @@ Javascript timers on steroids (and easier to boot)!
      func: function() {
        console.log('Running.');
        // the 3 second timer is started again at the *end* of this function,
-       // ensuring the processor doesn't get pegged.  We know a specific 
+       // ensuring the processor doesn't get pegged.  We know a specific
        // amount of time will lapse between calls.
      },
    });
