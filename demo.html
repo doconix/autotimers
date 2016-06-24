@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+  <title>PowerTimer Demo</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="jquery.powertimer.js"></script>
+  <style type="text/css">
+    h1, h2, h3 {
+      text-align: center;
+    }
+    .example {
+      margin: 48px 0px;
+      padding: 36px 12px;
+      border-top: 1px inset #999;
+      clear: both;
+    }
+    .title {
+      font-size: 1.4em;
+    }
+    .description {
+      margin: 12px;
+    }
+    .code {
+      padding: 24px;
+    }
+    .code_viewer {
+      float: right;
+      padding-right: 24px;
+      margin-bottom: 48px;
+      margin-left: 24px;
+      border-radius: 4px;
+      border: 1px solid #CCC;
+      background-color: #E4E4E4;
+      white-space: pre;
+      font-family: "Courier New", Courier, monospace;
+      font-size: .8em;
+    }
+  </style>
+</head>
+<body>
+  <h1>PowerTimer Demos</h1>
+  <h2>Javascript timers on steroids (and easier to boot)!</h2>
+  <h3><a href="https://github.com/doconix/jquery.powertimer.js">Read the Docs, Get the Code...</a></h3>
+
+
+
+  <div class="example">
+    <div class="title">Example: Set a timer to run one time, in 2 seconds</div>
+    <div class="code">
+      <div id="someid">Not yet run</div>
+      <script>
+        $(function() {
+          $('#someid').powerTimer({
+             delay: 2000,
+             params: {
+               first: 1,
+               second: 'text',
+             },
+             func: function(params) {
+               $(this).text("Ran after 2 seconds: " + params.first + 
+                            " " + params.second + 
+                            ".  Reload the page to run again."); 
+             },
+           });
+         });
+      </script>
+    </div>
+  </div>
+  
+  
+  
+
+  <div class="example">
+    <div class="title">Example: Set a timer to run repeatedly at exact intervals of 0.8 seconds</div>
+    <div class="code">
+      <div id="someid2">Element here</div>
+      <script>
+        $(function() {
+          var index = 1;
+          $('#someid2').powerTimer({
+             interval: 800,
+             func: function() {
+               if (index % 5 == 0) {
+                 $(this).html('');
+               }//if
+               $(this).append('<div>Run #' + index);
+               index++;
+             },
+          });
+        });
+      </script>
+    </div>
+  </div>
+  
+  
+  
+
+  <div class="example">
+    <div class="title">Example: Set a timer to run repeatedly with 2 seconds in between runs (<b>different than setInterval</b>).</div>
+    <div class="description">
+      This one is for long-running functions (such as an Ajax call).  It starts the 2 seconds <b>after</b> the function finishes. 
+      This is quite different than Javascript's setInterval() method because it ensures a given period between calls.
+    </div>
+    <div class="description">
+      Note also that the option is "sleepAfter", which does an initial run of the function before starting the sleep timer.
+      Using "sleep" instead would have run only after an initial sleep.
+    </div>
+    <div class="code">
+      <div id="someid3">Element here</div>
+      <script>
+        $(function() {
+          var index = 1;
+          $('#someid3').powerTimer({
+             sleepAfter: 2000,
+             func: function() {
+               if (index % 5 == 0) {
+                 $(this).html('');
+               }//if
+               $(this).append('<div>Run #' + index);
+               index++;
+             },
+          });
+        });
+      </script>
+    </div>
+  </div>
+  
+
+
+  <script>
+    $(function() {
+      // place the code in each example
+      $('.code').each(function() {
+        var html = this.innerHTML.replace(new RegExp('<', 'g'), '&lt;').replace(new RegExp('>', 'g'), '&gt;');
+        var code_viewer = $('<div class="code_viewer"></div>');
+        code_viewer.html(html);
+        $(this).closest('.example').prepend(code_viewer);
+      });//each
+    });//ready
+  </script>
+</body>
+</html>

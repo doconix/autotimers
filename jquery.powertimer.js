@@ -4,14 +4,14 @@ Publishing reminder:
 Change the version number in all the files.
 git commit -am 'message'
 git push origin master
-git tag 1.2.2
+git tag 1.2.3
 git push origin --tags
 
 */
 
 /*
    Author: Conan C. Albrecht <ca@byu.edu>
-   Version: 1.2.2 (April 2016)
+   Version: 1.2.3 (June 2016)
    License: MIT
 
    A jQuery plugin that provides the following types of timers:
@@ -448,7 +448,7 @@ git push origin --tags
     /* The event function that setTimeout calls.  It runs the user function, then continues the timer loop. */
     function callWithElement(elem, options) {
         // has the element been removed from the DOM or is it past its stop time while we've been waiting?
-        var inDOM = $.contains(document, elem);
+        var inDOM = document == elem || $.contains(document, elem);
         var now = new Date().getTime();
         var pastStop = options.stopAfter && options.stopAfter > 0 && now - getTimerValue(elem, options.name, 'starttime') > options.stopAfter;
         if (!inDOM || pastStop) {
