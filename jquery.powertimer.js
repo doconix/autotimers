@@ -4,14 +4,14 @@ Publishing reminder:
 Change the version number in all the files.
 git commit -am 'message'
 git push origin master
-git tag 1.2.3
+git tag 1.2.4
 git push origin --tags
 
 */
 
 /*
    Author: Conan C. Albrecht <ca@byu.edu>
-   Version: 1.2.3 (June 2016)
+   Version: 1.2.4 (October 2017)
    License: MIT
 
    A jQuery plugin that provides the following types of timers:
@@ -428,7 +428,7 @@ git push origin --tags
 
 
 
-    TIMER_KEY = 'jquery.powertimers.js';
+    var TIMER_KEY = 'jquery.powertimers.js';
 
     /* Does the actual setTimeout call. This is called from setTimer for the first run and then callWithElement for subsequent runs. */
     function registerTimeout(elem, options, duration) {
