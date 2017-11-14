@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-13 21:14:20
+// Transcrypt'ed from Python, 2017-11-13 21:20:29
 function timer_interval () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};

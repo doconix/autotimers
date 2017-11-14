@@ -10,7 +10,7 @@ from os.path import join as j
 VERSION = "2.0.3"
 SROOT = 'src'
 DROOT = 'dist'
-
+TROOT = 'tests'
 
 def main():
     # update the version number
@@ -28,12 +28,20 @@ def main():
     if not os.path.exists(DROOT):
         os.mkdir(DROOT)
 
-    # transpile
-    log('Transpile .py scripts')
-    shutil.rmtree(j(SROOT, '__javascript__'))
+    # transpile src/
+    log('Transpile src/ scripts')
+    if os.path.exists(j(SROOT, '__javascript__')):
+        shutil.rmtree(j(SROOT, '__javascript__'))
     for src in glob.glob(j(SROOT, '*.py')):
         run('transcrypt --build --esv 6 {}'.format(src))
     shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DROOT, 'jquery.timers.min.js'))
+
+    # transpile tests/
+    log('Transpile tests/ scripts')
+    if os.path.exists(j(TROOT, '__javascript__')):
+        shutil.rmtree(j(TROOT, '__javascript__'))
+    for src in glob.glob(j(TROOT, '*.py')):
+        run('transcrypt --build --map --nomin --esv 6 {}'.format(src))
     
 
 #########################
