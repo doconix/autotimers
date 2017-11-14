@@ -10,6 +10,7 @@ from os.path import join as j
 VERSION = "2.0.3"
 SROOT = 'src'
 DROOT = 'dist'
+DEMOROOT = 'demo'
 TROOT = 'tests'
 
 def main():
@@ -35,6 +36,9 @@ def main():
     for src in glob.glob(j(SROOT, '*.py')):
         run('transcrypt --build --esv 6 {}'.format(src))
     shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DROOT, 'jquery.timers.min.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DROOT, 'jquery.timers.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DEMOROOT, 'jquery.timers.min.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DEMOROOT, 'jquery.timers.js'))
 
     # transpile tests/
     log('Transpile tests/ scripts')

@@ -1,5 +1,5 @@
+__pragma__('alias', 'S', '$')
 from test_base import TestBase
-S = jQuery
 
 # I really need to make func() take a long time so I can ensure sleep instead of interval
     

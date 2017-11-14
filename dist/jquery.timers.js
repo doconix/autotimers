@@ -1,6 +1,6 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-13 21:20:33
-function timer_sleep () {
+// Transcrypt'ed from Python, 2017-11-13 22:07:42
+function plugin () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
     var __world__ = __all__;
@@ -2638,32 +2638,194 @@ function timer_sleep () {
 			}
 		}
 	);
-	(function () {
-		var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
-		var S = jQuery;
-		var SleepTimer = __class__ ('SleepTimer', [BaseTimer], {
-			get _startTimer () {return __get__ (this, function (self) {
-				return window.setTimeout (self._notifyObservers, self.millis);
-			});}
-		});
-		var SleepAfterTimer = __class__ ('SleepAfterTimer', [SleepTimer], {
-			get start () {return __get__ (this, function (self) {
-				if (self.run_count == 0) {
-					return self._notifyObservers ();
+	__nest__ (
+		__all__,
+		'timer_interval', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
+					var S = jQuery;
+					var IntervalTimer = __class__ ('IntervalTimer', [BaseTimer], {
+						get _startTimer () {return __get__ (this, function (self) {
+							if (self.timer_start === null) {
+								var millis = self.millis;
+							}
+							else {
+								var millis = max (0, self.millis - (new Date ().getTime () - self.timer_start));
+							}
+							return window.setTimeout (self._notifyObservers, millis);
+						});}
+					});
+					var IntervalAfterTimer = __class__ ('IntervalAfterTimer', [IntervalTimer], {
+						get start () {return __get__ (this, function (self) {
+							if (self.run_count == 0) {
+								return self._notifyObservers ();
+							}
+							return __super__ (IntervalAfterTimer, 'start') (self);
+						});}
+					});
+					__pragma__ ('<use>' +
+						'timer_base' +
+					'</use>')
+					__pragma__ ('<all>')
+						__all__.BaseTimer = BaseTimer;
+						__all__.IntervalAfterTimer = IntervalAfterTimer;
+						__all__.IntervalTimer = IntervalTimer;
+						__all__.S = S;
+					__pragma__ ('</all>')
 				}
-				return __super__ (SleepAfterTimer, 'start') (self);
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'timer_once', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
+					var S = jQuery;
+					var OnceTimer = __class__ ('OnceTimer', [BaseTimer], {
+						get __init__ () {return __get__ (this, function (self, elem, options, deferred) {
+							options ['max_runs'] = 1;
+							__super__ (OnceTimer, '__init__') (self, elem, options, deferred);
+						});},
+						get _startTimer () {return __get__ (this, function (self) {
+							return window.setTimeout (self._notifyObservers, self.millis);
+						});}
+					});
+					__pragma__ ('<use>' +
+						'timer_base' +
+					'</use>')
+					__pragma__ ('<all>')
+						__all__.BaseTimer = BaseTimer;
+						__all__.OnceTimer = OnceTimer;
+						__all__.S = S;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'timer_sleep', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
+					var S = jQuery;
+					var SleepTimer = __class__ ('SleepTimer', [BaseTimer], {
+						get _startTimer () {return __get__ (this, function (self) {
+							return window.setTimeout (self._notifyObservers, self.millis);
+						});}
+					});
+					var SleepAfterTimer = __class__ ('SleepAfterTimer', [SleepTimer], {
+						get start () {return __get__ (this, function (self) {
+							if (self.run_count == 0) {
+								return self._notifyObservers ();
+							}
+							return __super__ (SleepAfterTimer, 'start') (self);
+						});}
+					});
+					__pragma__ ('<use>' +
+						'timer_base' +
+					'</use>')
+					__pragma__ ('<all>')
+						__all__.BaseTimer = BaseTimer;
+						__all__.S = S;
+						__all__.SleepAfterTimer = SleepAfterTimer;
+						__all__.SleepTimer = SleepTimer;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	(function () {
+		var timer_interval = {};
+		var timer_once = {};
+		var timer_sleep = {};
+		var DEFAULT_OPTIONS = dict ({'millis': 1000, 'max_runs': 0, 'name': 'default'});
+		var S = jQuery;
+		var get_timers = __init__ (__world__.storage).get_timers;
+		var timers = function (options, tname) {
+			var elems = this;
+			if (options == 'cancel') {
+				for (var e of elems) {
+					for (var timer of get_timers (S (e), tname)) {
+						timer.cancel ();
+					}
+				}
+				return elems;
+			}
+			else if (options == 'list') {
+				var timers = list ([]);
+				for (var e of elems) {
+					timers.extend (get_timers (S (e), tname));
+				}
+				return timers;
+			}
+			return SecondaryNamespace (elems);
+		};
+		S.fn.timers = timers;
+		S.fn.timers.defaults = DEFAULT_OPTIONS;
+		S.fn.timers.VERSION = '2.0.3';
+		__nest__ (timer_once, '', __init__ (__world__.timer_once));
+		__nest__ (timer_sleep, '', __init__ (__world__.timer_sleep));
+		__nest__ (timer_interval, '', __init__ (__world__.timer_interval));
+		var SecondaryNamespace = __class__ ('SecondaryNamespace', [object], {
+			get __init__ () {return __get__ (this, function (self, elems) {
+				self.elems = elems;
+			});},
+			get _create_timer () {return __get__ (this, function (self, klass, options) {
+				var deferred = S.Deferred ();
+				var combined = update_options (options);
+				for (var e of self.elems) {
+					klass (e, combined, deferred);
+				}
+				var p = deferred.promise ();
+				p.do = p.progress;
+				return p;
+			});},
+			get Timer () {return __get__ (this, function (self, options) {
+				return self._create_timer (timer_once.OnceTimer, options);
+			});},
+			get SleepTimer () {return __get__ (this, function (self, options) {
+				return self._create_timer (timer_sleep.SleepTimer, options);
+			});},
+			get SleepAfterTimer () {return __get__ (this, function (self, options) {
+				return self._create_timer (timer_sleep.SleepAfterTimer, options);
+			});},
+			get IntervalTimer () {return __get__ (this, function (self, options) {
+				return self._create_timer (timer_interval.IntervalTimer, options);
+			});},
+			get IntervalAfterTimer () {return __get__ (this, function (self, options) {
+				return self._create_timer (timer_interval.IntervalAfterTimer, options);
 			});}
 		});
+		var update_options = function (options) {
+			var combined = dict ({});
+			combined.py_update (S.fn.timers.defaults);
+			if (options !== null) {
+				combined.py_update (options);
+			}
+			return combined;
+		};
 		__pragma__ ('<use>' +
-			'timer_base' +
+			'storage' +
+			'timer_interval' +
+			'timer_once' +
+			'timer_sleep' +
 		'</use>')
 		__pragma__ ('<all>')
-			__all__.BaseTimer = BaseTimer;
+			__all__.DEFAULT_OPTIONS = DEFAULT_OPTIONS;
 			__all__.S = S;
-			__all__.SleepAfterTimer = SleepAfterTimer;
-			__all__.SleepTimer = SleepTimer;
+			__all__.SecondaryNamespace = SecondaryNamespace;
+			__all__.get_timers = get_timers;
+			__all__.timers = timers;
+			__all__.update_options = update_options;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;
 }
-window ['timer_sleep'] = timer_sleep ();
+window ['plugin'] = plugin ();

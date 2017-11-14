@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-13 21:20:22
+// Transcrypt'ed from Python, 2017-11-14 05:52:42
 function plugin () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2778,8 +2778,15 @@ function plugin () {
 				self.elems = elems;
 			});},
 			get _create_timer () {return __get__ (this, function (self, klass, options) {
+				if (S.isNumeric (options)) {
+					var options = dict ({'millis': options});
+				}
+				var combined = dict ({});
+				combined.py_update (S.fn.timers.defaults);
+				if (options !== null) {
+					combined.py_update (options);
+				}
 				var deferred = S.Deferred ();
-				var combined = update_options (options);
 				for (var e of self.elems) {
 					klass (e, combined, deferred);
 				}
@@ -2803,14 +2810,6 @@ function plugin () {
 				return self._create_timer (timer_interval.IntervalAfterTimer, options);
 			});}
 		});
-		var update_options = function (options) {
-			var combined = dict ({});
-			combined.py_update (S.fn.timers.defaults);
-			if (options !== null) {
-				combined.py_update (options);
-			}
-			return combined;
-		};
 		__pragma__ ('<use>' +
 			'storage' +
 			'timer_interval' +
@@ -2823,9 +2822,10 @@ function plugin () {
 			__all__.SecondaryNamespace = SecondaryNamespace;
 			__all__.get_timers = get_timers;
 			__all__.timers = timers;
-			__all__.update_options = update_options;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;
 }
 window ['plugin'] = plugin ();
+
+//# sourceMappingURL=extra/sourcemap/plugin.js.map

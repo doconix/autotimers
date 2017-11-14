@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "tests/__javascript__/dev.mod.js",
+	"sources": [
+		"tests/dev.py"
+	],
+	"sourcesContent": [
+		"__pragma__('alias', 'S', '$')\n\ndef main():\n    def func():\n        console.log('hey world')\n        \n    S('#div1').timers().Timer(5000).do(func)\n    \nS(main)"
+	],
+	"mappings": "AAAA;AAEA;AACA;AACA;AAAA;AAEA;AAAA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA"
+}

@@ -1,4 +1,4 @@
-S = jQuery
+__pragma__('alias', 'S', '$')
 
 # each test is given 3 seconds to do its work. The process is:
 # .begin()

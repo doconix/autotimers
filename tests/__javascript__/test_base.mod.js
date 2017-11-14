@@ -4,16 +4,15 @@
 			__all__: {
 				__inited__: false,
 				__init__: function (__all__) {
-					var S = jQuery;
 					var TestBase = __class__ ('TestBase', [object], {
 						NEEDED_TIME: 3000,
 						get make () {return __get__ (this, function (self, elem_id, elem_tag) {
 							if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
 								var elem_tag = 'div';
 							};
-							S ('#{}'.format (elem_id)).remove ();
-							S ('body').append ('<div id="{}"></div>'.format (elem_id));
-							return S ('#{}'.format (elem_id));
+							$ ('#{}'.format (elem_id)).remove ();
+							$ ('body').append ('<div id="{}"></div>'.format (elem_id));
+							return $ ('#{}'.format (elem_id));
 						});},
 						get setUp () {return __get__ (this, function (self) {
 							self.div = self.make ('test1');
@@ -70,7 +69,6 @@
 						});}
 					});
 					__pragma__ ('<all>')
-						__all__.S = S;
 						__all__.TestBase = TestBase;
 					__pragma__ ('</all>')
 				}

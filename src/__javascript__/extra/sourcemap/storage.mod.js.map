@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "src/__javascript__/storage.mod.js",
+	"sources": [
+		"src/storage.py"
+	],
+	"sourcesContent": [
+		"S = jQuery\n\nDATA_KEY = '_jquery_timers_'\n\n\ndef _tstore(elem):\n    '''Gets the timer storage dict on the given element'''\n    if not elem.data(DATA_KEY):\n        elem.data(DATA_KEY, {})\n    return elem.data(DATA_KEY)\n    \n\ndef get_timers(elem, tname):\n    '''Retrieves the timers on the given jQuery array, optionally filtered by name'''\n    tlist= []\n    for e in elem:\n        store = _tstore(S(e))\n        for timer_name in store.keys():\n            if tname is None or tname is js_undefined or tname == timer_name:\n                tlist.push(store[timer_name])\n    return tlist\n    \n    \ndef set_timer(elem, tname, timer):\n    for e in elem:\n        _tstore(S(e))[tname] = timer\n\n\ndef remove_timer(elem, tname):\n    del _tstore(elem)[tname]"
+	],
+	"mappings": "AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAEA;AAGA;AAEA;AACA;AAAA;AACA;AAAA;AAGA;AAEA;AACA;AACA;AACA;AACA;AACA;AAAA;AAAA;AAAA;AACA;AAAA;AAGA;AACA;AACA;AAAA;AAAA;AAGA;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA"
+}

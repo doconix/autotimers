@@ -8,7 +8,7 @@
 ###        <script src="tests/__javascript__/run_tests.js"></script>
 ###
 
-S = jQuery
+__pragma__('alias', 'S', '$')
 S.fn.timers.TESTS = []
 
 # when imported, the modules add to S.fn.timers.TESTS

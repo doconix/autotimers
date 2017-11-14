@@ -35,8 +35,15 @@
 				self.elems = elems;
 			});},
 			get _create_timer () {return __get__ (this, function (self, klass, options) {
+				if (S.isNumeric (options)) {
+					var options = dict ({'millis': options});
+				}
+				var combined = dict ({});
+				combined.py_update (S.fn.timers.defaults);
+				if (options !== null) {
+					combined.py_update (options);
+				}
 				var deferred = S.Deferred ();
-				var combined = update_options (options);
 				for (var e of self.elems) {
 					klass (e, combined, deferred);
 				}
@@ -60,14 +67,6 @@
 				return self._create_timer (timer_interval.IntervalAfterTimer, options);
 			});}
 		});
-		var update_options = function (options) {
-			var combined = dict ({});
-			combined.py_update (S.fn.timers.defaults);
-			if (options !== null) {
-				combined.py_update (options);
-			}
-			return combined;
-		};
 		__pragma__ ('<use>' +
 			'storage' +
 			'timer_interval' +
@@ -80,6 +79,5 @@
 			__all__.SecondaryNamespace = SecondaryNamespace;
 			__all__.get_timers = get_timers;
 			__all__.timers = timers;
-			__all__.update_options = update_options;
 		__pragma__ ('</all>')
 	}) ();

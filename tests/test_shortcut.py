@@ -1,5 +1,5 @@
+__pragma__('alias', 'S', '$')
 from test_base import TestBase
-S = jQuery
 
     
 class TestSetTimer(TestBase):

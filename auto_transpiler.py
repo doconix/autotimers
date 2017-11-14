@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-import glob, os, sys, subprocess, time
+import glob, os, sys, subprocess, time, shutil
 
 
 WATCHERS = [
     ( 'src/*.py', 'transcrypt --map --build --nomin --esv 6 src/plugin.py' ),
-    ( 'tests/*.py', 'transcrypt --map --build --nomin --esv 6 tests/runner.py' ),
+    ( 'tests/*.py', 'transcrypt --map --build --nomin --esv 6 tests/run_tests.py' ),
+    ( 'tests/*.py', 'transcrypt --map --build --nomin --esv 6 tests/dev.py' ),
 ]
+
+if os.path.exists('src/__javascript__'):
+    shutil.rmtree('src/__javascript__')
+if os.path.exists('tests/__javascript__'):
+    shutil.rmtree('tests/__javascript__')
 
 
 class GlobWatcher(object):

@@ -1,5 +1,5 @@
+__pragma__('alias', 'S', '$')
 from test_base import TestBase
-S = jQuery
 
     
 class TestTimer(TestBase):
@@ -69,3 +69,5 @@ class TestSameNamedTimers(TestBase):
         self.assertTrue(self.counter == 1)
         
 S.fn.timers.TESTS.append(TestSameNamedTimers)
+
+

@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-13 21:20:36
+// Transcrypt'ed from Python, 2017-11-14 05:51:09
 function run_tests () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2499,16 +2499,15 @@ function run_tests () {
 			__all__: {
 				__inited__: false,
 				__init__: function (__all__) {
-					var S = jQuery;
 					var TestBase = __class__ ('TestBase', [object], {
 						NEEDED_TIME: 3000,
 						get make () {return __get__ (this, function (self, elem_id, elem_tag) {
 							if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
 								var elem_tag = 'div';
 							};
-							S ('#{}'.format (elem_id)).remove ();
-							S ('body').append ('<div id="{}"></div>'.format (elem_id));
-							return S ('#{}'.format (elem_id));
+							$ ('#{}'.format (elem_id)).remove ();
+							$ ('body').append ('<div id="{}"></div>'.format (elem_id));
+							return $ ('#{}'.format (elem_id));
 						});},
 						get setUp () {return __get__ (this, function (self) {
 							self.div = self.make ('test1');
@@ -2565,7 +2564,6 @@ function run_tests () {
 						});}
 					});
 					__pragma__ ('<all>')
-						__all__.S = S;
 						__all__.TestBase = TestBase;
 					__pragma__ ('</all>')
 				}
@@ -2579,7 +2577,6 @@ function run_tests () {
 				__inited__: false,
 				__init__: function (__all__) {
 					var TestBase = __init__ (__world__.test_base).TestBase;
-					var S = jQuery;
 					var TestZeroMillis = __class__ ('TestZeroMillis', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2592,7 +2589,7 @@ function run_tests () {
 						get end () {return __get__ (this, function (self) {
 						});}
 					});
-					S.fn.timers.TESTS.append (TestZeroMillis);
+					$.fn.timers.TESTS.append (TestZeroMillis);
 					var TestDOMRemoval = __class__ ('TestDOMRemoval', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2607,7 +2604,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 0);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestDOMRemoval);
+					$.fn.timers.TESTS.append (TestDOMRemoval);
 					var TestDebugTimer = __class__ ('TestDebugTimer', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2625,7 +2622,7 @@ function run_tests () {
 							// pass;
 						});}
 					});
-					S.fn.timers.TESTS.append (TestDebugTimer);
+					$.fn.timers.TESTS.append (TestDebugTimer);
 					var TestCancelTimer = __class__ ('TestCancelTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2640,7 +2637,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 1);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestCancelTimer);
+					$.fn.timers.TESTS.append (TestCancelTimer);
 					var TestExceptionInTimer = __class__ ('TestExceptionInTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2667,7 +2664,7 @@ function run_tests () {
 							self.assertTrue (self.fail_counter == 1);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestExceptionInTimer);
+					$.fn.timers.TESTS.append (TestExceptionInTimer);
 					var TestNoExceptionInTimer = __class__ ('TestNoExceptionInTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2691,12 +2688,11 @@ function run_tests () {
 							self.assertTrue (self.fail_counter == 0);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestNoExceptionInTimer);
+					$.fn.timers.TESTS.append (TestNoExceptionInTimer);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
 					__pragma__ ('<all>')
-						__all__.S = S;
 						__all__.TestBase = TestBase;
 						__all__.TestCancelTimer = TestCancelTimer;
 						__all__.TestDOMRemoval = TestDOMRemoval;
@@ -2716,7 +2712,6 @@ function run_tests () {
 				__inited__: false,
 				__init__: function (__all__) {
 					var TestBase = __init__ (__world__.test_base).TestBase;
-					var S = jQuery;
 					var TestInterval = __class__ ('TestInterval', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2731,7 +2726,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestInterval);
+					$.fn.timers.TESTS.append (TestInterval);
 					var TestIntervalAfter = __class__ ('TestIntervalAfter', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2746,15 +2741,30 @@ function run_tests () {
 							self.assertTrue (self.counter == 3);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestIntervalAfter);
+					$.fn.timers.TESTS.append (TestIntervalAfter);
+					var TestMillisShortcut = __class__ ('TestMillisShortcut', [TestBase], {
+						NEEDED_TIME: 1000,
+						get begin () {return __get__ (this, function (self) {
+							self.counter = 0;
+							self.start_time = new Date ();
+							var func = function () {
+								self.counter++;
+							};
+							self.div.timers ().IntervalTimer (400).do (func);
+						});},
+						get end () {return __get__ (this, function (self) {
+							self.assertTrue (self.counter == 2);
+						});}
+					});
+					$.fn.timers.TESTS.append (TestMillisShortcut);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
 					__pragma__ ('<all>')
-						__all__.S = S;
 						__all__.TestBase = TestBase;
 						__all__.TestInterval = TestInterval;
 						__all__.TestIntervalAfter = TestIntervalAfter;
+						__all__.TestMillisShortcut = TestMillisShortcut;
 					__pragma__ ('</all>')
 				}
 			}
@@ -2767,7 +2777,6 @@ function run_tests () {
 				__inited__: false,
 				__init__: function (__all__) {
 					var TestBase = __init__ (__world__.test_base).TestBase;
-					var S = jQuery;
 					var TestTimer = __class__ ('TestTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2787,7 +2796,7 @@ function run_tests () {
 							self.assertTrue (self.then_counter == 1);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestTimer);
+					$.fn.timers.TESTS.append (TestTimer);
 					var TestNamedTimers = __class__ ('TestNamedTimers', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2802,7 +2811,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestNamedTimers);
+					$.fn.timers.TESTS.append (TestNamedTimers);
 					var TestSameNamedTimers = __class__ ('TestSameNamedTimers', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2817,12 +2826,11 @@ function run_tests () {
 							self.assertTrue (self.counter == 1);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestSameNamedTimers);
+					$.fn.timers.TESTS.append (TestSameNamedTimers);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
 					__pragma__ ('<all>')
-						__all__.S = S;
 						__all__.TestBase = TestBase;
 						__all__.TestNamedTimers = TestNamedTimers;
 						__all__.TestSameNamedTimers = TestSameNamedTimers;
@@ -2839,7 +2847,6 @@ function run_tests () {
 				__inited__: false,
 				__init__: function (__all__) {
 					var TestBase = __init__ (__world__.test_base).TestBase;
-					var S = jQuery;
 					var TestSetTimer = __class__ ('TestSetTimer', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2852,7 +2859,7 @@ function run_tests () {
 							// pass;
 						});}
 					});
-					S.fn.timers.TESTS.append (TestSetTimer);
+					$.fn.timers.TESTS.append (TestSetTimer);
 					var TestRemoveTimer = __class__ ('TestRemoveTimer', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2870,12 +2877,11 @@ function run_tests () {
 							// pass;
 						});}
 					});
-					S.fn.timers.TESTS.append (TestRemoveTimer);
+					$.fn.timers.TESTS.append (TestRemoveTimer);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
 					__pragma__ ('<all>')
-						__all__.S = S;
 						__all__.TestBase = TestBase;
 						__all__.TestRemoveTimer = TestRemoveTimer;
 						__all__.TestSetTimer = TestSetTimer;
@@ -2891,7 +2897,6 @@ function run_tests () {
 				__inited__: false,
 				__init__: function (__all__) {
 					var TestBase = __init__ (__world__.test_base).TestBase;
-					var S = jQuery;
 					var TestSleep = __class__ ('TestSleep', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2906,7 +2911,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestSleep);
+					$.fn.timers.TESTS.append (TestSleep);
 					var TestSleepAfter = __class__ ('TestSleepAfter', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2921,12 +2926,11 @@ function run_tests () {
 							self.assertTrue (self.counter == 3);
 						});}
 					});
-					S.fn.timers.TESTS.append (TestSleepAfter);
+					$.fn.timers.TESTS.append (TestSleepAfter);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
 					__pragma__ ('<all>')
-						__all__.S = S;
 						__all__.TestBase = TestBase;
 						__all__.TestSleep = TestSleep;
 						__all__.TestSleepAfter = TestSleepAfter;
@@ -2941,8 +2945,7 @@ function run_tests () {
 		var test_once = {};
 		var test_shortcut = {};
 		var test_sleep = {};
-		var S = jQuery;
-		S.fn.timers.TESTS = list ([]);
+		$.fn.timers.TESTS = list ([]);
 		__nest__ (test_shortcut, '', __init__ (__world__.test_shortcut));
 		__nest__ (test_once, '', __init__ (__world__.test_once));
 		__nest__ (test_fails, '', __init__ (__world__.test_fails));
@@ -2950,11 +2953,11 @@ function run_tests () {
 		__nest__ (test_interval, '', __init__ (__world__.test_interval));
 		var test_log = list ([]);
 		var nextTest = function () {
-			if (len (test_log) == len (S.fn.timers.TESTS)) {
+			if (len (test_log) == len ($.fn.timers.TESTS)) {
 				console.log ('{} tests completed'.format (len (test_log)));
 				return ;
 			}
-			var klass = S.fn.timers.TESTS [len (test_log)];
+			var klass = $.fn.timers.TESTS [len (test_log)];
 			console.log (klass.__name__);
 			var t = klass ();
 			t.setUp ();
@@ -2970,8 +2973,8 @@ function run_tests () {
 			};
 			t.promise_start ().then (then, reject);
 		};
-		console.log ('Starting {} unit tests'.format (len (S.fn.timers.TESTS)));
-		S (nextTest);
+		console.log ('Starting {} unit tests'.format (len ($.fn.timers.TESTS)));
+		$ (nextTest);
 		__pragma__ ('<use>' +
 			'test_fails' +
 			'test_interval' +
@@ -2980,7 +2983,6 @@ function run_tests () {
 			'test_sleep' +
 		'</use>')
 		__pragma__ ('<all>')
-			__all__.S = S;
 			__all__.nextTest = nextTest;
 			__all__.test_log = test_log;
 		__pragma__ ('</all>')
