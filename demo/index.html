@@ -30,9 +30,12 @@
                 $(function() {
                     $('#someid').closest('.example').find('.start_btn').click(function() {
                         log_msg($('#someid'), "Starting 2 second, single-run Timer().")
+                        
+                        // TIMER CALL:
                         $('#someid').timers().Timer(2000).do(function(timer) {
                             log_msg($(this), "Timer is up!")
                         })
+
                     })
                     $('#someid').closest('.example').find('.cancel_btn').click(function() {
                         $('#someid').timers('cancel')
@@ -59,6 +62,8 @@
                     $('#someid2').closest('.example').find('.start_btn').click(function() {
                         log_msg($('#someid2'), "Starting IntervalTimer()")
                         var index = 1;
+
+                        // TIMER CALL:
                         $('#someid2').timers().IntervalTimer({
                             millis: 800,
                             max_runs: 10
@@ -66,6 +71,7 @@
                             log_msg($(this), 'Run #' + index);
                             index++;
                         })
+
                     })
                     $('#someid2').closest('.example').find('.cancel_btn').click(function() {
                         $('#someid2').timers('cancel')
@@ -102,10 +108,13 @@
                     $('#someid3').closest('.example').find('.start_btn').click(function() {
                         log_msg($('#someid3'), "Starting AfterSleepTimer() - note that Run #1 triggers immediately")
                         var index = 1;
+
+                        // TIMER CALL:
                         $('#someid3').timers().SleepAfterTimer(2000).do(function (timer) {
                             log_msg($(this), 'Run #' + index);
                             index++;
                         })
+
                     })
                     $('#someid3').closest('.example').find('.cancel_btn').click(function() {
                         $('#someid3').timers('cancel')
