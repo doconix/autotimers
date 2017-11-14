@@ -1,6 +1,6 @@
 # jquery.timers.js
 
-*Javascript timers on steroids!*
+[Visit the Demo Page](https://rawgit.com/doconix/jquery.timers.js/master/demo/index.html)
 
 Why not just use `window.setTimeout`?  Because these timers provide:
 
@@ -12,8 +12,6 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 * Automatic timer removal when related elements are removed from the DOM.
 * Multiple, named timers per element.
 * `this` is available in your timed function.
-
-[Visit the Demo Page](https://rawgit.com/doconix/jquery.timers.js/master/demo/index.html)
 
 [Latest v2 code](https://raw.githubusercontent.com/doconix/jquery.timers.js/master/dist/jquery.timers.min.js)
 

@@ -15,7 +15,7 @@ class BaseTimer(object):
         # timer state
         self.timer_id = None
         self.timer_start = None  # IntervalTimer needs this to be initially None
-        self.run_count = 0
+        self.run_index = 0
         self.cancelled = False
         
         # remove any existing, and place this timer on element
@@ -58,7 +58,7 @@ class BaseTimer(object):
             self._cleanup()
             self.deferred.resolveWith(self.elem, [ self ])
         else:
-            self.run_count += 1
+            self.run_index += 1
             try:
                 self.deferred.notifyWith(self.elem, [ self ])
             except Error as err:
@@ -76,7 +76,7 @@ class BaseTimer(object):
             (self.elem is not None and (document == self.elem or S.contains(document, self.elem))) and \
             (not self.cancelled) and \
             (self.millis >= 0) and \
-            (self.max_runs <= 0 or self.run_count < self.max_runs) and \
+            (self.max_runs <= 0 or self.run_index < self.max_runs) and \
             (self.deferred.state() == 'pending')
             
 

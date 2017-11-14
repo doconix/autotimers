@@ -2,6 +2,10 @@ h1, h2, h3 {
     text-align: center;
 }
 
+table {
+    margin: auto;
+}
+
 .example {
     margin: 48px 0px;
     padding: 36px 12px;
@@ -59,4 +63,9 @@ h1, h2, h3 {
     white-space: pre;
     font-family: "Courier New", Courier, monospace;
     font-size: .8em;
+}
+
+input {
+    width: 40%;
+    font-size: 1em;
 }

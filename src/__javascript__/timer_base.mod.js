@@ -17,7 +17,7 @@
 							self.deferred = deferred;
 							self.timer_id = null;
 							self.timer_start = null;
-							self.run_count = 0;
+							self.run_index = 0;
 							self.cancelled = false;
 							for (var other_timer of get_timers (S (self.elem), self.tname)) {
 								if (other_timer !== self) {
@@ -51,7 +51,7 @@
 								self.deferred.resolveWith (self.elem, list ([self]));
 							}
 							else {
-								self.run_count++;
+								self.run_index++;
 								try {
 									self.deferred.notifyWith (self.elem, list ([self]));
 								}
@@ -75,7 +75,7 @@
 							}
 						});},
 						get _shouldRunAgain () {return __get__ (this, function (self) {
-							return (self.elem !== null && (document == self.elem || S.contains (document, self.elem))) && !(self.cancelled) && self.millis >= 0 && (self.max_runs <= 0 || self.run_count < self.max_runs) && self.deferred.state () == 'pending';
+							return (self.elem !== null && (document == self.elem || S.contains (document, self.elem))) && !(self.cancelled) && self.millis >= 0 && (self.max_runs <= 0 || self.run_index < self.max_runs) && self.deferred.state () == 'pending';
 						});},
 						get _cleanup () {return __get__ (this, function (self) {
 							remove_timer (S (self.elem), self.tname);

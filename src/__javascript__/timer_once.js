@@ -1,6 +1,6 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 08:58:28
-function run_tests () {
+// Transcrypt'ed from Python, 2017-11-14 08:58:23
+function timer_once () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
     var __world__ = __all__;
@@ -2495,519 +2495,170 @@ function run_tests () {
     __all__.__setslice__ = __setslice__;
 	__nest__ (
 		__all__,
-		'test_base', {
+		'storage', {
 			__all__: {
 				__inited__: false,
 				__init__: function (__all__) {
-					var TestBase = __class__ ('TestBase', [object], {
-						NEEDED_TIME: 3000,
-						get make () {return __get__ (this, function (self, elem_id, elem_tag) {
-							if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
-								var elem_tag = 'div';
-							};
-							$ ('#{}'.format (elem_id)).remove ();
-							$ ('body').append ('<div id="{}"></div>'.format (elem_id));
-							return $ ('#{}'.format (elem_id));
-						});},
-						get setUp () {return __get__ (this, function (self) {
-							self.div = self.make ('test1');
-						});},
-						get tearDown () {return __get__ (this, function (self) {
-							self.div.remove ();
-						});},
-						get promise_start () {return __get__ (this, function (self) {
-							var promise = function (resolve, reject) {
-								var __left0__ = tuple ([resolve, reject]);
-								self.resolve = __left0__ [0];
-								self.reject = __left0__ [1];
-								self.begin ();
-								window.setTimeout (self.promise_end, self.NEEDED_TIME);
-							};
-							return new Promise (promise);
-						});},
-						get promise_end () {return __get__ (this, function (self) {
-							try {
-								self.end ();
-								self.resolve ();
-							}
-							catch (__except0__) {
-								if (isinstance (__except0__, Error)) {
-									var err = __except0__;
-									console.error (err);
-									self.reject ();
-								}
-								else {
-									throw __except0__;
+					var S = jQuery;
+					var DATA_KEY = '_jquery_timers_';
+					var _tstore = function (elem) {
+						if (!(elem.data (DATA_KEY))) {
+							elem.data (DATA_KEY, dict ({}));
+						}
+						return elem.data (DATA_KEY);
+					};
+					var get_timers = function (elem, tname) {
+						var tlist = list ([]);
+						for (var e of elem) {
+							var store = _tstore (S (e));
+							for (var timer_name of store.py_keys ()) {
+								if (tname === null || tname === undefined || tname == timer_name) {
+									tlist.push (store [timer_name]);
 								}
 							}
-							self.div.remove ();
-						});},
-						get begin () {return __get__ (this, function (self) {
-							var __except0__ = Error ('Subclass needs to implement begin()');
-							__except0__.__cause__ = null;
-							throw __except0__;
-						});},
-						get end () {return __get__ (this, function (self) {
-							var __except0__ = Error ('Subclass needs to implement end()');
-							__except0__.__cause__ = null;
-							throw __except0__;
-						});},
-						get assertTrue () {return __get__ (this, function (self, cond, msg) {
-							if (typeof msg == 'undefined' || (msg != null && msg .hasOwnProperty ("__kwargtrans__"))) {;
-								var msg = 'assertTrue condition was false';
-							};
-							if (!(cond)) {
-								var __except0__ = Error (msg);
-								__except0__.__cause__ = null;
-								throw __except0__;
+						}
+						return tlist;
+					};
+					var set_timer = function (elem, tname, timer) {
+						for (var e of elem) {
+							_tstore (S (e)) [tname] = timer;
+						}
+					};
+					var remove_timer = function (elem, tname) {
+						delete _tstore (elem) [tname];
+					};
+					__pragma__ ('<all>')
+						__all__.DATA_KEY = DATA_KEY;
+						__all__.S = S;
+						__all__._tstore = _tstore;
+						__all__.get_timers = get_timers;
+						__all__.remove_timer = remove_timer;
+						__all__.set_timer = set_timer;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'timer_base', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var get_timers = __init__ (__world__.storage).get_timers;
+					var set_timer = __init__ (__world__.storage).set_timer;
+					var remove_timer = __init__ (__world__.storage).remove_timer;
+					var S = jQuery;
+					var BaseTimer = __class__ ('BaseTimer', [object], {
+						get __init__ () {return __get__ (this, function (self, elem, options, deferred) {
+							self.elem = elem;
+							self.millis = options ['millis'];
+							self.max_runs = options ['max_runs'];
+							self.tname = options ['name'];
+							self.deferred = deferred;
+							self.timer_id = null;
+							self.timer_start = null;
+							self.run_index = 0;
+							self.cancelled = false;
+							for (var other_timer of get_timers (S (self.elem), self.tname)) {
+								if (other_timer !== self) {
+									other_timer.cancel ();
+								}
 							}
-						});}
-					});
-					__pragma__ ('<all>')
-						__all__.TestBase = TestBase;
-					__pragma__ ('</all>')
-				}
-			}
-		}
-	);
-	__nest__ (
-		__all__,
-		'test_fails', {
-			__all__: {
-				__inited__: false,
-				__init__: function (__all__) {
-					var TestBase = __init__ (__world__.test_base).TestBase;
-					var TestZeroMillis = __class__ ('TestZeroMillis', [TestBase], {
-						NEEDED_TIME: 500,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().Timer (dict ({'func': self.func, 'millis': 0})).do (func);
+							set_timer (S (self.elem), self.tname, self);
+							self.start ();
 						});},
-						get end () {return __get__ (this, function (self) {
-						});}
-					});
-					$.fn.timers.TESTS.append (TestZeroMillis);
-					var TestDOMRemoval = __class__ ('TestDOMRemoval', [TestBase], {
-						NEEDED_TIME: 500,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().Timer (dict ({'millis': 200})).do (func);
-							self.div.remove ();
+						get start () {return __get__ (this, function (self) {
+							if (!(self._shouldRunAgain ())) {
+								self._cleanup ();
+								self.deferred.resolveWith (self.elem, list ([self]));
+							}
+							else {
+								self.timer_start = new Date ().getTime ();
+								self.timer_id = self._startTimer ();
+							}
 						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 0);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestDOMRemoval);
-					var TestDebugTimer = __class__ ('TestDebugTimer', [TestBase], {
-						NEEDED_TIME: 500,
-						get begin () {return __get__ (this, function (self) {
-							var func1 = function () {
-								// pass;
-							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func1);
-							var func2 = function () {
-								// pass;
-							};
-							self.div.timers ().Timer (dict ({'millis': 300, 'name': 'test2'})).do (func2);
-							self.div.timers ('debug');
+						get cancel () {return __get__ (this, function (self) {
+							self.cancelled = true;
+							self._cleanup ();
+							self.deferred.resolveWith (self.elem, list ([self]));
 						});},
-						get end () {return __get__ (this, function (self) {
-							// pass;
-						});}
-					});
-					$.fn.timers.TESTS.append (TestDebugTimer);
-					var TestCancelTimer = __class__ ('TestCancelTimer', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							var func = function () {
-								self.counter++;
-								self.div.timers ('cancel');
-							};
-							self.div.timers ().SleepTimer (dict ({'millis': 200, 'name': 'test1'})).do (func);
+						get _startTimer () {return __get__ (this, function (self) {
+							console.warn ('Subclass did not implement _startTimer');
 						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 1);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestCancelTimer);
-					var TestExceptionInTimer = __class__ ('TestExceptionInTimer', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.then_counter = 0;
-							self.fail_counter = 0;
-							var func = function () {
-								self.counter++;
-								var __except0__ = Error ('intentional');
-								__except0__.__cause__ = null;
-								throw __except0__;
-							};
-							var then = function () {
-								self.then_counter++;
-							};
-							var fail = function () {
-								self.fail_counter++;
-							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
+						get _notifyObservers () {return __get__ (this, function (self) {
+							if (!(self._shouldRunAgain ())) {
+								self._cleanup ();
+								self.deferred.resolveWith (self.elem, list ([self]));
+							}
+							else {
+								self.run_index++;
+								try {
+									self.deferred.notifyWith (self.elem, list ([self]));
+								}
+								catch (__except0__) {
+									if (isinstance (__except0__, Error)) {
+										var err = __except0__;
+										self._cleanup ();
+										if (self.deferred.state () != 'pending') {
+											var __except1__ = err;
+											__except1__.__cause__ = null;
+											throw __except1__;
+										}
+										self.deferred.rejectWith (self.elem, list ([self, err]));
+										return ;
+									}
+									else {
+										throw __except0__;
+									}
+								}
+								self.start ();
+							}
 						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 1);
-							self.assertTrue (self.then_counter == 0);
-							self.assertTrue (self.fail_counter == 1);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestExceptionInTimer);
-					var TestNoExceptionInTimer = __class__ ('TestNoExceptionInTimer', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.then_counter = 0;
-							self.fail_counter = 0;
-							var func = function () {
-								self.counter++;
-							};
-							var then = function () {
-								self.then_counter++;
-							};
-							var fail = function () {
-								self.fail_counter++;
-							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
+						get _shouldRunAgain () {return __get__ (this, function (self) {
+							return (self.elem !== null && (document == self.elem || S.contains (document, self.elem))) && !(self.cancelled) && self.millis >= 0 && (self.max_runs <= 0 || self.run_index < self.max_runs) && self.deferred.state () == 'pending';
 						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 1);
-							self.assertTrue (self.then_counter == 1);
-							self.assertTrue (self.fail_counter == 0);
+						get _cleanup () {return __get__ (this, function (self) {
+							remove_timer (S (self.elem), self.tname);
+							window.clearTimeout (self.timer_id);
+							self.timer_id = null;
 						});}
 					});
-					$.fn.timers.TESTS.append (TestNoExceptionInTimer);
 					__pragma__ ('<use>' +
-						'test_base' +
+						'storage' +
 					'</use>')
 					__pragma__ ('<all>')
-						__all__.TestBase = TestBase;
-						__all__.TestCancelTimer = TestCancelTimer;
-						__all__.TestDOMRemoval = TestDOMRemoval;
-						__all__.TestDebugTimer = TestDebugTimer;
-						__all__.TestExceptionInTimer = TestExceptionInTimer;
-						__all__.TestNoExceptionInTimer = TestNoExceptionInTimer;
-						__all__.TestZeroMillis = TestZeroMillis;
-					__pragma__ ('</all>')
-				}
-			}
-		}
-	);
-	__nest__ (
-		__all__,
-		'test_interval', {
-			__all__: {
-				__inited__: false,
-				__init__: function (__all__) {
-					var TestBase = __init__ (__world__.test_base).TestBase;
-					var TestInterval = __class__ ('TestInterval', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.start_time = new Date ();
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().IntervalTimer (dict ({'millis': 400})).do (func);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 2);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestInterval);
-					var TestIntervalAfter = __class__ ('TestIntervalAfter', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.start_time = new Date ();
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().IntervalAfterTimer (dict ({'millis': 400})).do (func);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 3);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestIntervalAfter);
-					var TestMillisShortcut = __class__ ('TestMillisShortcut', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.start_time = new Date ();
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().IntervalTimer (400).do (func);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 2);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestMillisShortcut);
-					__pragma__ ('<use>' +
-						'test_base' +
-					'</use>')
-					__pragma__ ('<all>')
-						__all__.TestBase = TestBase;
-						__all__.TestInterval = TestInterval;
-						__all__.TestIntervalAfter = TestIntervalAfter;
-						__all__.TestMillisShortcut = TestMillisShortcut;
-					__pragma__ ('</all>')
-				}
-			}
-		}
-	);
-	__nest__ (
-		__all__,
-		'test_once', {
-			__all__: {
-				__inited__: false,
-				__init__: function (__all__) {
-					var TestBase = __init__ (__world__.test_base).TestBase;
-					var TestTimer = __class__ ('TestTimer', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.then_counter = 0;
-							self.start_time = new Date ();
-							var func = function () {
-								self.counter++;
-							};
-							var then = function () {
-								self.then_counter++;
-							};
-							self.div.timers ().Timer (dict ({'millis': 500})).do (func).then (then);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 1);
-							self.assertTrue (self.then_counter == 1);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestTimer);
-					var TestNamedTimers = __class__ ('TestNamedTimers', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().Timer (dict ({'millis': 400, 'name': 'first'})).do (func);
-							self.div.timers ().Timer (dict ({'millis': 600, 'name': 'second'})).do (func);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 2);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestNamedTimers);
-					var TestSameNamedTimers = __class__ ('TestSameNamedTimers', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().Timer (dict ({'millis': 400, 'name': 'same'})).do (func);
-							self.div.timers ().Timer (dict ({'millis': 600, 'name': 'same'})).do (func);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 1);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestSameNamedTimers);
-					__pragma__ ('<use>' +
-						'test_base' +
-					'</use>')
-					__pragma__ ('<all>')
-						__all__.TestBase = TestBase;
-						__all__.TestNamedTimers = TestNamedTimers;
-						__all__.TestSameNamedTimers = TestSameNamedTimers;
-						__all__.TestTimer = TestTimer;
-					__pragma__ ('</all>')
-				}
-			}
-		}
-	);
-	__nest__ (
-		__all__,
-		'test_shortcut', {
-			__all__: {
-				__inited__: false,
-				__init__: function (__all__) {
-					var TestBase = __init__ (__world__.test_base).TestBase;
-					var TestSetTimer = __class__ ('TestSetTimer', [TestBase], {
-						NEEDED_TIME: 500,
-						get begin () {return __get__ (this, function (self) {
-							var func = function () {
-								self.assertTrue (bool (self.div.data ('_jquery_timers_') ['test1']));
-							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func);
-						});},
-						get end () {return __get__ (this, function (self) {
-							// pass;
-						});}
-					});
-					$.fn.timers.TESTS.append (TestSetTimer);
-					var TestRemoveTimer = __class__ ('TestRemoveTimer', [TestBase], {
-						NEEDED_TIME: 500,
-						get begin () {return __get__ (this, function (self) {
-							var func1 = function (timer) {
-								timer.cancel ();
-							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func1);
-							var func2 = function () {
-								self.assertTrue (!(self.div.data ('_jquery_timers_') ['test1']));
-								self.assertTrue (self.div.data ('_jquery_timers_') ['test2']);
-							};
-							self.div.timers ().Timer (dict ({'millis': 300, 'name': 'test2'})).do (func2);
-						});},
-						get end () {return __get__ (this, function (self) {
-							// pass;
-						});}
-					});
-					$.fn.timers.TESTS.append (TestRemoveTimer);
-					__pragma__ ('<use>' +
-						'test_base' +
-					'</use>')
-					__pragma__ ('<all>')
-						__all__.TestBase = TestBase;
-						__all__.TestRemoveTimer = TestRemoveTimer;
-						__all__.TestSetTimer = TestSetTimer;
-					__pragma__ ('</all>')
-				}
-			}
-		}
-	);
-	__nest__ (
-		__all__,
-		'test_sleep', {
-			__all__: {
-				__inited__: false,
-				__init__: function (__all__) {
-					var TestBase = __init__ (__world__.test_base).TestBase;
-					var TestSleep = __class__ ('TestSleep', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.start_time = new Date ();
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().SleepTimer (dict ({'millis': 400})).do (func);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 2);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestSleep);
-					var TestSleepAfter = __class__ ('TestSleepAfter', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.start_time = new Date ();
-							var func = function () {
-								self.counter++;
-							};
-							self.div.timers ().SleepAfterTimer (dict ({'millis': 400})).do (func);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 3);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestSleepAfter);
-					var TestSleepAfter = __class__ ('TestSleepAfter', [TestBase], {
-						NEEDED_TIME: 1000,
-						get begin () {return __get__ (this, function (self) {
-							self.counter = 0;
-							self.start_time = new Date ();
-							var func = function () {
-								self.counter++;
-							};
-							var promise = self.div.timers ().SleepAfterTimer (dict ({'millis': 10000}));
-							var attach = function () {
-								promise.do (func);
-							};
-							window.setTimeout (attach, 400);
-						});},
-						get end () {return __get__ (this, function (self) {
-							self.assertTrue (self.counter == 1);
-						});}
-					});
-					$.fn.timers.TESTS.append (TestSleepAfter);
-					__pragma__ ('<use>' +
-						'test_base' +
-					'</use>')
-					__pragma__ ('<all>')
-						__all__.TestBase = TestBase;
-						__all__.TestSleep = TestSleep;
-						__all__.TestSleepAfter = TestSleepAfter;
+						__all__.BaseTimer = BaseTimer;
+						__all__.S = S;
+						__all__.get_timers = get_timers;
+						__all__.remove_timer = remove_timer;
+						__all__.set_timer = set_timer;
 					__pragma__ ('</all>')
 				}
 			}
 		}
 	);
 	(function () {
-		var test_fails = {};
-		var test_interval = {};
-		var test_once = {};
-		var test_shortcut = {};
-		var test_sleep = {};
-		$.fn.timers.TESTS = list ([]);
-		__nest__ (test_shortcut, '', __init__ (__world__.test_shortcut));
-		__nest__ (test_once, '', __init__ (__world__.test_once));
-		__nest__ (test_fails, '', __init__ (__world__.test_fails));
-		__nest__ (test_sleep, '', __init__ (__world__.test_sleep));
-		__nest__ (test_interval, '', __init__ (__world__.test_interval));
-		var test_log = list ([]);
-		var nextTest = function () {
-			if (len (test_log) == len ($.fn.timers.TESTS)) {
-				console.log ('{} tests completed'.format (len (test_log)));
-				return ;
-			}
-			var klass = $.fn.timers.TESTS [len (test_log)];
-			console.log (klass.__name__);
-			var t = klass ();
-			t.setUp ();
-			var then = function () {
-				t.tearDown ();
-				test_log.push ('success');
-				nextTest ();
-			};
-			var reject = function (err) {
-				console.error (err);
-				test_log.push (err);
-				nextTest ();
-			};
-			t.promise_start ().then (then, reject);
-		};
-		console.log ('Starting {} unit tests'.format (len ($.fn.timers.TESTS)));
-		$ (nextTest);
+		var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
+		var S = jQuery;
+		var OnceTimer = __class__ ('OnceTimer', [BaseTimer], {
+			get __init__ () {return __get__ (this, function (self, elem, options, deferred) {
+				options ['max_runs'] = 1;
+				__super__ (OnceTimer, '__init__') (self, elem, options, deferred);
+			});},
+			get _startTimer () {return __get__ (this, function (self) {
+				return window.setTimeout (self._notifyObservers, self.millis);
+			});}
+		});
 		__pragma__ ('<use>' +
-			'test_fails' +
-			'test_interval' +
-			'test_once' +
-			'test_shortcut' +
-			'test_sleep' +
+			'timer_base' +
 		'</use>')
 		__pragma__ ('<all>')
-			__all__.nextTest = nextTest;
-			__all__.test_log = test_log;
+			__all__.BaseTimer = BaseTimer;
+			__all__.OnceTimer = OnceTimer;
+			__all__.S = S;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;
 }
-window ['run_tests'] = run_tests ();
-
-//# sourceMappingURL=extra/sourcemap/run_tests.js.map
+window ['timer_once'] = timer_once ();

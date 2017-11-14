@@ -12,7 +12,7 @@ class SleepTimer(BaseTimer):
 class SleepAfterTimer(SleepTimer):
     '''This timer immediately calls the timer function, then starts the sleep/function cycle.'''
     def start(self):
-        if self.run_count == 0:
+        if self.run_index == 0:
             return self._notifyObservers()
         return super().start()
 

@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 06:52:25
+// Transcrypt'ed from Python, 2017-11-14 08:58:14
 function plugin () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2558,7 +2558,7 @@ function plugin () {
 							self.deferred = deferred;
 							self.timer_id = null;
 							self.timer_start = null;
-							self.run_count = 0;
+							self.run_index = 0;
 							self.cancelled = false;
 							for (var other_timer of get_timers (S (self.elem), self.tname)) {
 								if (other_timer !== self) {
@@ -2592,7 +2592,7 @@ function plugin () {
 								self.deferred.resolveWith (self.elem, list ([self]));
 							}
 							else {
-								self.run_count++;
+								self.run_index++;
 								try {
 									self.deferred.notifyWith (self.elem, list ([self]));
 								}
@@ -2616,7 +2616,7 @@ function plugin () {
 							}
 						});},
 						get _shouldRunAgain () {return __get__ (this, function (self) {
-							return (self.elem !== null && (document == self.elem || S.contains (document, self.elem))) && !(self.cancelled) && self.millis >= 0 && (self.max_runs <= 0 || self.run_count < self.max_runs) && self.deferred.state () == 'pending';
+							return (self.elem !== null && (document == self.elem || S.contains (document, self.elem))) && !(self.cancelled) && self.millis >= 0 && (self.max_runs <= 0 || self.run_index < self.max_runs) && self.deferred.state () == 'pending';
 						});},
 						get _cleanup () {return __get__ (this, function (self) {
 							remove_timer (S (self.elem), self.tname);
@@ -2659,7 +2659,7 @@ function plugin () {
 					});
 					var IntervalAfterTimer = __class__ ('IntervalAfterTimer', [IntervalTimer], {
 						get start () {return __get__ (this, function (self) {
-							if (self.run_count == 0) {
+							if (self.run_index == 0) {
 								return self._notifyObservers ();
 							}
 							return __super__ (IntervalAfterTimer, 'start') (self);
@@ -2722,7 +2722,7 @@ function plugin () {
 					});
 					var SleepAfterTimer = __class__ ('SleepAfterTimer', [SleepTimer], {
 						get start () {return __get__ (this, function (self) {
-							if (self.run_count == 0) {
+							if (self.run_index == 0) {
 								return self._notifyObservers ();
 							}
 							return __super__ (SleepAfterTimer, 'start') (self);
