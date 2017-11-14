@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 06:52:39
+// Transcrypt'ed from Python, 2017-11-14 07:33:10
 function run_tests () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2924,6 +2924,25 @@ function run_tests () {
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 3);
+						});}
+					});
+					$.fn.timers.TESTS.append (TestSleepAfter);
+					var TestSleepAfter = __class__ ('TestSleepAfter', [TestBase], {
+						NEEDED_TIME: 1000,
+						get begin () {return __get__ (this, function (self) {
+							self.counter = 0;
+							self.start_time = new Date ();
+							var func = function () {
+								self.counter++;
+							};
+							var promise = self.div.timers ().SleepAfterTimer (dict ({'millis': 10000}));
+							var attach = function () {
+								promise.do (func);
+							};
+							window.setTimeout (attach, 400);
+						});},
+						get end () {return __get__ (this, function (self) {
+							self.assertTrue (self.counter == 1);
 						});}
 					});
 					$.fn.timers.TESTS.append (TestSleepAfter);

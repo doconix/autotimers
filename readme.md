@@ -154,3 +154,14 @@ Change any of the global options with:
 ```
 $.fn.timers.defaults.millis = 2000
 ```
+
+## Development
+
+`jquery.timers.js` is programmed in Python, then transpiled to Javascript using the excellent [Transcrypt Library](https://www.transcrypt.org/).
+
+The `src/*.py` files are the source code for the plugin, with `plugin.py` being the primary script. The output files are in `src/__javascript/*.js`.  Only `plugin.js` really matters - the other files are included within it when Transcrypt runs. I've split the plugin into many files to make maintenance easier.  The individual files are fairly small.
+
+During development and testing, run `auto_transpiler.py` to automatically transpile whenever source files change.  You can also run `build.py` to erase and rebuild everything.
+
+The `tests/` directory holds a small testing suite to ensure everything works.  To run the test suite, open `tests/run_tests.html` file and check the output in the browser console.
+    
