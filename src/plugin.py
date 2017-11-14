@@ -1,5 +1,5 @@
 # Author: Conan C. Albrecht <doconix@gmail.com>
-# Version: 2.0.3
+# Version: 2.0.4
 # License: MIT
 #
 # See the readme.md file for docs.
@@ -52,7 +52,7 @@ def timers(options, tname):
 # only one function so not using extend()
 S.fn.timers = timers
 S.fn.timers.defaults = DEFAULT_OPTIONS
-S.fn.timers.VERSION = "2.0.3"
+S.fn.timers.VERSION = "2.0.4"
 
 
 

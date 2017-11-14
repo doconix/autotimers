@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 06:17:33
+// Transcrypt'ed from Python, 2017-11-14 06:52:25
 function plugin () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2769,7 +2769,7 @@ function plugin () {
 		};
 		S.fn.timers = timers;
 		S.fn.timers.defaults = DEFAULT_OPTIONS;
-		S.fn.timers.VERSION = '2.0.3';
+		S.fn.timers.VERSION = '2.0.4';
 		__nest__ (timer_once, '', __init__ (__world__.timer_once));
 		__nest__ (timer_sleep, '', __init__ (__world__.timer_sleep));
 		__nest__ (timer_interval, '', __init__ (__world__.timer_interval));

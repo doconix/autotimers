@@ -7,7 +7,7 @@ from os.path import join as j
 # git tag 2.0.1
 # git push origin --tags
 
-VERSION = "2.0.3"
+VERSION = "2.0.4"
 SROOT = 'src'
 DROOT = 'dist'
 DEMOROOT = 'demo'
