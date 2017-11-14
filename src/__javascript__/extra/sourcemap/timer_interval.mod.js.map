@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "src/__javascript__/timer_interval.mod.js",
+	"sources": [
+		"src/timer_interval.py"
+	],
+	"sourcesContent": [
+		"from timer_base import BaseTimer\nS = jQuery\n\n\nclass IntervalTimer(BaseTimer):\n    def _startTimer(self):\n        '''Helper function for start().  Call window.setTimeout and return the id'''\n        if self.timer_start is None:\n            millis = self.millis\n        else:\n            millis = max(0, self.millis - (__new__(Date()).getTime() - self.timer_start))\n        return window.setTimeout(self._notifyObservers, millis)\n\n\nclass IntervalAfterTimer(IntervalTimer):\n    '''This timer immediately calls the timer function, then starts the sleep/function cycle.'''\n    def start(self):\n        if self.run_count == 0:\n            return self._notifyObservers()\n        return super().start()\n\n\n    \n"
+	],
+	"mappings": "AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AACA;AAGA;AACA;AAEA;AACA;AAAA;AACA;AACA;AAAA;AACA;AAAA;AAAA;AAGA;AAEA;AACA;AACA;AAAA;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA"
+}

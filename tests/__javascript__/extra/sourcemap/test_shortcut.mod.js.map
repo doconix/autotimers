@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "tests/__javascript__/test_shortcut.mod.js",
+	"sources": [
+		"tests/test_shortcut.py"
+	],
+	"sourcesContent": [
+		"from test_base import TestBase\nS = jQuery\n\n    \nclass TestSetTimer(TestBase):\n    NEEDED_TIME = 500\n\n    def begin(self):\n        def func():\n            self.assertTrue(bool(self.div.data('_jquery_timers_')['test1']))\n        self.div.timers().Timer({\n            'millis': 200,\n            'name': 'test1',\n        }).do(func)\n        \n    def end(self):\n        pass\n        \nS.fn.timers.TESTS.append(TestSetTimer)\n    \n    \nclass TestRemoveTimer(TestBase):\n    NEEDED_TIME = 500\n\n    def begin(self):\n        def func1(timer):\n            timer.cancel()\n        self.div.timers().Timer({\n            'millis': 200,\n            'name': 'test1',\n        }).do(func1)\n        def func2():\n            self.assertTrue(not self.div.data('_jquery_timers_')['test1'])\n            self.assertTrue(self.div.data('_jquery_timers_')['test2'])\n        self.div.timers().Timer({\n            'millis': 300,\n            'name': 'test2',\n        }).do(func2)\n        \n    def end(self):\n        pass\n        \nS.fn.timers.TESTS.append(TestRemoveTimer)\n    \n    \n"
+	],
+	"mappings": "AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AACA;AAGA;AACA;AAEA;AACA;AACA;AAAA;AACA;AAAA;AAKA;AACA;AAAA;AAAA;AAEA;AAGA;AACA;AAEA;AACA;AACA;AAAA;AACA;AAIA;AACA;AACA;AAAA;AACA;AAAA;AAKA;AACA;AAAA;AAAA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA"
+}
