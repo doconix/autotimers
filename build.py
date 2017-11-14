@@ -2,12 +2,7 @@
 import os, shutil, glob, sys, subprocess, re
 from os.path import join as j
 
-# git commit -am 'message'
-# git push origin master
-# git tag 2.0.1
-# git push origin --tags
-
-VERSION = "2.0.4"
+VERSION = "2.0.5"
 SROOT = 'src'
 DROOT = 'dist'
 DEMOROOT = 'demo'
@@ -23,6 +18,12 @@ def main():
             line = re.sub('Version: \d+\.\d+\.\d+', 'Version: {}'.format(VERSION), line)
             line = re.sub('S.fn.timers.VERSION = "\d+\.\d+\.\d+"', 'S.fn.timers.VERSION = "{}"'.format(VERSION), line)
             fout.write(line)
+    with open('package.json', 'r') as fin:
+        content = fin.readlines()
+    with open('package.json', 'w') as fout:
+        for line in content:
+            line = re.sub('"version": "\d+\.\d+\.\d+"', '"version": "{}"'.format(VERSION), line)
+            fout.write(line)
 
     # dist folder
     log('Initialize {} folder'.format(DROOT))
@@ -35,10 +36,10 @@ def main():
         shutil.rmtree(j(SROOT, '__javascript__'))
     for src in glob.glob(j(SROOT, '*.py')):
         run('transcrypt --build --esv 6 {}'.format(src))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DROOT, 'jquery.timers.min.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DROOT, 'jquery.timers.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DEMOROOT, 'jquery.timers.min.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DEMOROOT, 'jquery.timers.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DROOT, 'jquery-timers.min.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DROOT, 'jquery-timers.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DEMOROOT, 'jquery-timers.min.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DEMOROOT, 'jquery-timers.js'))
 
     # transpile tests/
     log('Transpile tests/ scripts')

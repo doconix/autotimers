@@ -1,0 +1,26 @@
+{
+  "name": "jquery-timers",
+  "version": "2.0.5",
+  "description": "Replacement for setTimeout() with five types of repeating timer objects, timers on elements; easier cancellation, and promise pattern.",
+  "main": "jquery-timers.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doconix/jquery-timers.git"
+  },
+  "keywords": [
+    "jquery",
+    "timer"
+  ],
+  "author": "Conan Albrecht <doconix@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/doconix/jquery-timers"
+  },
+  "homepage": "https://github.com/doconix/jquery-timers"
+}
