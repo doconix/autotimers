@@ -15,7 +15,7 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 
 [Visit the Demo Page](https://rawgit.com/doconix/jquery.timers.js/master/demo/index.html)
 
-[Download Latest](https://raw.githubusercontent.com/doconix/jquery.timers.js/master/dist/jquery.timers.min.js)
+[Download latest minified code](https://raw.githubusercontent.com/doconix/jquery.timers.js/master/dist/jquery.timers.min.js)
 
 ## tl;dr:
 
