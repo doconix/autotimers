@@ -1,3 +1,7 @@
+Note: This is the last release in the 1.x.x line.  It is archived here for those who want to continue using it.  
+
+Also check out the new version, 2.x.x, which has an updated API using promises.  The new version is written in Python and transpiled to a single JS file.
+
 jquery.powertimer.js
 ====================
 

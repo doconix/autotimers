@@ -14,7 +14,7 @@ DROOT = 'dist'
 
 def main():
     # update the version number
-    print('Set version to {}'.format(VERSION))
+    log('Set version to {}'.format(VERSION))
     with open(j(SROOT, 'plugin.py'), 'r') as fin:
         content = fin.readlines()
     with open(j(SROOT, 'plugin.py'), 'w') as fout:
@@ -24,21 +24,17 @@ def main():
             fout.write(line)
 
     # dist folder
-    print('Initialize {} folder'.format(DROOT))
-    if os.path.exists(DROOT):
-        shutil.rmtree(DROOT)
-    os.mkdir(DROOT)
+    log('Initialize {} folder'.format(DROOT))
+    if not os.path.exists(DROOT):
+        os.mkdir(DROOT)
 
     # transpile
     log('Transpile .py scripts')
+    shutil.rmtree(j(SROOT, '__javascript__'))
     for src in glob.glob(j(SROOT, '*.py')):
         run('transcrypt --build --esv 6 {}'.format(src))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), 'jquery.timers.min.js')
     shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DROOT, 'jquery.timers.min.js'))
     
-    # copy html
-    shutil.copy('example.html', DROOT)
-
 
 #########################
 ###  Helper functions
