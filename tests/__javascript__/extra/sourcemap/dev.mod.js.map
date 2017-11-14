@@ -5,7 +5,7 @@
 		"tests/dev.py"
 	],
 	"sourcesContent": [
-		"__pragma__('alias', 'S', '$')\n\ndef main():\n    def func():\n        console.log('hey world')\n        \n    S('#div1').timers().Timer(5000).do(func)\n    \nS(main)"
+		"__pragma__('alias', 'S', '$')\n\ndef main():\n    index = 1\n    def func(timer):\n        console.log(this)\n        if index % 5 == 0:\n            S(this).html('')\n        S(this).append('<div>Run #' + index)\n        index += 1\n        \n    S('#div1').timers().IntervalTimer(800).do(func)\n    \nS(main)\n\n                  "
 	],
-	"mappings": "AAAA;AAEA;AACA;AACA;AAAA;AAEA;AAAA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA"
+	"mappings": "AAAA;AAEA;AACA;AACA;AACA;AACA;AACA;AAAA;AACA;AAAA;AAAA;AAGA;AAAA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA"
 }

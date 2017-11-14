@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 05:51:09
+// Transcrypt'ed from Python, 2017-11-14 06:17:46
 function dev () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2495,10 +2495,16 @@ function dev () {
     __all__.__setslice__ = __setslice__;
 	(function () {
 		var main = function () {
-			var func = function () {
-				console.log ('hey world');
+			var index = 1;
+			var func = function (timer) {
+				console.log (this);
+				if (__mod__ (index, 5) == 0) {
+					$ (this).html ('');
+				}
+				$ (this).append ('<div>Run #' + index);
+				index++;
 			};
-			$ ('#div1').timers ().Timer (5000).do (func);
+			$ ('#div1').timers ().IntervalTimer (800).do (func);
 		};
 		$ (main);
 		__pragma__ ('<all>')

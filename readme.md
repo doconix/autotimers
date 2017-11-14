@@ -16,6 +16,8 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 
 ## tl;dr:
 
+**Get the code in the `dist/` folder above.**  Everything is in the single `jquery.timers.min.js` file.
+
 Wait four seconds, then run one time:
 
 ```

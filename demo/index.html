@@ -3,27 +3,40 @@
 <head>
     <title>Timers Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="example.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="jquery.timers.js"></script>
 </head>
 <body>
     <h1>Timers Demos</h1>
     <h2>Javascript timers on steroids (and easier to boot)!</h2>
-    <h3><a href="https://github.com/doconix/jquery.timers.js">Get the Code...</a></h3>
+    <h3><a href="https://github.com/doconix/jquery.timers.js">Return to jquery.timers.js</a></h3>
 
-
+    <script>
+        function log_msg(elem, msg) {
+            elem.html(elem.html() + "<div>" + msg + "</div>")
+        }
+    </script>
 
     <div class="example">
-        <div class="title">Example: Set a timer to run one time, in 2 seconds</div>
+        <div class="title">Example 1: Set a timer to run one time, in 2 seconds. If you hit start more than once, only the last timer started will continue.</div>
+        <div class="buttons">
+            <button class="start_btn">Start</button>
+            <button class="cancel_btn">Cancel</button>
+        </div>
         <div class="code">
-            <div id="someid">Not yet run</div>
+            <div id="someid" class="message">Not yet run</div>
             <script>
-                $(() => {
-                    $('#someid').timers().Timer({
-                        millis: 2000
-                    }).do((timer) => {
-                        $(this).text("Ran after 2 seconds. Reload the page to run again.")
+                $(function() {
+                    $('#someid').closest('.example').find('.start_btn').click(function() {
+                        log_msg($('#someid'), "Starting 2 second, single-run Timer().")
+                        $('#someid').timers().Timer(2000).do(function(timer) {
+                            log_msg($(this), "Timer is up!")
+                        })
+                    })
+                    $('#someid').closest('.example').find('.cancel_btn').click(function() {
+                        $('#someid').timers('cancel')
+                        log_msg($('#someid'), "Cancelled!")
                     })
                 })
             </script>
@@ -34,20 +47,29 @@
   
 
     <div class="example">
-        <div class="title">Example: Set a timer to run repeatedly at exact intervals of 0.8 seconds</div>
+        <div class="title">Example 2: Set a timer to run repeatedly at exact intervals of 0.8 seconds, with 10 maximum runs</div>
+        <div class="buttons">
+            <button class="start_btn">Start</button>
+            <button class="cancel_btn">Cancel</button>
+        </div>
         <div class="code">
-            <div id="someid2">Element here</div>
+            <div id="someid2" class="message">Element here</div>
             <script>
-                $(() => {
-                    var index = 1;
-                    $('#someid2').timers().IntervalTimer({
-                        interval: 800
-                    }).do((timer) => {
-                        if (index % 5 == 0) {
-                            $(this).html('');
-                        }
-                        $(this).append('<div>Run #' + index);
-                        index++;
+                $(function() {
+                    $('#someid2').closest('.example').find('.start_btn').click(function() {
+                        log_msg($('#someid2'), "Starting IntervalTimer()")
+                        var index = 1;
+                        $('#someid2').timers().IntervalTimer({
+                            millis: 800,
+                            max_runs: 10
+                        }).do(function (timer) {
+                            log_msg($(this), 'Run #' + index);
+                            index++;
+                        })
+                    })
+                    $('#someid2').closest('.example').find('.cancel_btn').click(function() {
+                        $('#someid2').timers('cancel')
+                        log_msg($('#someid2'), "Cancelled!")
                     })
                 })
             </script>
@@ -58,29 +80,36 @@
   
 
     <div class="example">
-        <div class="title">Example: Set a timer to run repeatedly with exactly 2 seconds in between runs.</div>
+        <div class="title">Example 3: Set an "After" timer to run repeatedly with exactly 2 seconds in between runs.</div>
         <div class="description">
-            This one is for long-running functions (such as an Ajax call).  It starts the 2 seconds <b>after</b> the function finishes. 
+            This one is for long-running functions (such as an Ajax call).  It first runs the function, then starts the 2 
+            seconds <b>after</b> the function finishes. 
             This is quite different than Javascript's setInterval() method because it ensures a given period between calls.
         </div>
         <div class="description">
             The "After" type of timer calls the function immediately, followed by the sleep delay.  This is useful when you
             need a periodic function but also need an initial run.
         </div>
+        <div class="buttons">
+            <button class="start_btn">Start</button>
+            <button class="cancel_btn">Cancel</button>
+        </div>
         <div class="code">
-            <div id="someid3">Element here</div>
+            <div id="someid3" class="message">Element here</div>
             <script>
-                $(() => {
+                $(function() {
                     var index = 1;
-                    $('#someid3').timers().SleepAfterTimer({
-                        millis: 2000
-                    }).do((timer) => {
-                        console.log(this)
-                        if (index % 5 == 0) {
-                            $(this).html('');
-                        }
-                        $(this).append('<div>Run #' + index);
-                        index++;
+                    $('#someid3').closest('.example').find('.start_btn').click(function() {
+                        log_msg($('#someid3'), "Starting AfterSleepTimer() - note that Run #1 triggers immediately")
+                        var index = 1;
+                        $('#someid3').timers().SleepAfterTimer(2000).do(function (timer) {
+                            log_msg($(this), 'Run #' + index);
+                            index++;
+                        })
+                    })
+                    $('#someid3').closest('.example').find('.cancel_btn').click(function() {
+                        $('#someid3').timers('cancel')
+                        log_msg($('#someid3'), "Cancelled!")
                     })
                 })
             </script>

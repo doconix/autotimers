@@ -1,9 +1,15 @@
 	(function () {
 		var main = function () {
-			var func = function () {
-				console.log ('hey world');
+			var index = 1;
+			var func = function (timer) {
+				console.log (this);
+				if (__mod__ (index, 5) == 0) {
+					$ (this).html ('');
+				}
+				$ (this).append ('<div>Run #' + index);
+				index++;
 			};
-			$ ('#div1').timers ().Timer (5000).do (func);
+			$ ('#div1').timers ().IntervalTimer (800).do (func);
 		};
 		$ (main);
 		__pragma__ ('<all>')
