@@ -1,6 +1,6 @@
-# jquery-object-timers
+# jquery-autotimer
 
-[Visit the Demo Page](https://rawgit.com/doconix/jquery-object-timers/master/demo/index.html)
+[Visit the Demo Page](https://rawgit.com/doconix/jquery-autotimer/master/demo/index.html)
 
 Why not just use `window.setTimeout`?  Because these timers provide:
 
@@ -16,11 +16,11 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 
 ## Install
 
-**`npm install jquery-object-timers`**
+**`npm install jquery-autotimer`**
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or
 
-[Get the latest v2 code](https://raw.githubusercontent.com/doconix/jquery-object-timers/master/dist/jquery-object-timers.min.js)
+[Get the latest v2 code](https://raw.githubusercontent.com/doconix/jquery-autotimer/master/dist/jquery-autotimer.min.js)
 
 
 ### A few examples: 
@@ -28,7 +28,7 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 Wait four seconds, then run one time:
 
 ```
-$('#somediv').timers().Timer(4000).do((tmr) => {
+$('#somediv').autotimer().Timer(4000).do((tmr) => {
     console.log('one time joe!')
 })
 ```
@@ -36,7 +36,7 @@ $('#somediv').timers().Timer(4000).do((tmr) => {
 Run immediately, then repeatedly run exactly four seconds after the *end* of the previous run:
 
 ```
-$('#somediv').timers().SleepAfterTimer({ 'millis': 4000 }).do((tmr) => {
+$('#somediv').autotimer().SleepAfterTimer({ 'millis': 4000 }).do((tmr) => {
     console.log('right now, then again and again!')
 })
 ```
@@ -45,7 +45,7 @@ Wait four seconds, then repeatedly run exactly four seconds after the *start* of
 previous run. Stop after five runs:
 
 ```
-$('#somediv').timers().IntervalTimer({ 
+$('#somediv').autotimer().IntervalTimer({ 
     'millis': 4000, 
     'max_runs': 5 
 }).do((tmr) => {
@@ -56,7 +56,7 @@ $('#somediv').timers().IntervalTimer({
 Check every fours seconds for boolean to be true, then stop checking:
 
 ```
-$('#somediv').timers().SleepAfterTimer(4000).do((tmr) => {
+$('#somediv').autotimer().SleepAfterTimer(4000).do((tmr) => {
     if (somebool)
         tmr.cancel()
 })
@@ -103,11 +103,11 @@ Note that SleepTimer is often a better option than IntervalTimer because it ensu
 See also the tl;dr examples at the top of this page.
 
 ```
-$('#somediv').timers().Timer(options).do(...)
-$('#somediv').timers().SleepTimer(options).do(...)
-$('#somediv').timers().SleepAfterTimer(options).do(...)
-$('#somediv').timers().IntervalTimer(options).do(...)
-$('#somediv').timers().IntervalAfterTimer(options).do(...)
+$('#somediv').autotimer().Timer(options).do(...)
+$('#somediv').autotimer().SleepTimer(options).do(...)
+$('#somediv').autotimer().SleepAfterTimer(options).do(...)
+$('#somediv').autotimer().IntervalTimer(options).do(...)
+$('#somediv').autotimer().IntervalAfterTimer(options).do(...)
 ```
 
 Specfy options as a `single number` (duration in millis) or as an `object`:
@@ -137,16 +137,16 @@ The timer object is sole parameter to your callbacks (`this` is also available).
 ### Shortcut functions
 
 ```
-$('#somediv').timers('cancel')          # Cancels all timers on #somediv
-$('#somediv').timers('cancel', 'name')  # Cancels named timer on #somediv
-$('#somediv').timers('list')            # Returns the timer objects on #somediv
+$('#somediv').autotimer('cancel')          # Cancels all timers on #somediv
+$('#somediv').autotimer('cancel', 'name')  # Cancels named timer on #somediv
+$('#somediv').autotimer('list')            # Returns the timer objects on #somediv
 ```
 
 ### Cancel Timers
 
 Any of the following will cancel a timer:
 
-* If `$('#myid').timers('cancel')` is called.
+* If `$('#myid').autotimer('cancel')` is called.
 * If `timer.cancel()` is called within a `do(timer)` function.
 * If elem is removed from the DOM.
 * If another timer with the same name is placed on elem.
@@ -156,12 +156,12 @@ Any of the following will cancel a timer:
 Change any of the global options with:
 
 ```
-$.fn.timers.defaults.millis = 2000
+$.fn.autotimer.defaults.millis = 2000
 ```
 
 ## Development
 
-`jquery-object-timers` is programmed in Python, then transpiled to Javascript using the excellent [Transcrypt Library](https://www.transcrypt.org/).
+`jquery-autotimer` is programmed in Python, then transpiled to Javascript using the excellent [Transcrypt Library](https://www.transcrypt.org/).
 
 The `src/*.py` files are the source code for the plugin, with `plugin.py` being the primary script. The output files are in `src/__javascript/*.js`.  Only `plugin.js` really matters - the other files are included within it when Transcrypt runs. I've split the plugin into many files to make maintenance easier.  The individual files are fairly small.
 

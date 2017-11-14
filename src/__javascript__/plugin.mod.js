@@ -5,7 +5,7 @@
 		var DEFAULT_OPTIONS = dict ({'millis': 1000, 'max_runs': 0, 'name': 'default'});
 		var S = jQuery;
 		var get_timers = __init__ (__world__.storage).get_timers;
-		var timers = function (options, tname) {
+		var autotimer = function (options, tname) {
 			var elems = this;
 			if (options == 'cancel') {
 				for (var e of elems) {
@@ -24,9 +24,9 @@
 			}
 			return SecondaryNamespace (elems);
 		};
-		S.fn.timers = timers;
-		S.fn.timers.defaults = DEFAULT_OPTIONS;
-		S.fn.timers.VERSION = '2.0.6';
+		S.fn.autotimer = autotimer;
+		S.fn.autotimer.defaults = DEFAULT_OPTIONS;
+		S.fn.autotimer.VERSION = '2.0.6';
 		__nest__ (timer_once, '', __init__ (__world__.timer_once));
 		__nest__ (timer_sleep, '', __init__ (__world__.timer_sleep));
 		__nest__ (timer_interval, '', __init__ (__world__.timer_interval));
@@ -39,7 +39,7 @@
 					var options = dict ({'millis': options});
 				}
 				var combined = dict ({});
-				combined.py_update (S.fn.timers.defaults);
+				combined.py_update (S.fn.autotimer.defaults);
 				if (options !== null) {
 					combined.py_update (options);
 				}
@@ -77,7 +77,7 @@
 			__all__.DEFAULT_OPTIONS = DEFAULT_OPTIONS;
 			__all__.S = S;
 			__all__.SecondaryNamespace = SecondaryNamespace;
+			__all__.autotimer = autotimer;
 			__all__.get_timers = get_timers;
-			__all__.timers = timers;
 		__pragma__ ('</all>')
 	}) ();

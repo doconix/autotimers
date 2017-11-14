@@ -9,9 +9,9 @@
 ###
 
 __pragma__('alias', 'S', '$')
-S.fn.timers.TESTS = []
+S.fn.autotimer.TESTS = []
 
-# when imported, the modules add to S.fn.timers.TESTS
+# when imported, the modules add to S.fn.autotimer.TESTS
 import test_shortcut
 import test_once
 import test_fails
@@ -23,10 +23,10 @@ import test_interval
     
 test_log = []
 def nextTest():
-    if len(test_log) == len(S.fn.timers.TESTS):
+    if len(test_log) == len(S.fn.autotimer.TESTS):
         console.log('{} tests completed'.format(len(test_log)))
         return
-    klass = S.fn.timers.TESTS[len(test_log)]
+    klass = S.fn.autotimer.TESTS[len(test_log)]
     console.log(klass.__name__)
     t = klass()
     t.setUp()
@@ -42,6 +42,6 @@ def nextTest():
     
 
 # start the tests
-console.log('Starting {} unit tests'.format(len(S.fn.timers.TESTS)))
+console.log('Starting {} unit tests'.format(len(S.fn.autotimer.TESTS)))
 S(nextTest)
 

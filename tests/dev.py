@@ -9,7 +9,7 @@ def main():
         S(this).append('<div>Run #' + index)
         index += 1
         
-    S('#div1').timers().IntervalTimer(800).do(func)
+    S('#div1').autotimer().IntervalTimer(800).do(func)
     
 S(main)
 

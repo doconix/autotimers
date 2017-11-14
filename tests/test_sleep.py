@@ -11,14 +11,14 @@ class TestSleep(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.timers().SleepTimer({
+        self.div.autotimer().SleepTimer({
             'millis': 400,
         }).do(func)
         
     def end(self):
         self.assertTrue(self.counter == 2)
         
-S.fn.timers.TESTS.append(TestSleep)
+S.fn.autotimer.TESTS.append(TestSleep)
     
     
 
@@ -30,7 +30,7 @@ class TestSleepAfter(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.timers().SleepAfterTimer({
+        self.div.autotimer().SleepAfterTimer({
             'millis': 400,
         }).do(func)
         
@@ -38,7 +38,7 @@ class TestSleepAfter(TestBase):
         # immediate run, plus two after timer runs
         self.assertTrue(self.counter == 3)
         
-S.fn.timers.TESTS.append(TestSleepAfter)
+S.fn.autotimer.TESTS.append(TestSleepAfter)
     
     
     
@@ -50,7 +50,7 @@ class TestSleepAfter(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        promise = self.div.timers().SleepAfterTimer({
+        promise = self.div.autotimer().SleepAfterTimer({
             'millis': 10000, 
         })
         # wait 400ms to attach the do
@@ -63,7 +63,7 @@ class TestSleepAfter(TestBase):
     def end(self):
         self.assertTrue(self.counter == 1)
         
-S.fn.timers.TESTS.append(TestSleepAfter)
+S.fn.autotimer.TESTS.append(TestSleepAfter)
     
     
     

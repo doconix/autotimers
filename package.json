@@ -1,8 +1,8 @@
 {
-  "name": "jquery-object-timers",
+  "name": "jquery-autotimer",
   "version": "2.0.6",
   "description": "Replacement for setTimeout() with five types of repeating timer objects, timers on elements; easier cancellation, and promise pattern.",
-  "main": "dist/jquery-object-timers.js",
+  "main": "dist/jquery-autotimer.js",
   "directories": {
     "test": "tests"
   },
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/doconix/jquery-object-timers.git"
+    "url": "git+https://github.com/doconix/jquery-autotimer.git"
   },
   "keywords": [
     "jquery",
@@ -20,7 +20,7 @@
   "author": "Conan Albrecht <doconix@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/doconix/jquery-object-timers"
+    "url": "https://github.com/doconix/jquery-autotimer"
   },
-  "homepage": "https://github.com/doconix/jquery-object-timers"
+  "homepage": "https://github.com/doconix/jquery-autotimer"
 }

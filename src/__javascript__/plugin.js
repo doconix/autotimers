@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 15:52:09
+// Transcrypt'ed from Python, 2017-11-14 16:13:06
 function plugin () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2748,7 +2748,7 @@ function plugin () {
 		var DEFAULT_OPTIONS = dict ({'millis': 1000, 'max_runs': 0, 'name': 'default'});
 		var S = jQuery;
 		var get_timers = __init__ (__world__.storage).get_timers;
-		var timers = function (options, tname) {
+		var autotimer = function (options, tname) {
 			var elems = this;
 			if (options == 'cancel') {
 				for (var e of elems) {
@@ -2767,9 +2767,9 @@ function plugin () {
 			}
 			return SecondaryNamespace (elems);
 		};
-		S.fn.timers = timers;
-		S.fn.timers.defaults = DEFAULT_OPTIONS;
-		S.fn.timers.VERSION = '2.0.6';
+		S.fn.autotimer = autotimer;
+		S.fn.autotimer.defaults = DEFAULT_OPTIONS;
+		S.fn.autotimer.VERSION = '2.0.6';
 		__nest__ (timer_once, '', __init__ (__world__.timer_once));
 		__nest__ (timer_sleep, '', __init__ (__world__.timer_sleep));
 		__nest__ (timer_interval, '', __init__ (__world__.timer_interval));
@@ -2782,7 +2782,7 @@ function plugin () {
 					var options = dict ({'millis': options});
 				}
 				var combined = dict ({});
-				combined.py_update (S.fn.timers.defaults);
+				combined.py_update (S.fn.autotimer.defaults);
 				if (options !== null) {
 					combined.py_update (options);
 				}
@@ -2820,8 +2820,8 @@ function plugin () {
 			__all__.DEFAULT_OPTIONS = DEFAULT_OPTIONS;
 			__all__.S = S;
 			__all__.SecondaryNamespace = SecondaryNamespace;
+			__all__.autotimer = autotimer;
 			__all__.get_timers = get_timers;
-			__all__.timers = timers;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;

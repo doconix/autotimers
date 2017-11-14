@@ -8,13 +8,13 @@
 				var func = function () {
 					self.counter++;
 				};
-				self.div.timers ().IntervalTimer (dict ({'millis': 400})).do (func);
+				self.div.autotimer ().IntervalTimer (dict ({'millis': 400})).do (func);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 2);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestInterval);
+		$.fn.autotimer.TESTS.append (TestInterval);
 		var TestIntervalAfter = __class__ ('TestIntervalAfter', [TestBase], {
 			NEEDED_TIME: 1000,
 			get begin () {return __get__ (this, function (self) {
@@ -23,13 +23,13 @@
 				var func = function () {
 					self.counter++;
 				};
-				self.div.timers ().IntervalAfterTimer (dict ({'millis': 400})).do (func);
+				self.div.autotimer ().IntervalAfterTimer (dict ({'millis': 400})).do (func);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 3);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestIntervalAfter);
+		$.fn.autotimer.TESTS.append (TestIntervalAfter);
 		var TestMillisShortcut = __class__ ('TestMillisShortcut', [TestBase], {
 			NEEDED_TIME: 1000,
 			get begin () {return __get__ (this, function (self) {
@@ -38,13 +38,13 @@
 				var func = function () {
 					self.counter++;
 				};
-				self.div.timers ().IntervalTimer (400).do (func);
+				self.div.autotimer ().IntervalTimer (400).do (func);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 2);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestMillisShortcut);
+		$.fn.autotimer.TESTS.append (TestMillisShortcut);
 		__pragma__ ('<use>' +
 			'test_base' +
 		'</use>')

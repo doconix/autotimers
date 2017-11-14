@@ -13,7 +13,7 @@ class TestTimer(TestBase):
             self.counter += 1
         def then():
             self.then_counter += 1
-        self.div.timers().Timer({
+        self.div.autotimer().Timer({
             'millis': 500,
         }).do(func).then(then)
         
@@ -21,7 +21,7 @@ class TestTimer(TestBase):
         self.assertTrue(self.counter == 1)
         self.assertTrue(self.then_counter == 1)
         
-S.fn.timers.TESTS.append(TestTimer)
+S.fn.autotimer.TESTS.append(TestTimer)
     
     
     
@@ -32,11 +32,11 @@ class TestNamedTimers(TestBase):
         self.counter = 0
         def func():
             self.counter += 1
-        self.div.timers().Timer({
+        self.div.autotimer().Timer({
             'millis': 400,
             'name': 'first',
         }).do(func)
-        self.div.timers().Timer({
+        self.div.autotimer().Timer({
             'millis': 600,
             'name': 'second',
         }).do(func)
@@ -44,7 +44,7 @@ class TestNamedTimers(TestBase):
     def end(self):
         self.assertTrue(self.counter == 2)
         
-S.fn.timers.TESTS.append(TestNamedTimers)
+S.fn.autotimer.TESTS.append(TestNamedTimers)
     
     
     
@@ -55,12 +55,12 @@ class TestSameNamedTimers(TestBase):
         self.counter = 0
         def func():
             self.counter += 1
-        self.div.timers().Timer({
+        self.div.autotimer().Timer({
             'millis': 400,
             'name': 'same',
         }).do(func)
         # this second one should override the first
-        self.div.timers().Timer({
+        self.div.autotimer().Timer({
             'millis': 600,
             'name': 'same',
         }).do(func)
@@ -68,6 +68,6 @@ class TestSameNamedTimers(TestBase):
     def end(self):
         self.assertTrue(self.counter == 1)
         
-S.fn.timers.TESTS.append(TestSameNamedTimers)
+S.fn.autotimer.TESTS.append(TestSameNamedTimers)
 
 

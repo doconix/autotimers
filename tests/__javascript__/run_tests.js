@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 15:52:26
+// Transcrypt'ed from Python, 2017-11-14 16:13:23
 function run_tests () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2584,12 +2584,12 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().Timer (dict ({'func': self.func, 'millis': 0})).do (func);
+							self.div.autotimer ().Timer (dict ({'func': self.func, 'millis': 0})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 						});}
 					});
-					$.fn.timers.TESTS.append (TestZeroMillis);
+					$.fn.autotimer.TESTS.append (TestZeroMillis);
 					var TestDOMRemoval = __class__ ('TestDOMRemoval', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2597,47 +2597,47 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().Timer (dict ({'millis': 200})).do (func);
+							self.div.autotimer ().Timer (dict ({'millis': 200})).do (func);
 							self.div.remove ();
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 0);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestDOMRemoval);
+					$.fn.autotimer.TESTS.append (TestDOMRemoval);
 					var TestDebugTimer = __class__ ('TestDebugTimer', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
 							var func1 = function () {
 								// pass;
 							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func1);
+							self.div.autotimer ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func1);
 							var func2 = function () {
 								// pass;
 							};
-							self.div.timers ().Timer (dict ({'millis': 300, 'name': 'test2'})).do (func2);
-							self.div.timers ('debug');
+							self.div.autotimer ().Timer (dict ({'millis': 300, 'name': 'test2'})).do (func2);
+							self.div.autotimer ('debug');
 						});},
 						get end () {return __get__ (this, function (self) {
 							// pass;
 						});}
 					});
-					$.fn.timers.TESTS.append (TestDebugTimer);
+					$.fn.autotimer.TESTS.append (TestDebugTimer);
 					var TestCancelTimer = __class__ ('TestCancelTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
 							self.counter = 0;
 							var func = function () {
 								self.counter++;
-								self.div.timers ('cancel');
+								self.div.autotimer ('cancel');
 							};
-							self.div.timers ().SleepTimer (dict ({'millis': 200, 'name': 'test1'})).do (func);
+							self.div.autotimer ().SleepTimer (dict ({'millis': 200, 'name': 'test1'})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 1);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestCancelTimer);
+					$.fn.autotimer.TESTS.append (TestCancelTimer);
 					var TestExceptionInTimer = __class__ ('TestExceptionInTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2656,7 +2656,7 @@ function run_tests () {
 							var fail = function () {
 								self.fail_counter++;
 							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
+							self.div.autotimer ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 1);
@@ -2664,7 +2664,7 @@ function run_tests () {
 							self.assertTrue (self.fail_counter == 1);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestExceptionInTimer);
+					$.fn.autotimer.TESTS.append (TestExceptionInTimer);
 					var TestNoExceptionInTimer = __class__ ('TestNoExceptionInTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2680,7 +2680,7 @@ function run_tests () {
 							var fail = function () {
 								self.fail_counter++;
 							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
+							self.div.autotimer ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 1);
@@ -2688,7 +2688,7 @@ function run_tests () {
 							self.assertTrue (self.fail_counter == 0);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestNoExceptionInTimer);
+					$.fn.autotimer.TESTS.append (TestNoExceptionInTimer);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2720,13 +2720,13 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().IntervalTimer (dict ({'millis': 400})).do (func);
+							self.div.autotimer ().IntervalTimer (dict ({'millis': 400})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestInterval);
+					$.fn.autotimer.TESTS.append (TestInterval);
 					var TestIntervalAfter = __class__ ('TestIntervalAfter', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2735,13 +2735,13 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().IntervalAfterTimer (dict ({'millis': 400})).do (func);
+							self.div.autotimer ().IntervalAfterTimer (dict ({'millis': 400})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 3);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestIntervalAfter);
+					$.fn.autotimer.TESTS.append (TestIntervalAfter);
 					var TestMillisShortcut = __class__ ('TestMillisShortcut', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2750,13 +2750,13 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().IntervalTimer (400).do (func);
+							self.div.autotimer ().IntervalTimer (400).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestMillisShortcut);
+					$.fn.autotimer.TESTS.append (TestMillisShortcut);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2789,14 +2789,14 @@ function run_tests () {
 							var then = function () {
 								self.then_counter++;
 							};
-							self.div.timers ().Timer (dict ({'millis': 500})).do (func).then (then);
+							self.div.autotimer ().Timer (dict ({'millis': 500})).do (func).then (then);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 1);
 							self.assertTrue (self.then_counter == 1);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestTimer);
+					$.fn.autotimer.TESTS.append (TestTimer);
 					var TestNamedTimers = __class__ ('TestNamedTimers', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2804,14 +2804,14 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().Timer (dict ({'millis': 400, 'name': 'first'})).do (func);
-							self.div.timers ().Timer (dict ({'millis': 600, 'name': 'second'})).do (func);
+							self.div.autotimer ().Timer (dict ({'millis': 400, 'name': 'first'})).do (func);
+							self.div.autotimer ().Timer (dict ({'millis': 600, 'name': 'second'})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestNamedTimers);
+					$.fn.autotimer.TESTS.append (TestNamedTimers);
 					var TestSameNamedTimers = __class__ ('TestSameNamedTimers', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2819,14 +2819,14 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().Timer (dict ({'millis': 400, 'name': 'same'})).do (func);
-							self.div.timers ().Timer (dict ({'millis': 600, 'name': 'same'})).do (func);
+							self.div.autotimer ().Timer (dict ({'millis': 400, 'name': 'same'})).do (func);
+							self.div.autotimer ().Timer (dict ({'millis': 600, 'name': 'same'})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 1);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestSameNamedTimers);
+					$.fn.autotimer.TESTS.append (TestSameNamedTimers);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2853,31 +2853,31 @@ function run_tests () {
 							var func = function () {
 								self.assertTrue (bool (self.div.data ('_jquery_timers_') ['test1']));
 							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func);
+							self.div.autotimer ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							// pass;
 						});}
 					});
-					$.fn.timers.TESTS.append (TestSetTimer);
+					$.fn.autotimer.TESTS.append (TestSetTimer);
 					var TestRemoveTimer = __class__ ('TestRemoveTimer', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
 							var func1 = function (timer) {
 								timer.cancel ();
 							};
-							self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func1);
+							self.div.autotimer ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func1);
 							var func2 = function () {
 								self.assertTrue (!(self.div.data ('_jquery_timers_') ['test1']));
 								self.assertTrue (self.div.data ('_jquery_timers_') ['test2']);
 							};
-							self.div.timers ().Timer (dict ({'millis': 300, 'name': 'test2'})).do (func2);
+							self.div.autotimer ().Timer (dict ({'millis': 300, 'name': 'test2'})).do (func2);
 						});},
 						get end () {return __get__ (this, function (self) {
 							// pass;
 						});}
 					});
-					$.fn.timers.TESTS.append (TestRemoveTimer);
+					$.fn.autotimer.TESTS.append (TestRemoveTimer);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2905,13 +2905,13 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().SleepTimer (dict ({'millis': 400})).do (func);
+							self.div.autotimer ().SleepTimer (dict ({'millis': 400})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestSleep);
+					$.fn.autotimer.TESTS.append (TestSleep);
 					var TestSleepAfter = __class__ ('TestSleepAfter', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2920,13 +2920,13 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							self.div.timers ().SleepAfterTimer (dict ({'millis': 400})).do (func);
+							self.div.autotimer ().SleepAfterTimer (dict ({'millis': 400})).do (func);
 						});},
 						get end () {return __get__ (this, function (self) {
 							self.assertTrue (self.counter == 3);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestSleepAfter);
+					$.fn.autotimer.TESTS.append (TestSleepAfter);
 					var TestSleepAfter = __class__ ('TestSleepAfter', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2935,7 +2935,7 @@ function run_tests () {
 							var func = function () {
 								self.counter++;
 							};
-							var promise = self.div.timers ().SleepAfterTimer (dict ({'millis': 10000}));
+							var promise = self.div.autotimer ().SleepAfterTimer (dict ({'millis': 10000}));
 							var attach = function () {
 								promise.do (func);
 							};
@@ -2945,7 +2945,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 1);
 						});}
 					});
-					$.fn.timers.TESTS.append (TestSleepAfter);
+					$.fn.autotimer.TESTS.append (TestSleepAfter);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2964,7 +2964,7 @@ function run_tests () {
 		var test_once = {};
 		var test_shortcut = {};
 		var test_sleep = {};
-		$.fn.timers.TESTS = list ([]);
+		$.fn.autotimer.TESTS = list ([]);
 		__nest__ (test_shortcut, '', __init__ (__world__.test_shortcut));
 		__nest__ (test_once, '', __init__ (__world__.test_once));
 		__nest__ (test_fails, '', __init__ (__world__.test_fails));
@@ -2972,11 +2972,11 @@ function run_tests () {
 		__nest__ (test_interval, '', __init__ (__world__.test_interval));
 		var test_log = list ([]);
 		var nextTest = function () {
-			if (len (test_log) == len ($.fn.timers.TESTS)) {
+			if (len (test_log) == len ($.fn.autotimer.TESTS)) {
 				console.log ('{} tests completed'.format (len (test_log)));
 				return ;
 			}
-			var klass = $.fn.timers.TESTS [len (test_log)];
+			var klass = $.fn.autotimer.TESTS [len (test_log)];
 			console.log (klass.__name__);
 			var t = klass ();
 			t.setUp ();
@@ -2992,7 +2992,7 @@ function run_tests () {
 			};
 			t.promise_start ().then (then, reject);
 		};
-		console.log ('Starting {} unit tests'.format (len ($.fn.timers.TESTS)));
+		console.log ('Starting {} unit tests'.format (len ($.fn.autotimer.TESTS)));
 		$ (nextTest);
 		__pragma__ ('<use>' +
 			'test_fails' +

@@ -9,7 +9,7 @@
 				$ (this).append ('<div>Run #' + index);
 				index++;
 			};
-			$ ('#div1').timers ().IntervalTimer (800).do (func);
+			$ ('#div1').autotimer ().IntervalTimer (800).do (func);
 		};
 		$ (main);
 		__pragma__ ('<all>')

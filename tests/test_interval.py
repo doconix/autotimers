@@ -11,14 +11,14 @@ class TestInterval(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.timers().IntervalTimer({
+        self.div.autotimer().IntervalTimer({
             'millis': 400,
         }).do(func)
         
     def end(self):
         self.assertTrue(self.counter == 2)
         
-S.fn.timers.TESTS.append(TestInterval)
+S.fn.autotimer.TESTS.append(TestInterval)
     
     
 
@@ -30,14 +30,14 @@ class TestIntervalAfter(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.timers().IntervalAfterTimer({
+        self.div.autotimer().IntervalAfterTimer({
             'millis': 400,
         }).do(func)
         
     def end(self):
         self.assertTrue(self.counter == 3)
         
-S.fn.timers.TESTS.append(TestIntervalAfter)
+S.fn.autotimer.TESTS.append(TestIntervalAfter)
     
     
 
@@ -49,12 +49,12 @@ class TestMillisShortcut(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.timers().IntervalTimer(400).do(func)
+        self.div.autotimer().IntervalTimer(400).do(func)
         
     def end(self):
         self.assertTrue(self.counter == 2)
         
-S.fn.timers.TESTS.append(TestMillisShortcut)
+S.fn.autotimer.TESTS.append(TestMillisShortcut)
     
     
     

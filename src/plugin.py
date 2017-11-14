@@ -27,7 +27,7 @@ from storage import get_timers
 ############################################
 ###  Main plugin entry point
 
-def timers(options, tname):
+def autotimer(options, tname):
     '''Main plugin function'''
     elems = this
     
@@ -50,9 +50,9 @@ def timers(options, tname):
         
 # attach plugin fnction to jQuery prototype
 # only one function so not using extend()
-S.fn.timers = timers
-S.fn.timers.defaults = DEFAULT_OPTIONS
-S.fn.timers.VERSION = "2.0.6"
+S.fn.autotimer = autotimer
+S.fn.autotimer.defaults = DEFAULT_OPTIONS
+S.fn.autotimer.VERSION = "2.0.6"
 
 
 
@@ -62,8 +62,8 @@ S.fn.timers.VERSION = "2.0.6"
 ###  A secondary namespace that allows us to have multiple functions
 ###  under a single name (see jQuery namespace pattern), e.g.:
 ###
-###      $('#div1').timers().Timer({...})
-###      $('#div2').timers().SleepTimer({...})
+###      $('#div1').autotimer().Timer({...})
+###      $('#div2').autotimer().SleepTimer({...})
 
 import timer_once, timer_sleep, timer_interval
 
@@ -72,7 +72,7 @@ class SecondaryNamespace(object):
     '''
     Factory that creates timer classes.  To have a secondary namespace,
     we have to hold the `this` variable from the primary call.  We
-    create this object when .timers() is called, which holds `elems`
+    create this object when .autotimer() is called, which holds `elems`
     for the secondary call (one of the methods below).
     '''
     def __init__(self, elems):
@@ -85,7 +85,7 @@ class SecondaryNamespace(object):
         
         # options
         combined = {}
-        combined.update(S.fn.timers.defaults)
+        combined.update(S.fn.autotimer.defaults)
         if options is not None:
             combined.update(options)
             

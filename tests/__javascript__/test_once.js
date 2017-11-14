@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 15:52:27
+// Transcrypt'ed from Python, 2017-11-14 16:13:25
 function test_once () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2584,14 +2584,14 @@ function test_once () {
 				var then = function () {
 					self.then_counter++;
 				};
-				self.div.timers ().Timer (dict ({'millis': 500})).do (func).then (then);
+				self.div.autotimer ().Timer (dict ({'millis': 500})).do (func).then (then);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 1);
 				self.assertTrue (self.then_counter == 1);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestTimer);
+		$.fn.autotimer.TESTS.append (TestTimer);
 		var TestNamedTimers = __class__ ('TestNamedTimers', [TestBase], {
 			NEEDED_TIME: 1000,
 			get begin () {return __get__ (this, function (self) {
@@ -2599,14 +2599,14 @@ function test_once () {
 				var func = function () {
 					self.counter++;
 				};
-				self.div.timers ().Timer (dict ({'millis': 400, 'name': 'first'})).do (func);
-				self.div.timers ().Timer (dict ({'millis': 600, 'name': 'second'})).do (func);
+				self.div.autotimer ().Timer (dict ({'millis': 400, 'name': 'first'})).do (func);
+				self.div.autotimer ().Timer (dict ({'millis': 600, 'name': 'second'})).do (func);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 2);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestNamedTimers);
+		$.fn.autotimer.TESTS.append (TestNamedTimers);
 		var TestSameNamedTimers = __class__ ('TestSameNamedTimers', [TestBase], {
 			NEEDED_TIME: 1000,
 			get begin () {return __get__ (this, function (self) {
@@ -2614,14 +2614,14 @@ function test_once () {
 				var func = function () {
 					self.counter++;
 				};
-				self.div.timers ().Timer (dict ({'millis': 400, 'name': 'same'})).do (func);
-				self.div.timers ().Timer (dict ({'millis': 600, 'name': 'same'})).do (func);
+				self.div.autotimer ().Timer (dict ({'millis': 400, 'name': 'same'})).do (func);
+				self.div.autotimer ().Timer (dict ({'millis': 600, 'name': 'same'})).do (func);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 1);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestSameNamedTimers);
+		$.fn.autotimer.TESTS.append (TestSameNamedTimers);
 		__pragma__ ('<use>' +
 			'test_base' +
 		'</use>')

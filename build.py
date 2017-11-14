@@ -16,7 +16,7 @@ def main():
     with open(j(SROOT, 'plugin.py'), 'w') as fout:
         for line in content:
             line = re.sub('Version: \d+\.\d+\.\d+', 'Version: {}'.format(VERSION), line)
-            line = re.sub('S.fn.timers.VERSION = "\d+\.\d+\.\d+"', 'S.fn.timers.VERSION = "{}"'.format(VERSION), line)
+            line = re.sub('S.fn.autotimer.VERSION = "\d+\.\d+\.\d+"', 'S.fn.autotimer.VERSION = "{}"'.format(VERSION), line)
             fout.write(line)
     with open('package.json', 'r') as fin:
         content = fin.readlines()
@@ -36,10 +36,10 @@ def main():
         shutil.rmtree(j(SROOT, '__javascript__'))
     for src in glob.glob(j(SROOT, '*.py')):
         run('transcrypt --build --esv 6 {}'.format(src))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DROOT, 'jquery-object-timers.min.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DROOT, 'jquery-object-timers.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DEMOROOT, 'jquery-object-timers.min.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DEMOROOT, 'jquery-object-timers.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DROOT, 'jquery-autotimer.min.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DROOT, 'jquery-autotimer.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DEMOROOT, 'jquery-autotimer.min.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DEMOROOT, 'jquery-autotimer.js'))
 
     # transpile tests/
     log('Transpile tests/ scripts')

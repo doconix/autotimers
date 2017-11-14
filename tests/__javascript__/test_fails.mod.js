@@ -7,12 +7,12 @@
 				var func = function () {
 					self.counter++;
 				};
-				self.div.timers ().Timer (dict ({'func': self.func, 'millis': 0})).do (func);
+				self.div.autotimer ().Timer (dict ({'func': self.func, 'millis': 0})).do (func);
 			});},
 			get end () {return __get__ (this, function (self) {
 			});}
 		});
-		$.fn.timers.TESTS.append (TestZeroMillis);
+		$.fn.autotimer.TESTS.append (TestZeroMillis);
 		var TestDOMRemoval = __class__ ('TestDOMRemoval', [TestBase], {
 			NEEDED_TIME: 500,
 			get begin () {return __get__ (this, function (self) {
@@ -20,47 +20,47 @@
 				var func = function () {
 					self.counter++;
 				};
-				self.div.timers ().Timer (dict ({'millis': 200})).do (func);
+				self.div.autotimer ().Timer (dict ({'millis': 200})).do (func);
 				self.div.remove ();
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 0);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestDOMRemoval);
+		$.fn.autotimer.TESTS.append (TestDOMRemoval);
 		var TestDebugTimer = __class__ ('TestDebugTimer', [TestBase], {
 			NEEDED_TIME: 500,
 			get begin () {return __get__ (this, function (self) {
 				var func1 = function () {
 					// pass;
 				};
-				self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func1);
+				self.div.autotimer ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func1);
 				var func2 = function () {
 					// pass;
 				};
-				self.div.timers ().Timer (dict ({'millis': 300, 'name': 'test2'})).do (func2);
-				self.div.timers ('debug');
+				self.div.autotimer ().Timer (dict ({'millis': 300, 'name': 'test2'})).do (func2);
+				self.div.autotimer ('debug');
 			});},
 			get end () {return __get__ (this, function (self) {
 				// pass;
 			});}
 		});
-		$.fn.timers.TESTS.append (TestDebugTimer);
+		$.fn.autotimer.TESTS.append (TestDebugTimer);
 		var TestCancelTimer = __class__ ('TestCancelTimer', [TestBase], {
 			NEEDED_TIME: 1000,
 			get begin () {return __get__ (this, function (self) {
 				self.counter = 0;
 				var func = function () {
 					self.counter++;
-					self.div.timers ('cancel');
+					self.div.autotimer ('cancel');
 				};
-				self.div.timers ().SleepTimer (dict ({'millis': 200, 'name': 'test1'})).do (func);
+				self.div.autotimer ().SleepTimer (dict ({'millis': 200, 'name': 'test1'})).do (func);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 1);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestCancelTimer);
+		$.fn.autotimer.TESTS.append (TestCancelTimer);
 		var TestExceptionInTimer = __class__ ('TestExceptionInTimer', [TestBase], {
 			NEEDED_TIME: 1000,
 			get begin () {return __get__ (this, function (self) {
@@ -79,7 +79,7 @@
 				var fail = function () {
 					self.fail_counter++;
 				};
-				self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
+				self.div.autotimer ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 1);
@@ -87,7 +87,7 @@
 				self.assertTrue (self.fail_counter == 1);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestExceptionInTimer);
+		$.fn.autotimer.TESTS.append (TestExceptionInTimer);
 		var TestNoExceptionInTimer = __class__ ('TestNoExceptionInTimer', [TestBase], {
 			NEEDED_TIME: 1000,
 			get begin () {return __get__ (this, function (self) {
@@ -103,7 +103,7 @@
 				var fail = function () {
 					self.fail_counter++;
 				};
-				self.div.timers ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
+				self.div.autotimer ().Timer (dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).fail (fail);
 			});},
 			get end () {return __get__ (this, function (self) {
 				self.assertTrue (self.counter == 1);
@@ -111,7 +111,7 @@
 				self.assertTrue (self.fail_counter == 0);
 			});}
 		});
-		$.fn.timers.TESTS.append (TestNoExceptionInTimer);
+		$.fn.autotimer.TESTS.append (TestNoExceptionInTimer);
 		__pragma__ ('<use>' +
 			'test_base' +
 		'</use>')

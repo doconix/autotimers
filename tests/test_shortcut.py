@@ -8,7 +8,7 @@ class TestSetTimer(TestBase):
     def begin(self):
         def func():
             self.assertTrue(bool(self.div.data('_jquery_timers_')['test1']))
-        self.div.timers().Timer({
+        self.div.autotimer().Timer({
             'millis': 200,
             'name': 'test1',
         }).do(func)
@@ -16,7 +16,7 @@ class TestSetTimer(TestBase):
     def end(self):
         pass
         
-S.fn.timers.TESTS.append(TestSetTimer)
+S.fn.autotimer.TESTS.append(TestSetTimer)
     
     
 class TestRemoveTimer(TestBase):
@@ -25,14 +25,14 @@ class TestRemoveTimer(TestBase):
     def begin(self):
         def func1(timer):
             timer.cancel()
-        self.div.timers().Timer({
+        self.div.autotimer().Timer({
             'millis': 200,
             'name': 'test1',
         }).do(func1)
         def func2():
             self.assertTrue(not self.div.data('_jquery_timers_')['test1'])
             self.assertTrue(self.div.data('_jquery_timers_')['test2'])
-        self.div.timers().Timer({
+        self.div.autotimer().Timer({
             'millis': 300,
             'name': 'test2',
         }).do(func2)
@@ -40,6 +40,6 @@ class TestRemoveTimer(TestBase):
     def end(self):
         pass
         
-S.fn.timers.TESTS.append(TestRemoveTimer)
+S.fn.autotimer.TESTS.append(TestRemoveTimer)
     
     

@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 15:52:25
+// Transcrypt'ed from Python, 2017-11-14 16:13:23
 function dev () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2504,7 +2504,7 @@ function dev () {
 				$ (this).append ('<div>Run #' + index);
 				index++;
 			};
-			$ ('#div1').timers ().IntervalTimer (800).do (func);
+			$ ('#div1').autotimer ().IntervalTimer (800).do (func);
 		};
 		$ (main);
 		__pragma__ ('<all>')

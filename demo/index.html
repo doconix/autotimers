@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Timers Demo</title>
+    <title>Autotimers Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="index.css" />
     <script src="jquery-3.2.1.js"></script>
-    <script src="jquery-object-timers.js"></script>
+    <script src="jquery-autotimer.js"></script>
 </head>
 <body>
-    <h1>Timers Demos</h1>
+    <h1>Autotimers Demos</h1>
     <h2>Javascript timers on steroids (and easier to boot)!</h2>
-    <h3><a href="https://github.com/doconix/jquery-object-timers.js">Return to jquery-object-timers.js</a></h3>
+    <h3><a href="https://github.com/doconix/jquery-autotimer.js">Return to jquery-autotimer.js</a></h3>
 
     <script>
         function log_msg(elem, msg) {
@@ -32,13 +32,13 @@
                         log_msg($('#someid'), "Starting 2 second, single-run Timer().")
                         
                         // TIMER CALL:
-                        $('#someid').timers().Timer(2000).do(function(timer) {
+                        $('#someid').autotimer().Timer(2000).do(function(timer) {
                             log_msg($(this), "Timer is up!")
                         })
 
                     })
                     $('#someid').closest('.example').find('.cancel_btn').click(function() {
-                        $('#someid').timers('cancel')
+                        $('#someid').autotimer('cancel')
                         log_msg($('#someid'), "Cancelled!")
                     })
                 })
@@ -70,7 +70,7 @@
                     $('#someid2_input').keyup(function() {
                         
                         // TIMER CALL:
-                        $('#someid2').timers().Timer({
+                        $('#someid2').autotimer().Timer({
                             millis: 1000,
                             name: 'input-watcher'
                         }).do(function(timer) {
@@ -136,7 +136,7 @@
                         log_msg($('#someid3'), "Starting IntervalTimer()")
 
                         // TIMER CALL:
-                        $('#someid3').timers().IntervalTimer({
+                        $('#someid3').autotimer().IntervalTimer({
                             millis: 1000,
                             max_runs: 4
                         }).do(function (timer) {
@@ -151,7 +151,7 @@
 
                     })
                     $('#someid3').closest('.example').find('.cancel_btn').click(function() {
-                        $('#someid3').timers('cancel')
+                        $('#someid3').autotimer('cancel')
                         log_msg($('#someid3'), "Cancelled!")
                     })
                 })
@@ -187,14 +187,14 @@
                         var index = 1;
 
                         // TIMER CALL:
-                        $('#someid4').timers().SleepAfterTimer(2000).do(function (timer) {
+                        $('#someid4').autotimer().SleepAfterTimer(2000).do(function (timer) {
                             log_msg($(this), 'Run #' + index);
                             index++;
                         })
 
                     })
                     $('#someid4').closest('.example').find('.cancel_btn').click(function() {
-                        $('#someid4').timers('cancel')
+                        $('#someid4').autotimer('cancel')
                         log_msg($('#someid4'), "Cancelled!")
                     })
                 })
