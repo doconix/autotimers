@@ -13,6 +13,7 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 * Multiple, named timers per element.
 * `this` is available in your timed function.
 
+[Visit the Demo Page](https://rawgit.com/doconix/jquery.timers.js/master/demo/index.html)
 
 ## tl;dr:
 
