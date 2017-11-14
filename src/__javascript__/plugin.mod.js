@@ -26,7 +26,7 @@
 		};
 		S.fn.timers = timers;
 		S.fn.timers.defaults = DEFAULT_OPTIONS;
-		S.fn.timers.VERSION = '2.0.5';
+		S.fn.timers.VERSION = '2.0.6';
 		__nest__ (timer_once, '', __init__ (__world__.timer_once));
 		__nest__ (timer_sleep, '', __init__ (__world__.timer_sleep));
 		__nest__ (timer_interval, '', __init__ (__world__.timer_interval));

@@ -1,6 +1,6 @@
-# jquery-timers
+# jquery-object-timers
 
-[Visit the Demo Page](https://rawgit.com/doconix/jquery-timers/master/demo/index.html)
+[Visit the Demo Page](https://rawgit.com/doconix/jquery-object-timers/master/demo/index.html)
 
 Why not just use `window.setTimeout`?  Because these timers provide:
 
@@ -13,13 +13,17 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 * Multiple, named timers per element.
 * `this` is available in your timed function.
 
-[Latest v2 code](https://raw.githubusercontent.com/doconix/jquery-timers/master/dist/jquery-timers.min.js)
 
-[Archived v1 code](https://github.com/doconix/jquery-timers/tree/master/archived-v1.2.4)
+## Install
 
-## tl;dr:
+**`npm install jquery-object-timers`**
 
-**Get the code in the `dist/` folder above.**  Everything is in the single `jquery-timers.min.js` file.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or
+
+[Get the latest v2 code](https://raw.githubusercontent.com/doconix/jquery-object-timers/master/dist/jquery-object-timers.min.js)
+
+
+### A few examples: 
 
 Wait four seconds, then run one time:
 
@@ -157,7 +161,7 @@ $.fn.timers.defaults.millis = 2000
 
 ## Development
 
-`jquery-timers` is programmed in Python, then transpiled to Javascript using the excellent [Transcrypt Library](https://www.transcrypt.org/).
+`jquery-object-timers` is programmed in Python, then transpiled to Javascript using the excellent [Transcrypt Library](https://www.transcrypt.org/).
 
 The `src/*.py` files are the source code for the plugin, with `plugin.py` being the primary script. The output files are in `src/__javascript/*.js`.  Only `plugin.js` really matters - the other files are included within it when Transcrypt runs. I've split the plugin into many files to make maintenance easier.  The individual files are fairly small.
 
