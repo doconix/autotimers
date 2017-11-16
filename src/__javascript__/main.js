@@ -1,6 +1,6 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 16:13:25
-function test_once () {
+// Transcrypt'ed from Python, 2017-11-16 06:45:16
+function main () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
     var __world__ = __all__;
@@ -2495,145 +2495,531 @@ function test_once () {
     __all__.__setslice__ = __setslice__;
 	__nest__ (
 		__all__,
-		'test_base', {
+		'promise', {
 			__all__: {
 				__inited__: false,
 				__init__: function (__all__) {
-					var TestBase = __class__ ('TestBase', [object], {
-						NEEDED_TIME: 3000,
-						get make () {return __get__ (this, function (self, elem_id, elem_tag) {
-							if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
-								var elem_tag = 'div';
-							};
-							$ ('#{}'.format (elem_id)).remove ();
-							$ ('body').append ('<div id="{}"></div>'.format (elem_id));
-							return $ ('#{}'.format (elem_id));
-						});},
-						get setUp () {return __get__ (this, function (self) {
-							self.div = self.make ('test1');
-						});},
-						get tearDown () {return __get__ (this, function (self) {
-							self.div.remove ();
-						});},
-						get promise_start () {return __get__ (this, function (self) {
-							var promise = function (resolve, reject) {
-								var __left0__ = tuple ([resolve, reject]);
-								self.resolve = __left0__ [0];
-								self.reject = __left0__ [1];
-								self.begin ();
-								window.setTimeout (self.promise_end, self.NEEDED_TIME);
-							};
-							return new Promise (promise);
-						});},
-						get promise_end () {return __get__ (this, function (self) {
-							try {
-								self.end ();
-								self.resolve ();
-							}
-							catch (__except0__) {
-								if (isinstance (__except0__, Error)) {
-									var err = __except0__;
-									console.error (err);
-									self.reject ();
-								}
-								else {
-									throw __except0__;
+					var TimerPromise = __class__ ('TimerPromise', [object], {
+						get __init__ () {return __get__ (this, function (self, executor) {
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+											case 'executor': var executor = __allkwargs0__ [__attrib0__]; break;
+										}
+									}
 								}
 							}
-							self.div.remove ();
+							else {
+							}
+							self.resolve;
+							self.reject;
+							self.executor = executor;
+							self.do_handlers = list ([]);
+							self.promise = new Promise (self._executor).then (self._cleanup, self._cleanup);
 						});},
-						get begin () {return __get__ (this, function (self) {
-							var __except0__ = Error ('Subclass needs to implement begin()');
-							__except0__.__cause__ = null;
-							throw __except0__;
+						get _cleanup () {return __get__ (this, function (self) {
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+										}
+									}
+								}
+							}
+							else {
+							}
+							self.resolve = null;
+							self.reject = null;
+							self.do_handlers = null;
+							self.promise = null;
 						});},
-						get end () {return __get__ (this, function (self) {
-							var __except0__ = Error ('Subclass needs to implement end()');
-							__except0__.__cause__ = null;
-							throw __except0__;
+						get do () {return __get__ (this, function (self, onAlarm) {
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+											case 'onAlarm': var onAlarm = __allkwargs0__ [__attrib0__]; break;
+										}
+									}
+								}
+							}
+							else {
+							}
+							if (self.do_handlers !== null) {
+								self.do_handlers.append (onAlarm);
+							}
+							return self;
 						});},
-						get assertTrue () {return __get__ (this, function (self, cond, msg) {
-							if (typeof msg == 'undefined' || (msg != null && msg .hasOwnProperty ("__kwargtrans__"))) {;
-								var msg = 'assertTrue condition was false';
-							};
-							if (!(cond)) {
-								var __except0__ = Error (msg);
-								__except0__.__cause__ = null;
-								throw __except0__;
+						get alarm () {return __get__ (this, function (self, context, args) {
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+											case 'context': var context = __allkwargs0__ [__attrib0__]; break;
+											case 'args': var args = __allkwargs0__ [__attrib0__]; break;
+										}
+									}
+								}
+							}
+							else {
+							}
+							console.log ('alarm called!');
+							if (self._pending) {
+								for (var f of self.do_handlers) {
+									f.apply (context, args);
+								}
+							}
+						});},
+						get _executor () {return __get__ (this, function (self, resolve, reject) {
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+											case 'resolve': var resolve = __allkwargs0__ [__attrib0__]; break;
+											case 'reject': var reject = __allkwargs0__ [__attrib0__]; break;
+										}
+									}
+								}
+							}
+							else {
+							}
+							console.log ('saving resolve and reject');
+							self.resolve = resolve;
+							self.reject = reject;
+							self.executor ();
+							self.executor = null;
+						});},
+						get _pending () {return __get__ (this, function (self) {
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+										}
+									}
+								}
+							}
+							else {
+							}
+							return bool (self.do_handlers);
+						});},
+						get catch () {return __get__ (this, function (self) {
+							var kwargs = dict ();
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+											default: kwargs [__attrib0__] = __allkwargs0__ [__attrib0__];
+										}
+									}
+									delete kwargs.__kwargtrans__;
+								}
+								var args = tuple ([].slice.apply (arguments).slice (1, __ilastarg0__ + 1));
+							}
+							else {
+								var args = tuple ();
+							}
+							self.promise = self.promise.catch (...args, __kwargtrans__ (kwargs));
+							return self;
+						});},
+						get then () {return __get__ (this, function (self) {
+							var kwargs = dict ();
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+											default: kwargs [__attrib0__] = __allkwargs0__ [__attrib0__];
+										}
+									}
+									delete kwargs.__kwargtrans__;
+								}
+								var args = tuple ([].slice.apply (arguments).slice (1, __ilastarg0__ + 1));
+							}
+							else {
+								var args = tuple ();
+							}
+							self.promise = self.promise.then (...args, __kwargtrans__ (kwargs));
+							return self;
+						});},
+						get finally () {return __get__ (this, function (self) {
+							var kwargs = dict ();
+							if (arguments.length) {
+								var __ilastarg0__ = arguments.length - 1;
+								if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+									var __allkwargs0__ = arguments [__ilastarg0__--];
+									for (var __attrib0__ in __allkwargs0__) {
+										switch (__attrib0__) {
+											case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+											default: kwargs [__attrib0__] = __allkwargs0__ [__attrib0__];
+										}
+									}
+									delete kwargs.__kwargtrans__;
+								}
+								var args = tuple ([].slice.apply (arguments).slice (1, __ilastarg0__ + 1));
+							}
+							else {
+								var args = tuple ();
+							}
+							self.promise = self.promise.finally (...args, __kwargtrans__ (kwargs));
+							return self;
+						});}
+					});
+					Object.defineProperty (TimerPromise, 'pending', property.call (TimerPromise, TimerPromise.pending));;
+					__pragma__ ('<all>')
+						__all__.TimerPromise = TimerPromise;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'storage', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var TIMERS = new WeakMap ();
+					var _tstore = function (elem) {
+						if (!(TIMERS.has (elem))) {
+							TIMERS.set (elem, new Map ());
+						}
+						return TIMERS.get (elem);
+					};
+					var remove_timer = function (elem, tname) {
+						var tmap = _tstore (elem);
+						tmap.delete (tname);
+						if (tmap.length == 0) {
+							TIMERS.delete (elem);
+						}
+					};
+					var set_timer = function (elem, tname, timer) {
+						_tstore (elem).set (tname, timer);
+					};
+					var get_timers = function (elem, tname) {
+						var tlist = list ([]);
+						var tmap = _tstore (elem);
+						for (var key of tmap.keys ()) {
+							if (tname === null || tname === undefined || tname == key) {
+								tlist.push (tmap [key]);
+							}
+						}
+						return tlist;
+					};
+					var get_timer = function (elem, tname) {
+						var timer = _tstore (elem) [tname];
+						return (timer !== undefined ? timer : null);
+					};
+					__pragma__ ('<all>')
+						__all__.TIMERS = TIMERS;
+						__all__._tstore = _tstore;
+						__all__.get_timer = get_timer;
+						__all__.get_timers = get_timers;
+						__all__.remove_timer = remove_timer;
+						__all__.set_timer = set_timer;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'timer_base', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var get_timers = __init__ (__world__.storage).get_timers;
+					var set_timer = __init__ (__world__.storage).set_timer;
+					var remove_timer = __init__ (__world__.storage).remove_timer;
+					var TimerPromise = __init__ (__world__.promise).TimerPromise;
+					var BaseTimer = __class__ ('BaseTimer', [object], {
+						get __init__ () {return __get__ (this, function (self, elem, options) {
+							self.elem = elem;
+							self.millis = options ['millis'];
+							self.maxRuns = options ['maxRuns'];
+							self.tname = options ['name'];
+							self.timer_id = null;
+							self.timer_start = null;
+							self.run_index = 0;
+							self.cancelled = false;
+							for (var other_timer of get_timers (self.elem, self.tname)) {
+								if (other_timer !== self) {
+									other_timer.cancel ();
+								}
+							}
+							set_timer (self.elem, self.tname, self);
+							self.promise = TimerPromise (self._renewTimer);
+						});},
+						get cancel () {return __get__ (this, function (self) {
+							self.cancelled = true;
+							self._cleanup ();
+							self.promise.resolve.apply (self.elem, list ([self]));
+						});},
+						get _renewTimer () {return __get__ (this, function (self) {
+							console.log (11);
+							if (!(self._shouldRunAgain ())) {
+								console.log (22);
+								self._cleanup ();
+								self.promise.resolve.apply (self.elem, list ([self]));
+							}
+							else {
+								console.log (33);
+								self.timer_start = new Date ().getTime ();
+								self.timer_id = window.setTimeout (self._onTimeout, self._nextMillis ());
+							}
+						});},
+						get _nextMillis () {return __get__ (this, function (self) {
+							return self.millis;
+						});},
+						get _onTimeout () {return __get__ (this, function (self) {
+							if (!(self._shouldRunAgain ())) {
+								self._cleanup ();
+								self.promise.resolve.apply (self.elem, list ([self]));
+							}
+							else {
+								self.run_index++;
+								try {
+									self.palarm (self.elem, list ([self]));
+								}
+								catch (__except0__) {
+									if (isinstance (__except0__, Error)) {
+										var err = __except0__;
+										self._cleanup ();
+										if (!(self.promise.pending)) {
+											var __except1__ = err;
+											__except1__.__cause__ = null;
+											throw __except1__;
+										}
+										self.promise.reject.apply (self.elem, list ([self, err]));
+										return ;
+									}
+									else {
+										throw __except0__;
+									}
+								}
+								self._doAlarm ();
+							}
+						});},
+						get _shouldRunAgain () {return __get__ (this, function (self) {
+							return (self.elem !== null && (document == self.elem || document.contains (self.elem))) && !(self.cancelled) && self.millis >= 0 && (self.maxRuns <= 0 || self.run_index < self.maxRuns) && self.deferred.state () == 'pending';
+						});},
+						get _cleanup () {return __get__ (this, function (self) {
+							remove_timer (self.elem, self.tname);
+							window.clearTimeout (self.timer_id);
+							self.timer_id = null;
+						});}
+					});
+					__pragma__ ('<use>' +
+						'promise' +
+						'storage' +
+					'</use>')
+					__pragma__ ('<all>')
+						__all__.BaseTimer = BaseTimer;
+						__all__.TimerPromise = TimerPromise;
+						__all__.get_timers = get_timers;
+						__all__.remove_timer = remove_timer;
+						__all__.set_timer = set_timer;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'timer_interval', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
+					var IntervalTimer = __class__ ('IntervalTimer', [BaseTimer], {
+						get _nextMillis () {return __get__ (this, function (self) {
+							if (self.timer_start === null) {
+								return self.millis;
+							}
+							else {
+								return max (0, self.millis - (new Date ().getTime () - self.timer_start));
 							}
 						});}
 					});
+					var IntervalAfterTimer = __class__ ('IntervalAfterTimer', [IntervalTimer], {
+						get _renewTimer () {return __get__ (this, function (self) {
+							if (self.run_index == 0) {
+								return self._onTimeout ();
+							}
+							return __super__ (IntervalAfterTimer, '_renewTimer') (self);
+						});}
+					});
+					__pragma__ ('<use>' +
+						'timer_base' +
+					'</use>')
 					__pragma__ ('<all>')
-						__all__.TestBase = TestBase;
+						__all__.BaseTimer = BaseTimer;
+						__all__.IntervalAfterTimer = IntervalAfterTimer;
+						__all__.IntervalTimer = IntervalTimer;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'timer_once', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
+					var OnceTimer = __class__ ('OnceTimer', [BaseTimer], {
+						get __init__ () {return __get__ (this, function (self, elem, options, deferred) {
+							options ['maxRuns'] = 1;
+							__super__ (OnceTimer, '__init__') (self, elem, options, deferred);
+						});}
+					});
+					__pragma__ ('<use>' +
+						'timer_base' +
+					'</use>')
+					__pragma__ ('<all>')
+						__all__.BaseTimer = BaseTimer;
+						__all__.OnceTimer = OnceTimer;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'timer_sleep', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
+					var SleepTimer = __class__ ('SleepTimer', [BaseTimer], {
+					});
+					var SleepAfterTimer = __class__ ('SleepAfterTimer', [SleepTimer], {
+						get _renewTimer () {return __get__ (this, function (self) {
+							if (self.run_index == 0) {
+								return self._onTimeout ();
+							}
+							return __super__ (SleepAfterTimer, '_renewTimer') (self);
+						});}
+					});
+					__pragma__ ('<use>' +
+						'timer_base' +
+					'</use>')
+					__pragma__ ('<all>')
+						__all__.BaseTimer = BaseTimer;
+						__all__.SleepAfterTimer = SleepAfterTimer;
+						__all__.SleepTimer = SleepTimer;
 					__pragma__ ('</all>')
 				}
 			}
 		}
 	);
 	(function () {
-		var TestBase = __init__ (__world__.test_base).TestBase;
-		var TestTimer = __class__ ('TestTimer', [TestBase], {
-			NEEDED_TIME: 1000,
-			get begin () {return __get__ (this, function (self) {
-				self.counter = 0;
-				self.then_counter = 0;
-				self.start_time = new Date ();
-				var func = function () {
-					self.counter++;
-				};
-				var then = function () {
-					self.then_counter++;
-				};
-				self.div.autotimer ().Timer (dict ({'millis': 500})).do (func).then (then);
+		var timer_interval = {};
+		var timer_once = {};
+		var timer_sleep = {};
+		var get_timers = __init__ (__world__.storage).get_timers;
+		__nest__ (timer_once, '', __init__ (__world__.timer_once));
+		__nest__ (timer_sleep, '', __init__ (__world__.timer_sleep));
+		__nest__ (timer_interval, '', __init__ (__world__.timer_interval));
+		var Timers = __class__ ('Timers', [object], {
+			get __init__ () {return __get__ (this, function (self) {
+				self.defaults = dict ({'millis': 1000, 'maxRuns': 0, 'name': 'default'});
 			});},
-			get end () {return __get__ (this, function (self) {
-				self.assertTrue (self.counter == 1);
-				self.assertTrue (self.then_counter == 1);
+			get cancel () {return __get__ (this, function (self, elem, tname) {
+				for (var timer of get_timers (elem, tname)) {
+					timer.cancel ();
+				}
+			});},
+			get timers () {return __get__ (this, function (self, elem, tname) {
+				return get_timers (elem, tname);
+			});},
+			get Timer () {return __get__ (this, function (self, elem, options) {
+				return self._create (timer_once.OnceTimer, elem, options);
+			});},
+			get SleepTimer () {return __get__ (this, function (self, elem, options) {
+				return self._create (timer_sleep.SleepTimer, elem, options);
+			});},
+			get SleepAfterTimer () {return __get__ (this, function (self, elem, options) {
+				return self._create (timer_sleep.SleepAfterTimer, elem, options);
+			});},
+			get IntervalTimer () {return __get__ (this, function (self, elem, options) {
+				return self._create (timer_interval.IntervalTimer, elem, options);
+			});},
+			get IntervalAfterTimer () {return __get__ (this, function (self, elem, options) {
+				return self._create (timer_interval.IntervalAfterTimer, elem, options);
+			});},
+			get _create () {return __get__ (this, function (self, timer_class, elem, options) {
+				if (!(elem)) {
+					console.warn ('Timer set on undefined element. Setting on document instead.');
+					var elem = document;
+				}
+				if (typeof (options) == 'number') {
+					var options = dict ({'millis': options});
+				}
+				var combined = dict ({});
+				combined.py_update (self.defaults);
+				if (options !== null) {
+					combined.py_update (options);
+				}
+				var timer = timer_class (elem, combined);
+				return timer.promise;
 			});}
 		});
-		$.fn.autotimer.TESTS.append (TestTimer);
-		var TestNamedTimers = __class__ ('TestNamedTimers', [TestBase], {
-			NEEDED_TIME: 1000,
-			get begin () {return __get__ (this, function (self) {
-				self.counter = 0;
-				var func = function () {
-					self.counter++;
-				};
-				self.div.autotimer ().Timer (dict ({'millis': 400, 'name': 'first'})).do (func);
-				self.div.autotimer ().Timer (dict ({'millis': 600, 'name': 'second'})).do (func);
-			});},
-			get end () {return __get__ (this, function (self) {
-				self.assertTrue (self.counter == 2);
-			});}
-		});
-		$.fn.autotimer.TESTS.append (TestNamedTimers);
-		var TestSameNamedTimers = __class__ ('TestSameNamedTimers', [TestBase], {
-			NEEDED_TIME: 1000,
-			get begin () {return __get__ (this, function (self) {
-				self.counter = 0;
-				var func = function () {
-					self.counter++;
-				};
-				self.div.autotimer ().Timer (dict ({'millis': 400, 'name': 'same'})).do (func);
-				self.div.autotimer ().Timer (dict ({'millis': 600, 'name': 'same'})).do (func);
-			});},
-			get end () {return __get__ (this, function (self) {
-				self.assertTrue (self.counter == 1);
-			});}
-		});
-		$.fn.autotimer.TESTS.append (TestSameNamedTimers);
+		var in_browser = function () {
+			return typeof (window) !== 'undefined';
+		};
+		var in_commonjs = function () {
+			return typeof (module) === 'object' && module.exports;
+		};
+		var in_amd = function () {
+			return typeof (define) === 'function' && define.amd;
+		};
+		if (in_commonjs ()) {
+			module.exports = Timers ();
+		}
+		else if (in_browser ()) {
+			window ['Timers'] = Timers ();
+		}
 		__pragma__ ('<use>' +
-			'test_base' +
+			'storage' +
+			'timer_interval' +
+			'timer_once' +
+			'timer_sleep' +
 		'</use>')
 		__pragma__ ('<all>')
-			__all__.TestBase = TestBase;
-			__all__.TestNamedTimers = TestNamedTimers;
-			__all__.TestSameNamedTimers = TestSameNamedTimers;
-			__all__.TestTimer = TestTimer;
+			__all__.Timers = Timers;
+			__all__.get_timers = get_timers;
+			__all__.in_amd = in_amd;
+			__all__.in_browser = in_browser;
+			__all__.in_commonjs = in_commonjs;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;
 }
-window ['test_once'] = test_once ();
+main ();
 
-//# sourceMappingURL=extra/sourcemap/test_once.js.map
+//# sourceMappingURL=extra/sourcemap/main.js.map

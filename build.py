@@ -2,7 +2,7 @@
 import os, shutil, glob, sys, subprocess, re
 from os.path import join as j
 
-VERSION = "2.0.6"
+VERSION = "2.0.9"
 SROOT = 'src'
 DROOT = 'dist'
 DEMOROOT = 'demo'
@@ -11,13 +11,6 @@ TROOT = 'tests'
 def main():
     # update the version number
     log('Set version to {}'.format(VERSION))
-    with open(j(SROOT, 'plugin.py'), 'r') as fin:
-        content = fin.readlines()
-    with open(j(SROOT, 'plugin.py'), 'w') as fout:
-        for line in content:
-            line = re.sub('Version: \d+\.\d+\.\d+', 'Version: {}'.format(VERSION), line)
-            line = re.sub('S.fn.autotimer.VERSION = "\d+\.\d+\.\d+"', 'S.fn.autotimer.VERSION = "{}"'.format(VERSION), line)
-            fout.write(line)
     with open('package.json', 'r') as fin:
         content = fin.readlines()
     with open('package.json', 'w') as fout:
@@ -35,24 +28,30 @@ def main():
     if os.path.exists(j(SROOT, '__javascript__')):
         shutil.rmtree(j(SROOT, '__javascript__'))
     for src in glob.glob(j(SROOT, '*.py')):
-        run('transcrypt --build --esv 6 {}'.format(src))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DROOT, 'jquery-autotimer.min.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DROOT, 'jquery-autotimer.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.min.js'), j(DEMOROOT, 'jquery-autotimer.min.js'))
-    shutil.copy(j(SROOT, '__javascript__', 'plugin.js'), j(DEMOROOT, 'jquery-autotimer.js'))
+        run('transcrypt --build --esv=6 --parent=.none {}'.format(src))
+    shutil.copy(j(SROOT, '__javascript__', 'main.min.js'), j(DROOT, 'autotimers.min.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'main.js'), j(DROOT, 'autotimers.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'main.min.js'), j(DEMOROOT, 'autotimers.min.js'))
+    shutil.copy(j(SROOT, '__javascript__', 'main.js'), j(DEMOROOT, 'autotimers.js'))
 
     # transpile tests/
     log('Transpile tests/ scripts')
     if os.path.exists(j(TROOT, '__javascript__')):
         shutil.rmtree(j(TROOT, '__javascript__'))
     for src in glob.glob(j(TROOT, '*.py')):
-        run('transcrypt --build --map --nomin --esv 6 {}'.format(src))
+        run('transcrypt --build --map --nomin --esv=6 --parent=.none {}'.format(src))
     
+    # publish to npm
+    log()
+    if input('Upload to npm?  (y/n)  ').lower()[0:1] == 'y':
+        run('npm publish'.format(src))
+        
+
 
 #########################
 ###  Helper functions
 
-def log(msg):
+def log(msg=''):
     print()
     print('=== {} ==='.format(msg))
 

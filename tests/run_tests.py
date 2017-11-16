@@ -1,17 +1,16 @@
 ##############################################################
 ###  unit tests for powertimers library
 ###
-###  Run tests by including this file just after the plugin:
+###  Run tests by including this file just after the main:
 ###
 ###        <script src="jquery-3.2.1.js"></script>
-###        <script src="src/__javascript__/plugin.js"></script>
+###        <script src="src/__javascript__/main.js"></script>
 ###        <script src="tests/__javascript__/run_tests.js"></script>
 ###
 
-__pragma__('alias', 'S', '$')
-S.fn.autotimer.TESTS = []
+document.TESTS = []
 
-# when imported, the modules add to S.fn.autotimer.TESTS
+# when imported, the modules add to document.TESTS
 import test_shortcut
 import test_once
 import test_fails
@@ -23,10 +22,10 @@ import test_interval
     
 test_log = []
 def nextTest():
-    if len(test_log) == len(S.fn.autotimer.TESTS):
+    if len(test_log) == len(document.TESTS):
         console.log('{} tests completed'.format(len(test_log)))
         return
-    klass = S.fn.autotimer.TESTS[len(test_log)]
+    klass = document.TESTS[len(test_log)]
     console.log(klass.__name__)
     t = klass()
     t.setUp()
@@ -42,6 +41,6 @@ def nextTest():
     
 
 # start the tests
-console.log('Starting {} unit tests'.format(len(S.fn.autotimer.TESTS)))
-S(nextTest)
+console.log('Starting {} unit tests'.format(len(document.TESTS)))
+document.addEventListener('DOMContentLoaded', nextTest)
 

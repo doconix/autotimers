@@ -1,4 +1,3 @@
-__pragma__('alias', 'S', '$')
 from test_base import TestBase
 
  
@@ -18,7 +17,7 @@ class TestZeroMillis(TestBase):
         # with no func, it should not trigger
         assert self.counter == 0
 
-S.fn.autotimer.TESTS.append(TestZeroMillis)
+document.TESTS.append(TestZeroMillis)
 
 
 class TestDOMRemoval(TestBase):
@@ -37,7 +36,7 @@ class TestDOMRemoval(TestBase):
         # with no func, it should not trigger
         self.assertTrue(self.counter == 0)
 
-S.fn.autotimer.TESTS.append(TestDOMRemoval)
+document.TESTS.append(TestDOMRemoval)
 
 
 class TestDebugTimer(TestBase):
@@ -61,7 +60,7 @@ class TestDebugTimer(TestBase):
     def end(self):
         pass
 
-S.fn.autotimer.TESTS.append(TestDebugTimer)
+document.TESTS.append(TestDebugTimer)
 
 
 class TestCancelTimer(TestBase):
@@ -80,7 +79,7 @@ class TestCancelTimer(TestBase):
     def end(self):
         self.assertTrue(self.counter == 1)
         
-S.fn.autotimer.TESTS.append(TestCancelTimer)
+document.TESTS.append(TestCancelTimer)
 
 
 class TestExceptionInTimer(TestBase):
@@ -107,7 +106,7 @@ class TestExceptionInTimer(TestBase):
         self.assertTrue(self.then_counter == 0)
         self.assertTrue(self.fail_counter == 1)
         
-S.fn.autotimer.TESTS.append(TestExceptionInTimer)
+document.TESTS.append(TestExceptionInTimer)
 
 
 class TestNoExceptionInTimer(TestBase):
@@ -133,6 +132,6 @@ class TestNoExceptionInTimer(TestBase):
         self.assertTrue(self.then_counter == 1)
         self.assertTrue(self.fail_counter == 0)
         
-S.fn.autotimer.TESTS.append(TestNoExceptionInTimer)
+document.TESTS.append(TestNoExceptionInTimer)
 
 

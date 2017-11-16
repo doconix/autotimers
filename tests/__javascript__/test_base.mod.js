@@ -10,9 +10,10 @@
 							if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
 								var elem_tag = 'div';
 							};
-							$ ('#{}'.format (elem_id)).remove ();
-							$ ('body').append ('<div id="{}"></div>'.format (elem_id));
-							return $ ('#{}'.format (elem_id));
+							var e = document.createElement (elem_tag);
+							e.id = elem_id;
+							document.body.appendChild (e);
+							return e;
 						});},
 						get setUp () {return __get__ (this, function (self) {
 							self.div = self.make ('test1');

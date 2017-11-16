@@ -1,4 +1,3 @@
-__pragma__('alias', 'S', '$')
 from test_base import TestBase
 
     
@@ -16,7 +15,7 @@ class TestSetTimer(TestBase):
     def end(self):
         pass
         
-S.fn.autotimer.TESTS.append(TestSetTimer)
+document.TESTS.append(TestSetTimer)
     
     
 class TestRemoveTimer(TestBase):
@@ -40,6 +39,6 @@ class TestRemoveTimer(TestBase):
     def end(self):
         pass
         
-S.fn.autotimer.TESTS.append(TestRemoveTimer)
+document.TESTS.append(TestRemoveTimer)
     
     

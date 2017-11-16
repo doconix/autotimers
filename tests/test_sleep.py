@@ -1,4 +1,3 @@
-__pragma__('alias', 'S', '$')
 from test_base import TestBase
 
 # I really need to make func() take a long time so I can ensure sleep instead of interval
@@ -18,7 +17,7 @@ class TestSleep(TestBase):
     def end(self):
         self.assertTrue(self.counter == 2)
         
-S.fn.autotimer.TESTS.append(TestSleep)
+document.TESTS.append(TestSleep)
     
     
 
@@ -38,7 +37,7 @@ class TestSleepAfter(TestBase):
         # immediate run, plus two after timer runs
         self.assertTrue(self.counter == 3)
         
-S.fn.autotimer.TESTS.append(TestSleepAfter)
+document.TESTS.append(TestSleepAfter)
     
     
     
@@ -63,7 +62,7 @@ class TestSleepAfter(TestBase):
     def end(self):
         self.assertTrue(self.counter == 1)
         
-S.fn.autotimer.TESTS.append(TestSleepAfter)
+document.TESTS.append(TestSleepAfter)
     
     
     

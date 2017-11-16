@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "src/__javascript__/storage.mod.js",
+	"sources": [
+		"src/storage.py"
+	],
+	"sourcesContent": [
+		"# using a weak map so the references go away when the element is removed from dom\nTIMERS = __new__(WeakMap())\n\n\ndef _tstore(elem):\n    '''Gets the timer storage Map for the given element'''\n    if not TIMERS.has(elem):\n        TIMERS.set(elem, __new__(Map()))\n    return TIMERS.js_get(elem)\n    \n\ndef remove_timer(elem, tname):\n    '''Removes the timer under the given tname for the given element'''\n    tmap = _tstore(elem)\n    tmap.delete(tname)\n    if tmap.length == 0:\n        TIMERS.delete(elem)\n\n\ndef set_timer(elem, tname, timer):\n    '''Stores tname=timer in the storage for the given element'''\n    _tstore(elem).set(tname, timer)\n\n\ndef get_timers(elem, tname):\n    '''Retrieves an array of timers on the given element, optionally filtered by name'''\n    tlist= []\n    tmap = _tstore(elem)\n    for key in tmap.js_keys():\n        if tname is None or tname is js_undefined or tname == key:\n            tlist.push(tmap[key])\n    return tlist\n    \n    \ndef get_timer(elem, tname):\n    '''Retrieves the timer keyed with tname on the given element, or None if not present'''\n    timer = _tstore(elem)[tname]\n    return timer if timer is not js_undefined else None\n    \n    \n\n"
+	],
+	"mappings": "AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AACA;AAGA;AAEA;AACA;AAAA;AACA;AAAA;AAGA;AAEA;AACA;AACA;AACA;AAAA;AAAA;AAGA;AAEA;AAAA;AAGA;AAEA;AACA;AACA;AACA;AACA;AAAA;AAAA;AACA;AAAA;AAGA;AAEA;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA"
+}

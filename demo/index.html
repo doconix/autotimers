@@ -4,13 +4,12 @@
     <title>Autotimers Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="index.css" />
-    <script src="jquery-3.2.1.js"></script>
-    <script src="jquery-autotimer.js"></script>
+    <script src="autotimers.js"></script>
 </head>
 <body>
     <h1>Autotimers Demos</h1>
     <h2>Javascript timers on steroids (and easier to boot)!</h2>
-    <h3><a href="https://github.com/doconix/jquery-autotimer.js">Return to jquery-autotimer.js</a></h3>
+    <h3><a href="https://github.com/doconix/autotimers.js">Return to autotimers.js</a></h3>
 
     <script>
         function log_msg(elem, msg) {
@@ -138,7 +137,7 @@
                         // TIMER CALL:
                         $('#someid3').autotimer().IntervalTimer({
                             millis: 1000,
-                            max_runs: 4
+                            maxRuns: 4
                         }).do(function (timer) {
                             log_msg($(this), 'Run #' + timer.run_index);
                         }).do(function (timer) {

@@ -1,4 +1,3 @@
-__pragma__('alias', 'S', '$')
 from test_base import TestBase
 
     
@@ -21,7 +20,7 @@ class TestTimer(TestBase):
         self.assertTrue(self.counter == 1)
         self.assertTrue(self.then_counter == 1)
         
-S.fn.autotimer.TESTS.append(TestTimer)
+document.TESTS.append(TestTimer)
     
     
     
@@ -44,7 +43,7 @@ class TestNamedTimers(TestBase):
     def end(self):
         self.assertTrue(self.counter == 2)
         
-S.fn.autotimer.TESTS.append(TestNamedTimers)
+document.TESTS.append(TestNamedTimers)
     
     
     
@@ -68,6 +67,6 @@ class TestSameNamedTimers(TestBase):
     def end(self):
         self.assertTrue(self.counter == 1)
         
-S.fn.autotimer.TESTS.append(TestSameNamedTimers)
+document.TESTS.append(TestSameNamedTimers)
 
 

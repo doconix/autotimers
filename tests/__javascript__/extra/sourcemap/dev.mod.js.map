@@ -5,7 +5,7 @@
 		"tests/dev.py"
 	],
 	"sourcesContent": [
-		"__pragma__('alias', 'S', '$')\n\ndef main():\n    index = 1\n    def func(timer):\n        console.log(this)\n        if index % 5 == 0:\n            S(this).html('')\n        S(this).append('<div>Run #' + index)\n        index += 1\n        \n    S('#div1').autotimer().IntervalTimer(800).do(func)\n    \nS(main)\n\n                  "
+		"def main():\n    elem = document.querySelector('#div1')\n    def func():\n        console.log('timer!')\n    console.log(elem)\n    Timers.Timer(elem, 1000).do(func)\n\n\ndocument.addEventListener('DOMContentLoaded', main)\n"
 	],
-	"mappings": "AAAA;AAEA;AACA;AACA;AACA;AACA;AACA;AAAA;AACA;AAAA;AAAA;AAGA;AAAA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA"
+	"mappings": "AAAA;AAAA;AACA;AACA;AACA;AAAA;AACA;AACA;AAAA;AAGA;AAAA;AAAA;AAAA;AAAA;AAAA"
 }

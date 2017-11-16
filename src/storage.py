@@ -1,30 +1,41 @@
-S = jQuery
-
-DATA_KEY = '_jquery_timers_'
+# using a weak map so the references go away when the element is removed from dom
+TIMERS = __new__(WeakMap())
 
 
 def _tstore(elem):
-    '''Gets the timer storage dict on the given element'''
-    if not elem.data(DATA_KEY):
-        elem.data(DATA_KEY, {})
-    return elem.data(DATA_KEY)
+    '''Gets the timer storage Map for the given element'''
+    if not TIMERS.has(elem):
+        TIMERS.set(elem, __new__(Map()))
+    return TIMERS.js_get(elem)
     
 
+def remove_timer(elem, tname):
+    '''Removes the timer under the given tname for the given element'''
+    tmap = _tstore(elem)
+    tmap.delete(tname)
+    if tmap.length == 0:
+        TIMERS.delete(elem)
+
+
+def set_timer(elem, tname, timer):
+    '''Stores tname=timer in the storage for the given element'''
+    _tstore(elem).set(tname, timer)
+
+
 def get_timers(elem, tname):
-    '''Retrieves the timers on the given jQuery array, optionally filtered by name'''
+    '''Retrieves an array of timers on the given element, optionally filtered by name'''
     tlist= []
-    for e in elem:
-        store = _tstore(S(e))
-        for timer_name in store.keys():
-            if tname is None or tname is js_undefined or tname == timer_name:
-                tlist.push(store[timer_name])
+    tmap = _tstore(elem)
+    for key in tmap.js_keys():
+        if tname is None or tname is js_undefined or tname == key:
+            tlist.push(tmap[key])
     return tlist
     
     
-def set_timer(elem, tname, timer):
-    for e in elem:
-        _tstore(S(e))[tname] = timer
+def get_timer(elem, tname):
+    '''Retrieves the timer keyed with tname on the given element, or None if not present'''
+    timer = _tstore(elem)[tname]
+    return timer if timer is not js_undefined else None
+    
+    
 
-
-def remove_timer(elem, tname):
-    del _tstore(elem)[tname]

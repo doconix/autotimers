@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-14 16:13:23
+// Transcrypt'ed from Python, 2017-11-16 06:34:43
 function run_tests () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2505,9 +2505,10 @@ function run_tests () {
 							if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
 								var elem_tag = 'div';
 							};
-							$ ('#{}'.format (elem_id)).remove ();
-							$ ('body').append ('<div id="{}"></div>'.format (elem_id));
-							return $ ('#{}'.format (elem_id));
+							var e = document.createElement (elem_tag);
+							e.id = elem_id;
+							document.body.appendChild (e);
+							return e;
 						});},
 						get setUp () {return __get__ (this, function (self) {
 							self.div = self.make ('test1');
@@ -2589,7 +2590,7 @@ function run_tests () {
 						get end () {return __get__ (this, function (self) {
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestZeroMillis);
+					document.TESTS.append (TestZeroMillis);
 					var TestDOMRemoval = __class__ ('TestDOMRemoval', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2604,7 +2605,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 0);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestDOMRemoval);
+					document.TESTS.append (TestDOMRemoval);
 					var TestDebugTimer = __class__ ('TestDebugTimer', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2622,7 +2623,7 @@ function run_tests () {
 							// pass;
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestDebugTimer);
+					document.TESTS.append (TestDebugTimer);
 					var TestCancelTimer = __class__ ('TestCancelTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2637,7 +2638,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 1);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestCancelTimer);
+					document.TESTS.append (TestCancelTimer);
 					var TestExceptionInTimer = __class__ ('TestExceptionInTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2664,7 +2665,7 @@ function run_tests () {
 							self.assertTrue (self.fail_counter == 1);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestExceptionInTimer);
+					document.TESTS.append (TestExceptionInTimer);
 					var TestNoExceptionInTimer = __class__ ('TestNoExceptionInTimer', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2688,7 +2689,7 @@ function run_tests () {
 							self.assertTrue (self.fail_counter == 0);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestNoExceptionInTimer);
+					document.TESTS.append (TestNoExceptionInTimer);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2726,7 +2727,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestInterval);
+					document.TESTS.append (TestInterval);
 					var TestIntervalAfter = __class__ ('TestIntervalAfter', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2741,7 +2742,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 3);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestIntervalAfter);
+					document.TESTS.append (TestIntervalAfter);
 					var TestMillisShortcut = __class__ ('TestMillisShortcut', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2756,7 +2757,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestMillisShortcut);
+					document.TESTS.append (TestMillisShortcut);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2796,7 +2797,7 @@ function run_tests () {
 							self.assertTrue (self.then_counter == 1);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestTimer);
+					document.TESTS.append (TestTimer);
 					var TestNamedTimers = __class__ ('TestNamedTimers', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2811,7 +2812,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestNamedTimers);
+					document.TESTS.append (TestNamedTimers);
 					var TestSameNamedTimers = __class__ ('TestSameNamedTimers', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2826,7 +2827,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 1);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestSameNamedTimers);
+					document.TESTS.append (TestSameNamedTimers);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2859,7 +2860,7 @@ function run_tests () {
 							// pass;
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestSetTimer);
+					document.TESTS.append (TestSetTimer);
 					var TestRemoveTimer = __class__ ('TestRemoveTimer', [TestBase], {
 						NEEDED_TIME: 500,
 						get begin () {return __get__ (this, function (self) {
@@ -2877,7 +2878,7 @@ function run_tests () {
 							// pass;
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestRemoveTimer);
+					document.TESTS.append (TestRemoveTimer);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2911,7 +2912,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 2);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestSleep);
+					document.TESTS.append (TestSleep);
 					var TestSleepAfter = __class__ ('TestSleepAfter', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2926,7 +2927,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 3);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestSleepAfter);
+					document.TESTS.append (TestSleepAfter);
 					var TestSleepAfter = __class__ ('TestSleepAfter', [TestBase], {
 						NEEDED_TIME: 1000,
 						get begin () {return __get__ (this, function (self) {
@@ -2945,7 +2946,7 @@ function run_tests () {
 							self.assertTrue (self.counter == 1);
 						});}
 					});
-					$.fn.autotimer.TESTS.append (TestSleepAfter);
+					document.TESTS.append (TestSleepAfter);
 					__pragma__ ('<use>' +
 						'test_base' +
 					'</use>')
@@ -2964,7 +2965,7 @@ function run_tests () {
 		var test_once = {};
 		var test_shortcut = {};
 		var test_sleep = {};
-		$.fn.autotimer.TESTS = list ([]);
+		document.TESTS = list ([]);
 		__nest__ (test_shortcut, '', __init__ (__world__.test_shortcut));
 		__nest__ (test_once, '', __init__ (__world__.test_once));
 		__nest__ (test_fails, '', __init__ (__world__.test_fails));
@@ -2972,11 +2973,11 @@ function run_tests () {
 		__nest__ (test_interval, '', __init__ (__world__.test_interval));
 		var test_log = list ([]);
 		var nextTest = function () {
-			if (len (test_log) == len ($.fn.autotimer.TESTS)) {
+			if (len (test_log) == len (document.TESTS)) {
 				console.log ('{} tests completed'.format (len (test_log)));
 				return ;
 			}
-			var klass = $.fn.autotimer.TESTS [len (test_log)];
+			var klass = document.TESTS [len (test_log)];
 			console.log (klass.__name__);
 			var t = klass ();
 			t.setUp ();
@@ -2992,8 +2993,8 @@ function run_tests () {
 			};
 			t.promise_start ().then (then, reject);
 		};
-		console.log ('Starting {} unit tests'.format (len ($.fn.autotimer.TESTS)));
-		$ (nextTest);
+		console.log ('Starting {} unit tests'.format (len (document.TESTS)));
+		document.addEventListener ('DOMContentLoaded', nextTest);
 		__pragma__ ('<use>' +
 			'test_fails' +
 			'test_interval' +
@@ -3008,6 +3009,6 @@ function run_tests () {
 	}) ();
    return __all__;
 }
-window ['run_tests'] = run_tests ();
+run_tests ();
 
 //# sourceMappingURL=extra/sourcemap/run_tests.js.map

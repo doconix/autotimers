@@ -1,20 +1,18 @@
 from timer_base import BaseTimer
-S = jQuery
 
 
 class SleepTimer(BaseTimer):
     '''A repeating timer that ensures a specific amount of time between runs'''
-    def _startTimer(self):
-        '''Helper function for start().  Call window.setTimeout and return the id'''
-        return window.setTimeout(self._notifyObservers, self.millis)
-
+    pass  # no changes needed from Base Timer
+    
 
 class SleepAfterTimer(SleepTimer):
-    '''This timer immediately calls the timer function, then starts the sleep/function cycle.'''
-    def start(self):
+    def _renewTimer(self):
+        '''Trigger the alarm immediately, then starts the sleep/function cycle.'''
         if self.run_index == 0:
-            return self._notifyObservers()
-        return super().start()
+            return self._onTimeout()
+        return super()._renewTimer()
+
 
 
     

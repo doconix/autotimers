@@ -1,4 +1,3 @@
-__pragma__('alias', 'S', '$')
 
 # each test is given 3 seconds to do its work. The process is:
 # .begin()
@@ -13,9 +12,10 @@ class TestBase(object):
     NEEDED_TIME = 3000  # time from begin() to end()
     
     def make(self, elem_id, elem_tag='div'):
-        S('#{}'.format(elem_id)).remove()  # just in case
-        S('body').append('<div id="{}"></div>'.format(elem_id))
-        return S('#{}'.format(elem_id))
+        e = document.createElement(elem_tag)
+        e.id = elem_id
+        document.body.appendChild(e)
+        return e
     
     def setUp(self):
         self.div = self.make('test1')

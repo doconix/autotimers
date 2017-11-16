@@ -3,9 +3,9 @@ import glob, os, sys, subprocess, time, shutil
 
 
 WATCHERS = [
-    ( 'src/*.py', 'transcrypt --map --build --nomin --esv 6 src/plugin.py' ),
-    ( 'tests/*.py', 'transcrypt --map --build --nomin --esv 6 tests/run_tests.py' ),
-    ( 'tests/*.py', 'transcrypt --map --build --nomin --esv 6 tests/dev.py' ),
+    ( 'src/*.py', 'transcrypt --map --build --nomin --esv=6 --parent=.none src/main.py' ),
+    ( 'tests/*.py', 'transcrypt --map --build --nomin --esv=6 --parent=.none tests/run_tests.py' ),
+    ( 'tests/*.py', 'transcrypt --map --build --nomin --esv=6 --parent=.none tests/dev.py' ),
 ]
 
 if os.path.exists('src/__javascript__'):

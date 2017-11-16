@@ -1,6 +1,6 @@
-# jquery-autotimer
+# autotimers
 
-[Visit the Demo Page](https://rawgit.com/doconix/jquery-autotimer/master/demo/index.html)
+[Visit the Demo Page](https://rawgit.com/doconix/autotimers/master/demo/index.html)
 
 Why not just use `window.setTimeout`?  Because these timers provide:
 
@@ -16,11 +16,11 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 
 ## Install
 
-**`npm install jquery-autotimer`**
+**`npm install autotimers`**
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or
 
-[Get the latest v2 code](https://raw.githubusercontent.com/doconix/jquery-autotimer/master/dist/jquery-autotimer.min.js)
+[Get the latest v2 code](https://raw.githubusercontent.com/doconix/autotimers/master/dist/autotimers.min.js)
 
 
 ### A few examples: 
@@ -47,7 +47,7 @@ previous run. Stop after five runs:
 ```
 $('#somediv').autotimer().IntervalTimer({ 
     'millis': 4000, 
-    'max_runs': 5 
+    'maxRuns': 5 
 }).do((tmr) => {
     console.log('wait first, then again and again!')
 })
@@ -64,7 +64,7 @@ $('#somediv').autotimer().SleepAfterTimer(4000).do((tmr) => {
 
 ## Description:
 
-A jQuery plugin that provides three types of timers (with additional variations):
+A jQuery main that provides three types of timers (with additional variations):
 
 ### 1. Regular Timer
 
@@ -118,7 +118,7 @@ Specfy options as a `single number` (duration in millis) or as an `object`:
     'millis': 1000,
 
     # maximum number of timer callbacks (< 1 is infinite runs)
-    'max_runs': 0,
+    'maxRuns': 0,
 
     # name of this timer - (elem + name) is unique and cancels any
     # previous timer with the same name on the elemnent
@@ -129,7 +129,7 @@ Specfy options as a `single number` (duration in millis) or as an `object`:
 Use the promise pattern for callbacks:
 
 * `do(timer)` is run each time the timer hits zero.
-* `then()` is run one time after max_runs is reached or the timer is cancelled.
+* `then()` is run one time after maxRuns is reached or the timer is cancelled.
 * `fail()` is run if an exception is thrown in your `do()` method.
 
 The timer object is sole parameter to your callbacks (`this` is also available).
@@ -161,9 +161,9 @@ $.fn.autotimer.defaults.millis = 2000
 
 ## Development
 
-`jquery-autotimer` is programmed in Python, then transpiled to Javascript using the excellent [Transcrypt Library](https://www.transcrypt.org/).
+`autotimers` is programmed in Python, then transpiled to Javascript using the excellent [Transcrypt Library](https://www.transcrypt.org/).
 
-The `src/*.py` files are the source code for the plugin, with `plugin.py` being the primary script. The output files are in `src/__javascript/*.js`.  Only `plugin.js` really matters - the other files are included within it when Transcrypt runs. I've split the plugin into many files to make maintenance easier.  The individual files are fairly small.
+The `src/*.py` files are the source code for the main, with `main.py` being the primary script. The output files are in `src/__javascript/*.js`.  Only `main.js` really matters - the other files are included within it when Transcrypt runs. I've split the main into many files to make maintenance easier.  The individual files are fairly small.
 
 During development and testing, run `auto_transpiler.py` to automatically transpile whenever source files change.  You can also run `build.py` to erase and rebuild everything.
 

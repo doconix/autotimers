@@ -4,7 +4,7 @@
 		var test_once = {};
 		var test_shortcut = {};
 		var test_sleep = {};
-		$.fn.autotimer.TESTS = list ([]);
+		document.TESTS = list ([]);
 		__nest__ (test_shortcut, '', __init__ (__world__.test_shortcut));
 		__nest__ (test_once, '', __init__ (__world__.test_once));
 		__nest__ (test_fails, '', __init__ (__world__.test_fails));
@@ -12,11 +12,11 @@
 		__nest__ (test_interval, '', __init__ (__world__.test_interval));
 		var test_log = list ([]);
 		var nextTest = function () {
-			if (len (test_log) == len ($.fn.autotimer.TESTS)) {
+			if (len (test_log) == len (document.TESTS)) {
 				console.log ('{} tests completed'.format (len (test_log)));
 				return ;
 			}
-			var klass = $.fn.autotimer.TESTS [len (test_log)];
+			var klass = document.TESTS [len (test_log)];
 			console.log (klass.__name__);
 			var t = klass ();
 			t.setUp ();
@@ -32,8 +32,8 @@
 			};
 			t.promise_start ().then (then, reject);
 		};
-		console.log ('Starting {} unit tests'.format (len ($.fn.autotimer.TESTS)));
-		$ (nextTest);
+		console.log ('Starting {} unit tests'.format (len (document.TESTS)));
+		document.addEventListener ('DOMContentLoaded', nextTest);
 		__pragma__ ('<use>' +
 			'test_fails' +
 			'test_interval' +

@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "src/__javascript__/timer_once.mod.js",
+	"sources": [
+		"src/timer_once.py"
+	],
+	"sourcesContent": [
+		"from timer_base import BaseTimer\n\n\nclass OnceTimer(BaseTimer):\n    def __init__(self, elem, options, deferred):\n        options['maxRuns'] = 1  # force one time\n        super().__init__(elem, options, deferred)\n\n\n\n"
+	],
+	"mappings": "AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA;AACA;AACA;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA"
+}

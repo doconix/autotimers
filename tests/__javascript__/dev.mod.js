@@ -1,17 +1,13 @@
 	(function () {
 		var main = function () {
-			var index = 1;
-			var func = function (timer) {
-				console.log (this);
-				if (__mod__ (index, 5) == 0) {
-					$ (this).html ('');
-				}
-				$ (this).append ('<div>Run #' + index);
-				index++;
+			var elem = document.querySelector ('#div1');
+			var func = function () {
+				console.log ('timer!');
 			};
-			$ ('#div1').autotimer ().IntervalTimer (800).do (func);
+			console.log (elem);
+			Timers.Timer (elem, 1000).do (func);
 		};
-		$ (main);
+		document.addEventListener ('DOMContentLoaded', main);
 		__pragma__ ('<all>')
 			__all__.main = main;
 		__pragma__ ('</all>')

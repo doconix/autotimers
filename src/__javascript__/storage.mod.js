@@ -4,38 +4,41 @@
 			__all__: {
 				__inited__: false,
 				__init__: function (__all__) {
-					var S = jQuery;
-					var DATA_KEY = '_jquery_timers_';
+					var TIMERS = new WeakMap ();
 					var _tstore = function (elem) {
-						if (!(elem.data (DATA_KEY))) {
-							elem.data (DATA_KEY, dict ({}));
+						if (!(TIMERS.has (elem))) {
+							TIMERS.set (elem, new Map ());
 						}
-						return elem.data (DATA_KEY);
+						return TIMERS.get (elem);
+					};
+					var remove_timer = function (elem, tname) {
+						var tmap = _tstore (elem);
+						tmap.delete (tname);
+						if (tmap.length == 0) {
+							TIMERS.delete (elem);
+						}
+					};
+					var set_timer = function (elem, tname, timer) {
+						_tstore (elem).set (tname, timer);
 					};
 					var get_timers = function (elem, tname) {
 						var tlist = list ([]);
-						for (var e of elem) {
-							var store = _tstore (S (e));
-							for (var timer_name of store.py_keys ()) {
-								if (tname === null || tname === undefined || tname == timer_name) {
-									tlist.push (store [timer_name]);
-								}
+						var tmap = _tstore (elem);
+						for (var key of tmap.keys ()) {
+							if (tname === null || tname === undefined || tname == key) {
+								tlist.push (tmap [key]);
 							}
 						}
 						return tlist;
 					};
-					var set_timer = function (elem, tname, timer) {
-						for (var e of elem) {
-							_tstore (S (e)) [tname] = timer;
-						}
-					};
-					var remove_timer = function (elem, tname) {
-						delete _tstore (elem) [tname];
+					var get_timer = function (elem, tname) {
+						var timer = _tstore (elem) [tname];
+						return (timer !== undefined ? timer : null);
 					};
 					__pragma__ ('<all>')
-						__all__.DATA_KEY = DATA_KEY;
-						__all__.S = S;
+						__all__.TIMERS = TIMERS;
 						__all__._tstore = _tstore;
+						__all__.get_timer = get_timer;
 						__all__.get_timers = get_timers;
 						__all__.remove_timer = remove_timer;
 						__all__.set_timer = set_timer;
