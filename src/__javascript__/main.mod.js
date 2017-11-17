@@ -46,8 +46,7 @@
 				if (options !== null) {
 					combined.py_update (options);
 				}
-				var timer = timer_class (elem, combined);
-				return timer.promise;
+				return timer_class (elem, combined);
 			});}
 		});
 		var in_browser = function () {

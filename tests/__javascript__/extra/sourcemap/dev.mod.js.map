@@ -5,7 +5,7 @@
 		"tests/dev.py"
 	],
 	"sourcesContent": [
-		"def main():\n    elem = document.querySelector('#div1')\n    def func():\n        console.log('timer!')\n    console.log(elem)\n    Timers.Timer(elem, 1000).do(func)\n\n\ndocument.addEventListener('DOMContentLoaded', main)\n"
+		"def main():\n    elem = document.querySelector('#div1')\n    def func():\n        console.log('timer do!')\n        raise __new__(Error('asdf'))\n        \n    def then():\n        console.log('then!')\n        \n    def err(timer, error):\n        console.log('error')\n        console.log(error)\n        \n    Timers.SleepTimer(elem, {\n        'millis': 1000,\n        'maxRuns': 2,\n    }).do(func).then(then).catch(err)\n\n\ndocument.addEventListener('DOMContentLoaded', main)\n"
 	],
-	"mappings": "AAAA;AAAA;AACA;AACA;AACA;AAAA;AACA;AACA;AAAA;AAGA;AAAA;AAAA;AAAA;AAAA;AAAA"
+	"mappings": "AAAA;AAAA;AACA;AACA;AACA;AACA;AAAA;AAAA;AAAA;AAEA;AACA;AAAA;AAEA;AACA;AACA;AAAA;AAEA;AAAA;AAMA;AAAA;AAAA;AAAA;AAAA;AAAA"
 }

@@ -87,9 +87,8 @@ class Timers(object):
         if options is not None:
             combined.update(options)
         
-        # set timer on each element in the jquery array
-        timer = timer_class(elem, combined)
-        return timer.promise
+        # create and return the timer
+        return timer_class(elem, combined)
         
 
 

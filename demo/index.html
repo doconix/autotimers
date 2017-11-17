@@ -107,11 +107,11 @@
             Note also the timer object, which is sent to do() functions.  This object has several fields of interest:
             <table>
                 <tr>
-                    <td><code>timer.timer_start</code></td><td>time timestamp the current timer run started</td>
+                    <td><code>timer.timerStart</code></td><td>time timestamp the current timer run started</td>
                 </tr><tr>
-                    <td><code>timer.run_index</code></td><td>the number of times the timer has triggered</td>
+                    <td><code>timer.runIndex</code></td><td>the number of times the timer has triggered</td>
                 </tr><tr>
-                    <td><code>timer.timer_id</code></td><td>the id from the internal setTimeout call</td>
+                    <td><code>timer.timerId</code></td><td>the id from the internal setTimeout call</td>
                 </tr><tr>
                     <td><code>timer.elem</code></td><td>DOM element the timer is running on.</td>
                 </tr><tr>
@@ -139,13 +139,13 @@
                             millis: 1000,
                             maxRuns: 4
                         }).do(function (timer) {
-                            log_msg($(this), 'Run #' + timer.run_index);
+                            log_msg($(this), 'Run #' + timer.runIndex);
                         }).do(function (timer) {
-                            log_msg($(this), 'ID is ' + timer.timer_id);
+                            log_msg($(this), 'ID is ' + timer.timerId);
                         }).do(function (timer) {
-                            log_msg($(this), 'Started at ' + timer.timer_start);
+                            log_msg($(this), 'Started at ' + timer.timerStart);
                         }).then(function(timer) {
-                            log_msg($(this), 'The timer finished after ' + timer.run_index + ' runs.');
+                            log_msg($(this), 'The timer finished after ' + timer.runIndex + ' runs.');
                         })
 
                     })

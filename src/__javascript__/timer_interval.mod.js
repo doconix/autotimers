@@ -7,17 +7,17 @@
 					var BaseTimer = __init__ (__world__.timer_base).BaseTimer;
 					var IntervalTimer = __class__ ('IntervalTimer', [BaseTimer], {
 						get _nextMillis () {return __get__ (this, function (self) {
-							if (self.timer_start === null) {
+							if (self.timerStart === null) {
 								return self.millis;
 							}
 							else {
-								return max (0, self.millis - (new Date ().getTime () - self.timer_start));
+								return max (0, self.millis - (new Date ().getTime () - self.timerStart));
 							}
 						});}
 					});
 					var IntervalAfterTimer = __class__ ('IntervalAfterTimer', [IntervalTimer], {
 						get _renewTimer () {return __get__ (this, function (self) {
-							if (self.run_index == 0) {
+							if (self.runIndex == 0) {
 								return self._onTimeout ();
 							}
 							return __super__ (IntervalAfterTimer, '_renewTimer') (self);

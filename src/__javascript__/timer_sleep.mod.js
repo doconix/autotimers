@@ -9,7 +9,7 @@
 					});
 					var SleepAfterTimer = __class__ ('SleepAfterTimer', [SleepTimer], {
 						get _renewTimer () {return __get__ (this, function (self) {
-							if (self.run_index == 0) {
+							if (self.runIndex == 0) {
 								return self._onTimeout ();
 							}
 							return __super__ (SleepAfterTimer, '_renewTimer') (self);

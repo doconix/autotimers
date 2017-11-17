@@ -1,5 +1,5 @@
+__pragma__('alias', 'js_finally', 'finally')
 from storage import get_timers, set_timer, remove_timer
-from promise import TimerPromise
 
 
 class BaseTimer(object):
@@ -11,10 +11,10 @@ class BaseTimer(object):
         self.tname = options['name']
         
         # timer state
-        self.timer_id = None
-        self.timer_start = None  # IntervalTimer needs this to be initially None
-        self.run_index = 0
-        self.cancelled = False
+        self.timerId = None
+        self.timerStart = None  # IntervalTimer needs this to be initially None
+        self.runIndex = 0
+        self.finished = False
         
         # remove any existing, and place this timer on element
         for other_timer in get_timers(self.elem, self.tname):
@@ -22,65 +22,116 @@ class BaseTimer(object):
                 other_timer.cancel()
         set_timer(self.elem, self.tname, self)
         
-        # start the timer
-        self.promise = TimerPromise(self._renewTimer)
+        # set up the observer lists
+        # this is set to None when the timer is finished
+        self.observers = {
+            'do': [],
+            'then': [],
+            'catch': [],
+        }
+        
+        # finally, start the timer
+        self._renewTimer()
         
         
     def cancel(self):
         '''Cancels the timer - triggers .then()'''
-        self.cancelled = True
-        self._cleanup()
-        self.promise.resolve.apply(self.elem, [ self ])
+        self._notifyObservers('then', [ self ])
+        self._finalizeTimer()
         
         
     ############################################
     ###  Private methods
     
-    def _renewTimer(self):
-        console.log(11)
-        if not self._shouldRunAgain():
-            console.log(22)  
-            self._cleanup()
-            self.promise.resolve.apply(self.elem, [ self ])
-        else:
-            console.log(33)
-            self.timer_start = __new__(Date()).getTime()
-            self.timer_id = window.setTimeout(self._onTimeout, self._nextMillis())
+    def _finalizeTimer(self):
+        '''Called when the timer is entirely finished'''
+        remove_timer(self.elem, self.tname)
+        if self.timerId:
+            window.clearTimeout(self.timerId)
+            self.timerId = None
+        self.observers = None
             
+
+    def _renewTimer(self):
+        '''Restarts the timer, assuming we can run again'''
+        if not self._shouldRunAgain():
+            self._notifyObservers('then', [ self ])
+            self._finalizeTimer()
+        else:
+            self.timerStart = __new__(Date()).getTime()
+            self.timerId = window.setTimeout(self._onTimeout, self._nextMillis())
+        
 
     def _nextMillis(self):
         return self.millis  # subclasses like IntervalTimer adjust this
 
         
     def _onTimeout(self):
+        '''Triggered when setTimeout is done'''
         if not self._shouldRunAgain():
-            self._cleanup()
-            self.promise.resolve.apply(self.elem, [ self ])
+            self._notifyObservers('then', [ self ])
+            self._finalizeTimer()
         else:
-            self.run_index += 1
+            self.runIndex += 1
             try:
-                self.palarm(self.elem, [ self ])
+                self._notifyObservers('do', [ self ])
             except Error as err:
-                self._cleanup()
-                if not self.promise.pending:
-                    raise err  # resolve or reject already ran, so just raise normally
-                self.promise.reject.apply(self.elem, [ self, err ])
+                if self.observers is None:
+                    raise err  # just raise normally becaues finished
+                self._notifyObservers('catch', [ self, err ])
+                self._finalizeTimer()
                 return
-            self._doAlarm()
+            self._renewTimer()  # next run
 
 
     def _shouldRunAgain(self):
-        # 1) in dom, 2) not cancelled, 3) valid millis, 4) less than max runs, 5) deferred is still pending
+        # 1) in dom, 2) pending, 3) valid millis, 4) less than max runs
         return \
             (self.elem is not None and (document == self.elem or document.contains(self.elem))) and \
-            (not self.cancelled) and \
+            (self.observers is not None) and \
             (self.millis >= 0) and \
-            (self.maxRuns <= 0 or self.run_index < self.maxRuns) and \
-            (self.deferred.state() == 'pending')
+            (self.maxRuns <= 0 or self.runIndex < self.maxRuns)
             
 
-    def _cleanup(self):
-        remove_timer(self.elem, self.tname)
-        window.clearTimeout(self.timer_id)
-        self.timer_id = None
+        
+    #####################################################################
+    ###  Observers - I'm matching the API of A+ promises (somewhat)
+    ###  for familiarity in use, but these are observers, not promises.
+    ###  A repeating timer function doesn't really match the promise pattern.
+    
+    def do(self, onAlarm):
+        '''Registers an observer to be called each time the timer reaches zero.'''
+        return self._registerObserver('do', onAlarm)
+        
+
+    def catch(self, onError):
+        '''
+        Registers an observer to be called when exceptions occur.
+        Exceptions cancel the timer.
+        '''
+        return self._registerObserver('catch', onError)
+
+        
+    def then(self, onFinish):
+        '''
+        Registers an observer to be called when the timer is finished.
+        This could be max_timers or by cancel() being called.
+        This method is triggered only once.
+        '''
+        return self._registerObserver('then', onFinish)
+
+        
+    def _registerObserver(self, observer_key, callback):
+        if self.observers and self.observers[observer_key]:
+            self.observers[observer_key].append(callback)
+        return self  # allow chaining
             
+
+    def _notifyObservers(self, observer_key, args):
+        if self.observers and self.observers[observer_key]:
+            for f in self.observers[observer_key]:
+                f.apply(self.elem, args)
+
+            
+
+        

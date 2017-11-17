@@ -7,41 +7,45 @@
 					var get_timers = __init__ (__world__.storage).get_timers;
 					var set_timer = __init__ (__world__.storage).set_timer;
 					var remove_timer = __init__ (__world__.storage).remove_timer;
-					var TimerPromise = __init__ (__world__.promise).TimerPromise;
 					var BaseTimer = __class__ ('BaseTimer', [object], {
 						get __init__ () {return __get__ (this, function (self, elem, options) {
 							self.elem = elem;
 							self.millis = options ['millis'];
 							self.maxRuns = options ['maxRuns'];
 							self.tname = options ['name'];
-							self.timer_id = null;
-							self.timer_start = null;
-							self.run_index = 0;
-							self.cancelled = false;
+							self.timerId = null;
+							self.timerStart = null;
+							self.runIndex = 0;
+							self.finished = false;
 							for (var other_timer of get_timers (self.elem, self.tname)) {
 								if (other_timer !== self) {
 									other_timer.cancel ();
 								}
 							}
 							set_timer (self.elem, self.tname, self);
-							self.promise = TimerPromise (self._renewTimer);
+							self.observers = dict ({'do': list ([]), 'then': list ([]), 'catch': list ([])});
+							self._renewTimer ();
 						});},
 						get cancel () {return __get__ (this, function (self) {
-							self.cancelled = true;
-							self._cleanup ();
-							self.promise.resolve.apply (self.elem, list ([self]));
+							self._notifyObservers ('then', list ([self]));
+							self._finalizeTimer ();
+						});},
+						get _finalizeTimer () {return __get__ (this, function (self) {
+							remove_timer (self.elem, self.tname);
+							if (self.timerId) {
+								window.clearTimeout (self.timerId);
+								self.timerId = null;
+							}
+							self.observers = null;
 						});},
 						get _renewTimer () {return __get__ (this, function (self) {
-							console.log (11);
 							if (!(self._shouldRunAgain ())) {
-								console.log (22);
-								self._cleanup ();
-								self.promise.resolve.apply (self.elem, list ([self]));
+								self._notifyObservers ('then', list ([self]));
+								self._finalizeTimer ();
 							}
 							else {
-								console.log (33);
-								self.timer_start = new Date ().getTime ();
-								self.timer_id = window.setTimeout (self._onTimeout, self._nextMillis ());
+								self.timerStart = new Date ().getTime ();
+								self.timerId = window.setTimeout (self._onTimeout, self._nextMillis ());
 							}
 						});},
 						get _nextMillis () {return __get__ (this, function (self) {
@@ -49,49 +53,64 @@
 						});},
 						get _onTimeout () {return __get__ (this, function (self) {
 							if (!(self._shouldRunAgain ())) {
-								self._cleanup ();
-								self.promise.resolve.apply (self.elem, list ([self]));
+								self._notifyObservers ('then', list ([self]));
+								self._finalizeTimer ();
 							}
 							else {
-								self.run_index++;
+								self.runIndex++;
 								try {
-									self.palarm (self.elem, list ([self]));
+									self._notifyObservers ('do', list ([self]));
 								}
 								catch (__except0__) {
 									if (isinstance (__except0__, Error)) {
 										var err = __except0__;
-										self._cleanup ();
-										if (!(self.promise.pending)) {
+										if (self.observers === null) {
 											var __except1__ = err;
 											__except1__.__cause__ = null;
 											throw __except1__;
 										}
-										self.promise.reject.apply (self.elem, list ([self, err]));
+										self._notifyObservers ('catch', list ([self, err]));
+										self._finalizeTimer ();
 										return ;
 									}
 									else {
 										throw __except0__;
 									}
 								}
-								self._doAlarm ();
+								self._renewTimer ();
 							}
 						});},
 						get _shouldRunAgain () {return __get__ (this, function (self) {
-							return (self.elem !== null && (document == self.elem || document.contains (self.elem))) && !(self.cancelled) && self.millis >= 0 && (self.maxRuns <= 0 || self.run_index < self.maxRuns) && self.deferred.state () == 'pending';
+							return (self.elem !== null && (document == self.elem || document.contains (self.elem))) && self.observers !== null && self.millis >= 0 && (self.maxRuns <= 0 || self.runIndex < self.maxRuns);
 						});},
-						get _cleanup () {return __get__ (this, function (self) {
-							remove_timer (self.elem, self.tname);
-							window.clearTimeout (self.timer_id);
-							self.timer_id = null;
+						get do () {return __get__ (this, function (self, onAlarm) {
+							return self._registerObserver ('do', onAlarm);
+						});},
+						get catch () {return __get__ (this, function (self, onError) {
+							return self._registerObserver ('catch', onError);
+						});},
+						get then () {return __get__ (this, function (self, onFinish) {
+							return self._registerObserver ('then', onFinish);
+						});},
+						get _registerObserver () {return __get__ (this, function (self, observer_key, callback) {
+							if (self.observers && self.observers [observer_key]) {
+								self.observers [observer_key].append (callback);
+							}
+							return self;
+						});},
+						get _notifyObservers () {return __get__ (this, function (self, observer_key, args) {
+							if (self.observers && self.observers [observer_key]) {
+								for (var f of self.observers [observer_key]) {
+									f.apply (self.elem, args);
+								}
+							}
 						});}
 					});
 					__pragma__ ('<use>' +
-						'promise' +
 						'storage' +
 					'</use>')
 					__pragma__ ('<all>')
 						__all__.BaseTimer = BaseTimer;
-						__all__.TimerPromise = TimerPromise;
 						__all__.get_timers = get_timers;
 						__all__.remove_timer = remove_timer;
 						__all__.set_timer = set_timer;

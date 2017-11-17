@@ -9,7 +9,7 @@ class SleepTimer(BaseTimer):
 class SleepAfterTimer(SleepTimer):
     def _renewTimer(self):
         '''Trigger the alarm immediately, then starts the sleep/function cycle.'''
-        if self.run_index == 0:
+        if self.runIndex == 0:
             return self._onTimeout()
         return super()._renewTimer()
 
