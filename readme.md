@@ -4,12 +4,13 @@
 
 Why not just use `window.setTimeout`?  Because these timers provide:
 
-* A much easier API for starting, running, and cancelling
+* OO interface for starting, running, and cancelling.
+* No dependencies.
 * Automatic timer id tracking.
 * Several types of repeating timers. 
-* Automatically clearing of timers with the same name (super useful when you need a `keyUp` responder to trigger when the user stops typing for 500 ms in a text control).
-* Automatic stopping of repeating timer after a number of runs.
-* Automatic timer removal when related elements are removed from the DOM.
+* Automatically clearing of timers with the same name
+* Automatic stopping after a number of runs.
+* Automatic removal when related elements are removed from the DOM.
 * Multiple, named timers per element.
 * `this` is available in your timed function.
 
@@ -25,46 +26,70 @@ Why not just use `window.setTimeout`?  Because these timers provide:
 
 ### A few examples: 
 
-Wait four seconds, then run one time:
+Wait four seconds, then run one time.  Connect to default element (document).
 
 ```
-$('#somediv').autotimer().Timer(4000).do((tmr) => {
+Timers.Timer(4000).do(() => {
     console.log('one time joe!')
 })
 ```
 
-Run immediately, then repeatedly run exactly four seconds after the *end* of the previous run:
+Place timer on "#someid".  Run immediately, then repeatedly run exactly four seconds after the *end* of the previous run.
 
 ```
-$('#somediv').autotimer().SleepAfterTimer({ 'millis': 4000 }).do((tmr) => {
+let elem = document.getElementById('#someid')
+Timers.SleepAfterTimer(elem, 4000).do(() => {
     console.log('right now, then again and again!')
+    console.log(this)  # elem
 })
 ```
 
-Wait four seconds, then repeatedly run exactly four seconds after the *start* of the
-previous run. Stop after five runs:
+Place timer on "#someid".  Wait four seconds, then repeatedly run exactly four seconds after the *start* of the
+previous run. Stop after five runs.  
 
 ```
-$('#somediv').autotimer().IntervalTimer({ 
+let elem = document.getElementById('#someid')
+Timers.IntervalTimer(elem, {
     'millis': 4000, 
     'maxRuns': 5 
 }).do((tmr) => {
     console.log('wait first, then again and again!')
+    console.log(tmr.runIndex)    # 0, 1, 2, 3, or 4
+    console.log(tmr.timerStart)  # Date object for start of current timer
 })
 ```
 
-Check every fours seconds for boolean to be true, then stop checking:
+Check every fours seconds for boolean to be true, then cancel the timer.
 
 ```
-$('#somediv').autotimer().SleepAfterTimer(4000).do((tmr) => {
+let elem = document.getElementById('#someid')
+Timers.SleepAfterTimer(elem, 4000).do((tmr) => {
     if (somebool)
         tmr.cancel()
 })
 ```
 
+Trigger a function when the user stops typing for 500ms.  If the user presses another key quickly, cancel
+that timer and start the 500ms clock again.
+
+```
+elem = document.getElementById('#some_text_field')
+elem.addEventListener('keyup', () {
+    Timers.IntervalTimer(elem, {
+        'millis': 500, 
+        'name': 'keyup',  # this autocancels any previous timers by this name on elem
+                          # if omitted, the default name is 'default', so we actually
+                          # didn't need to set it explicitly
+    }).do((tmr) => {
+        console.log('The user finally stopped typing')
+    })
+})
+```
+
+
 ## Description:
 
-A jQuery main that provides three types of timers (with additional variations):
+Timer object that provides five types of timers.
 
 ### 1. Regular Timer
 
@@ -103,17 +128,20 @@ Note that SleepTimer is often a better option than IntervalTimer because it ensu
 See also the tl;dr examples at the top of this page.
 
 ```
-$('#somediv').autotimer().Timer(options).do(...)
-$('#somediv').autotimer().SleepTimer(options).do(...)
-$('#somediv').autotimer().SleepAfterTimer(options).do(...)
-$('#somediv').autotimer().IntervalTimer(options).do(...)
-$('#somediv').autotimer().IntervalAfterTimer(options).do(...)
+Timers.Timer(elem, millis, options).do(...).then(...).catch(...)
+Timers.SleepTimer(elem, millis, options).do(...).then(...).catch(...)
+Timers.SleepAfterTimer(elem, millis, options).do(...).then(...).catch(...)
+Timers.IntervalTimer(elem, millis, options).do(...).then(...).catch(...)
+Timers.IntervalAfterTimer(elem, millis, options).do(...).then(...).catch(...)
 ```
 
-Specfy options as a `single number` (duration in millis) or as an `object`:
+The `elem` and `millis` can be specified as above, or they can be specified in the `options` object.  Since the arguments are three distinct types, they can be specified in any order or omitted from the call (see the examples at the top of this page).
 
 ```
 {
+    # element to attach to (defaults to document)
+    elem = document,
+    
     # timer duration in milliseconds
     'millis': 1000,
 
@@ -126,44 +154,46 @@ Specfy options as a `single number` (duration in millis) or as an `object`:
 }
 ```
 
-Use the promise pattern for callbacks:
+The callbacks are specified with a familiar API:
 
 * `do(timer)` is run each time the timer hits zero.
-* `then()` is run one time after maxRuns is reached or the timer is cancelled.
-* `fail()` is run if an exception is thrown in your `do()` method.
+* `then(timer)` is run one time after maxRuns is reached or the timer is cancelled or `elem` is removed from the DOM.
+* `catch(timer, error)` is run if an exception is thrown in `do()`.
 
-The timer object is sole parameter to your callbacks (`this` is also available).
+Within each method, `this` is set to the element.  If you are using fat arrow functions, it is available at `timer.elem`.
 
-### Shortcut functions
+Promises: While the above methods look similar to promises, this is actually the observer pattern. Promises are a contract to do an action exactly one time, and repeating timers don't really match the pattern.  There's also no idea of chaining and value passing.  I've used the method names to make it familiar to programmers (who most likely don't care about the distinction anyway :).
+
+### Helper functions
 
 ```
-$('#somediv').autotimer('cancel')          # Cancels all timers on #somediv
-$('#somediv').autotimer('cancel', 'name')  # Cancels named timer on #somediv
-$('#somediv').autotimer('list')            # Returns the timer objects on #somediv
+Timers.cancel(elem)          # Cancels all timers on elem
+Timers.cancel(elem, 'name')  # Cancels named timer on #somediv
+let ar = Timers.timers(elem) # Returns the timer objects on elem (additional param 'name' filters by name)
 ```
 
-### Cancel Timers
+### Canceling Timers
 
 Any of the following will cancel a timer:
 
-* If `$('#myid').autotimer('cancel')` is called.
-* If `timer.cancel()` is called within a `do(timer)` function.
-* If elem is removed from the DOM.
-* If another timer with the same name is placed on elem.
+* `Timers.cancel(elem)` or `Timers.cancel(elem, name)` is called.
+* `tmr.cancel()` is called within a `do(tmr)` function.
+* `elem` is removed from the DOM.
+* Another timer with the same name is placed on `elem`.
 
 ### Global options
 
 Change any of the global options with:
 
 ```
-$.fn.autotimer.defaults.millis = 2000
+Timers.defaults.millis = 2000
 ```
 
 ## Development
 
-`autotimers` is programmed in Python, then transpiled to Javascript using the excellent [Transcrypt Library](https://www.transcrypt.org/).
+`autotimers` is programmed in Python and transpiled to Javascript using [Transcrypt Library](https://www.transcrypt.org/).  `dist/autotimers.js` is the only file needed to use the library.
 
-The `src/*.py` files are the source code for the main, with `main.py` being the primary script. The output files are in `src/__javascript/*.js`.  Only `main.js` really matters - the other files are included within it when Transcrypt runs. I've split the main into many files to make maintenance easier.  The individual files are fairly small.
+The source code is in `src/*.py`, with `main.py` being the primary script. The output files are in `src/__javascript/*.js`.  Upon build, `main.js` (which contains everything) is copied to `dist/autotimers.js`. 
 
 During development and testing, run `auto_transpiler.py` to automatically transpile whenever source files change.  You can also run `build.py` to erase and rebuild everything.
 

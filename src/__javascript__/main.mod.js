@@ -4,7 +4,7 @@
 		__nest__ (timer_concrete, '', __init__ (__world__.timer_concrete));
 		var Timers = __class__ ('Timers', [object], {
 			get __init__ () {return __get__ (this, function (self) {
-				self.defaults = dict ({'millis': 1000, 'maxRuns': 0, 'name': 'default'});
+				self.defaults = dict ({'elem': document, 'millis': 1000, 'maxRuns': 0, 'name': 'default'});
 			});},
 			get cancel () {return __get__ (this, function (self, elem, tname) {
 				if (!(elem)) {
@@ -56,9 +56,6 @@
 					else {
 						combined.py_update (arg);
 					}
-				}
-				if (!(combined ['elem'])) {
-					combined ['elem'] = document;
 				}
 				return timer_class (combined);
 			});}

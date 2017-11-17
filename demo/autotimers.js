@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 08:31:37
+// Transcrypt'ed from Python, 2017-11-17 11:57:05
 function main () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2725,7 +2725,7 @@ function main () {
 		__nest__ (timer_concrete, '', __init__ (__world__.timer_concrete));
 		var Timers = __class__ ('Timers', [object], {
 			get __init__ () {return __get__ (this, function (self) {
-				self.defaults = dict ({'millis': 1000, 'maxRuns': 0, 'name': 'default'});
+				self.defaults = dict ({'elem': document, 'millis': 1000, 'maxRuns': 0, 'name': 'default'});
 			});},
 			get cancel () {return __get__ (this, function (self, elem, tname) {
 				if (!(elem)) {
@@ -2777,9 +2777,6 @@ function main () {
 					else {
 						combined.py_update (arg);
 					}
-				}
-				if (!(combined ['elem'])) {
-					combined ['elem'] = document;
 				}
 				return timer_class (combined);
 			});}

@@ -1,6 +1,6 @@
 {
   "name": "autotimers",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Zero-dependency replacement for setTimeout() with five types of repeating timer objects, timers on elements; easier cancellation, and promise-style. ",
   "main": "dist/autotimers.js",
   "directories": {

@@ -11,6 +11,9 @@ import timer_concrete
 class Timers(object):
     def __init__(self):
         self.defaults = {
+            # the element to attach to
+            'elem': document,
+            
             # timer duration in milliseconds
             'millis': 1000,
 
@@ -88,8 +91,6 @@ class Timers(object):
                 pass
             else:                         # assume options dict
                 combined.update(arg)
-        if not combined['elem']:          # default elem to document
-            combined['elem'] = document
                 
         # create and return the timer
         return timer_class(combined)
