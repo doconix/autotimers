@@ -33,18 +33,20 @@
         <div class="code">
             <div id="someid" class="message"></div>
             <script>
-                $('#someid').closest('.example').find('.start_btn').click(function() {
-                    log_msg($('#someid'), "Starting 2 second, single-run Timer().")
+                $(function() {
+                    $('#someid').closest('.example').find('.start_btn').click(function() {
+                        log_msg($('#someid'), "Starting 2 second, single-run Timer().")
                     
-                    // TIMER CALL:
-                    Timers.Timer($('#someid')[0], 2000).do(function(timer) {
-                        log_msg($(this), "Timer is up!")
-                    })
+                        // TIMER CALL:
+                        Timers.Timer($('#someid')[0], 2000).do(function(timer) {
+                            log_msg($(this), "Timer is up!")
+                        })
 
-                })
-                $('#someid').closest('.example').find('.cancel_btn').click(function() {
-                    Timers.cancel($('#someid')[0])
-                    log_msg($('#someid'), "Cancelled!")
+                    })
+                    $('#someid').closest('.example').find('.cancel_btn').click(function() {
+                        Timers.cancel($('#someid')[0])
+                        log_msg($('#someid'), "Cancelled!")
+                    })
                 })
             </script>
         </div>
