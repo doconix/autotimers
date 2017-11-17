@@ -20,24 +20,20 @@ import test_interval
 ##################################
 ###   Test runner    
     
-test_log = []
+test_counter = 0
 def nextTest():
-    if len(test_log) == len(document.TESTS):
-        console.log('{} tests completed'.format(len(test_log)))
+    if test_counter == len(document.TESTS):
+        console.log('{} tests completed'.format(test_counter))
         return
-    klass = document.TESTS[len(test_log)]
+    klass = document.TESTS[test_counter]
     console.log(klass.__name__)
     t = klass()
-    t.setUp()
-    def then():
-        t.tearDown()
-        test_log.push('success')
+    def endTest():
+        t.endTest()
         nextTest()
-    def reject(err):
-        console.error(err)
-        test_log.push(err)
-        nextTest()
-    t.promise_start().then(then, reject)
+    window.setTimeout(endTest, t.NEEDED_TIME)
+    t.startTest()
+    test_counter += 1
     
 
 # start the tests

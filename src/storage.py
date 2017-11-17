@@ -28,13 +28,13 @@ def get_timers(elem, tname):
     tmap = _tstore(elem)
     for key in tmap.js_keys():
         if tname is None or tname is js_undefined or tname == key:
-            tlist.push(tmap[key])
+            tlist.append(tmap.js_get(key))
     return tlist
     
     
 def get_timer(elem, tname):
     '''Retrieves the timer keyed with tname on the given element, or None if not present'''
-    timer = _tstore(elem)[tname]
+    timer = _tstore(elem).js_get(tname)
     return timer if timer is not js_undefined else None
     
     

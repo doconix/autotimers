@@ -8,13 +8,12 @@ class TestZeroMillis(TestBase):
         self.counter = 0
         def func():
             self.counter += 1
-        self.div.autotimer().Timer({
-            'func': self.func,
+        Timers.Timer(self.div, {
             'millis': 0
         }).do(func)
 
     def end(self):
-        # with no func, it should not trigger
+        # with no millis, it should not trigger
         assert self.counter == 0
 
 document.TESTS.append(TestZeroMillis)
@@ -25,42 +24,22 @@ class TestDOMRemoval(TestBase):
 
     def begin(self):
         self.counter = 0
-        def func():
+        def func(timer):
             self.counter += 1
-        self.div.autotimer().Timer({
+            console.log("DOM DOM DOM")
+            console.log(timer)
+        Timers.Timer(self.div, {
             'millis': 200,
         }).do(func)
         self.div.remove()
 
     def end(self):
-        # with no func, it should not trigger
+        # with elem out of the document, it should not trigger
         self.assertTrue(self.counter == 0)
 
 document.TESTS.append(TestDOMRemoval)
 
 
-class TestDebugTimer(TestBase):
-    NEEDED_TIME = 500
-
-    def begin(self):
-        def func1():
-           pass
-        self.div.autotimer().Timer({
-            'millis': 200,
-            'name': 'test1',
-        }).do(func1)
-        def func2():
-            pass
-        self.div.autotimer().Timer({
-            'millis': 300,
-            'name': 'test2',
-        }).do(func2)
-        self.div.autotimer('debug')
-
-    def end(self):
-        pass
-
-document.TESTS.append(TestDebugTimer)
 
 
 class TestCancelTimer(TestBase):
@@ -71,14 +50,14 @@ class TestCancelTimer(TestBase):
         def func():
             self.counter += 1
             self.div.autotimer('cancel')
-        self.div.autotimer().SleepTimer({
+        Timers.SleepTimer(self.div, {
             'millis': 200,
             'name': 'test1',
         }).do(func)
-        
+
     def end(self):
         self.assertTrue(self.counter == 1)
-        
+
 document.TESTS.append(TestCancelTimer)
 
 
@@ -88,24 +67,24 @@ class TestExceptionInTimer(TestBase):
     def begin(self):
         self.counter = 0
         self.then_counter = 0
-        self.fail_counter = 0
+        self.cach_counter = 0
         def func():
             self.counter += 1
             raise Error('intentional')
         def then():
             self.then_counter += 1
         def fail():
-            self.fail_counter += 1
-        self.div.autotimer().Timer({
+            self.cach_counter += 1
+        Timers.Timer(self.div, {
             'millis': 200,
             'name': 'test1',
-        }).do(func).then(then).fail(fail)
-        
+        }).do(func).then(then).catch(fail)
+
     def end(self):
         self.assertTrue(self.counter == 1)
         self.assertTrue(self.then_counter == 0)
-        self.assertTrue(self.fail_counter == 1)
-        
+        self.assertTrue(self.cach_counter == 1)
+
 document.TESTS.append(TestExceptionInTimer)
 
 
@@ -115,23 +94,23 @@ class TestNoExceptionInTimer(TestBase):
     def begin(self):
         self.counter = 0
         self.then_counter = 0
-        self.fail_counter = 0
+        self.cach_counter = 0
         def func():
             self.counter += 1
         def then():
             self.then_counter += 1
         def fail():
-            self.fail_counter += 1
-        self.div.autotimer().Timer({
+            self.cach_counter += 1
+        Timers.Timer(self.div, {
             'millis': 200,
             'name': 'test1',
-        }).do(func).then(then).fail(fail)
-        
+        }).do(func).then(then).catch(fail)
+
     def end(self):
         self.assertTrue(self.counter == 1)
         self.assertTrue(self.then_counter == 1)
-        self.assertTrue(self.fail_counter == 0)
-        
+        self.assertTrue(self.cach_counter == 0)
+
 document.TESTS.append(TestNoExceptionInTimer)
 
 

@@ -1,6 +1,6 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 08:31:49
-function dev () {
+// Transcrypt'ed from Python, 2017-11-17 08:31:51
+function test_fails () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
     var __world__ = __all__;
@@ -2493,31 +2493,197 @@ function dev () {
         }
     };
     __all__.__setslice__ = __setslice__;
+	__nest__ (
+		__all__,
+		'test_base', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var TestBase = __class__ ('TestBase', [object], {
+						NEEDED_TIME: 3000,
+						get make () {return __get__ (this, function (self, elem_id, elem_tag) {
+							if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
+								var elem_tag = 'div';
+							};
+							var e = document.getElementById ('#' + elem_id);
+							if (e) {
+								e.remove ();
+							}
+							var e = document.createElement (elem_tag);
+							e.id = elem_id;
+							document.body.appendChild (e);
+							return e;
+						});},
+						get startTest () {return __get__ (this, function (self) {
+							self.div = self.make ('test1');
+							try {
+								self.begin ();
+							}
+							catch (__except0__) {
+								if (isinstance (__except0__, Error)) {
+									var err = __except0__;
+									console.error (err);
+								}
+								else {
+									throw __except0__;
+								}
+							}
+						});},
+						get endTest () {return __get__ (this, function (self) {
+							try {
+								self.end ();
+							}
+							catch (__except0__) {
+								if (isinstance (__except0__, Error)) {
+									var err = __except0__;
+									console.error (err);
+								}
+								else {
+									throw __except0__;
+								}
+							}
+							self.div.remove ();
+						});},
+						get begin () {return __get__ (this, function (self) {
+							var __except0__ = Error ('Subclass needs to implement begin()');
+							__except0__.__cause__ = null;
+							throw __except0__;
+						});},
+						get end () {return __get__ (this, function (self) {
+							var __except0__ = Error ('Subclass needs to implement end()');
+							__except0__.__cause__ = null;
+							throw __except0__;
+						});},
+						get assertTrue () {return __get__ (this, function (self, cond, msg) {
+							if (typeof msg == 'undefined' || (msg != null && msg .hasOwnProperty ("__kwargtrans__"))) {;
+								var msg = 'assertTrue condition was false';
+							};
+							if (!(cond)) {
+								var __except0__ = Error (msg);
+								__except0__.__cause__ = null;
+								throw __except0__;
+							}
+						});}
+					});
+					__pragma__ ('<all>')
+						__all__.TestBase = TestBase;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
 	(function () {
-		var main = function () {
-			var elem = document.querySelector ('#div1');
-			var func = function () {
-				console.log ('timer do!');
-				var __except0__ = new Error ('asdf');
-				__except0__.__cause__ = null;
-				throw __except0__;
-			};
-			var then = function () {
-				console.log ('then!');
-			};
-			var err = function (timer, error) {
-				console.log ('error');
-				console.log (error);
-			};
-			Timers.SleepTimer (elem, dict ({'millis': 1000, 'maxRuns': 2})).do (func).then (then).catch (err);
-		};
-		document.addEventListener ('DOMContentLoaded', main);
+		var TestBase = __init__ (__world__.test_base).TestBase;
+		var TestZeroMillis = __class__ ('TestZeroMillis', [TestBase], {
+			NEEDED_TIME: 500,
+			get begin () {return __get__ (this, function (self) {
+				self.counter = 0;
+				var func = function () {
+					self.counter++;
+				};
+				Timers.Timer (self.div, dict ({'millis': 0})).do (func);
+			});},
+			get end () {return __get__ (this, function (self) {
+			});}
+		});
+		document.TESTS.append (TestZeroMillis);
+		var TestDOMRemoval = __class__ ('TestDOMRemoval', [TestBase], {
+			NEEDED_TIME: 500,
+			get begin () {return __get__ (this, function (self) {
+				self.counter = 0;
+				var func = function (timer) {
+					self.counter++;
+					console.log ('DOM DOM DOM');
+					console.log (timer);
+				};
+				Timers.Timer (self.div, dict ({'millis': 200})).do (func);
+				self.div.remove ();
+			});},
+			get end () {return __get__ (this, function (self) {
+				self.assertTrue (self.counter == 0);
+			});}
+		});
+		document.TESTS.append (TestDOMRemoval);
+		var TestCancelTimer = __class__ ('TestCancelTimer', [TestBase], {
+			NEEDED_TIME: 1000,
+			get begin () {return __get__ (this, function (self) {
+				self.counter = 0;
+				var func = function () {
+					self.counter++;
+					self.div.autotimer ('cancel');
+				};
+				Timers.SleepTimer (self.div, dict ({'millis': 200, 'name': 'test1'})).do (func);
+			});},
+			get end () {return __get__ (this, function (self) {
+				self.assertTrue (self.counter == 1);
+			});}
+		});
+		document.TESTS.append (TestCancelTimer);
+		var TestExceptionInTimer = __class__ ('TestExceptionInTimer', [TestBase], {
+			NEEDED_TIME: 1000,
+			get begin () {return __get__ (this, function (self) {
+				self.counter = 0;
+				self.then_counter = 0;
+				self.cach_counter = 0;
+				var func = function () {
+					self.counter++;
+					var __except0__ = Error ('intentional');
+					__except0__.__cause__ = null;
+					throw __except0__;
+				};
+				var then = function () {
+					self.then_counter++;
+				};
+				var fail = function () {
+					self.cach_counter++;
+				};
+				Timers.Timer (self.div, dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).catch (fail);
+			});},
+			get end () {return __get__ (this, function (self) {
+				self.assertTrue (self.counter == 1);
+				self.assertTrue (self.then_counter == 0);
+				self.assertTrue (self.cach_counter == 1);
+			});}
+		});
+		document.TESTS.append (TestExceptionInTimer);
+		var TestNoExceptionInTimer = __class__ ('TestNoExceptionInTimer', [TestBase], {
+			NEEDED_TIME: 1000,
+			get begin () {return __get__ (this, function (self) {
+				self.counter = 0;
+				self.then_counter = 0;
+				self.cach_counter = 0;
+				var func = function () {
+					self.counter++;
+				};
+				var then = function () {
+					self.then_counter++;
+				};
+				var fail = function () {
+					self.cach_counter++;
+				};
+				Timers.Timer (self.div, dict ({'millis': 200, 'name': 'test1'})).do (func).then (then).catch (fail);
+			});},
+			get end () {return __get__ (this, function (self) {
+				self.assertTrue (self.counter == 1);
+				self.assertTrue (self.then_counter == 1);
+				self.assertTrue (self.cach_counter == 0);
+			});}
+		});
+		document.TESTS.append (TestNoExceptionInTimer);
+		__pragma__ ('<use>' +
+			'test_base' +
+		'</use>')
 		__pragma__ ('<all>')
-			__all__.main = main;
+			__all__.TestBase = TestBase;
+			__all__.TestCancelTimer = TestCancelTimer;
+			__all__.TestDOMRemoval = TestDOMRemoval;
+			__all__.TestExceptionInTimer = TestExceptionInTimer;
+			__all__.TestNoExceptionInTimer = TestNoExceptionInTimer;
+			__all__.TestZeroMillis = TestZeroMillis;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;
 }
-dev ();
+test_fails ();
 
-//# sourceMappingURL=extra/sourcemap/dev.js.map
+//# sourceMappingURL=extra/sourcemap/test_fails.js.map

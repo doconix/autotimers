@@ -8,8 +8,8 @@
 					var set_timer = __init__ (__world__.storage).set_timer;
 					var remove_timer = __init__ (__world__.storage).remove_timer;
 					var BaseTimer = __class__ ('BaseTimer', [object], {
-						get __init__ () {return __get__ (this, function (self, elem, options) {
-							self.elem = elem;
+						get __init__ () {return __get__ (this, function (self, options) {
+							self.elem = options ['elem'];
 							self.millis = options ['millis'];
 							self.maxRuns = options ['maxRuns'];
 							self.tname = options ['name'];

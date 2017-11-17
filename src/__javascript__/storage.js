@@ -1,6 +1,6 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 08:31:49
-function dev () {
+// Transcrypt'ed from Python, 2017-11-17 08:31:40
+function storage () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
     var __world__ = __all__;
@@ -2494,30 +2494,46 @@ function dev () {
     };
     __all__.__setslice__ = __setslice__;
 	(function () {
-		var main = function () {
-			var elem = document.querySelector ('#div1');
-			var func = function () {
-				console.log ('timer do!');
-				var __except0__ = new Error ('asdf');
-				__except0__.__cause__ = null;
-				throw __except0__;
-			};
-			var then = function () {
-				console.log ('then!');
-			};
-			var err = function (timer, error) {
-				console.log ('error');
-				console.log (error);
-			};
-			Timers.SleepTimer (elem, dict ({'millis': 1000, 'maxRuns': 2})).do (func).then (then).catch (err);
+		var TIMERS = new WeakMap ();
+		var _tstore = function (elem) {
+			if (!(TIMERS.has (elem))) {
+				TIMERS.set (elem, new Map ());
+			}
+			return TIMERS.get (elem);
 		};
-		document.addEventListener ('DOMContentLoaded', main);
+		var remove_timer = function (elem, tname) {
+			var tmap = _tstore (elem);
+			tmap.delete (tname);
+			if (tmap.length == 0) {
+				TIMERS.delete (elem);
+			}
+		};
+		var set_timer = function (elem, tname, timer) {
+			_tstore (elem).set (tname, timer);
+		};
+		var get_timers = function (elem, tname) {
+			var tlist = list ([]);
+			var tmap = _tstore (elem);
+			for (var key of tmap.keys ()) {
+				if (tname === null || tname === undefined || tname == key) {
+					tlist.append (tmap.get (key));
+				}
+			}
+			return tlist;
+		};
+		var get_timer = function (elem, tname) {
+			var timer = _tstore (elem).get (tname);
+			return (timer !== undefined ? timer : null);
+		};
 		__pragma__ ('<all>')
-			__all__.main = main;
+			__all__.TIMERS = TIMERS;
+			__all__._tstore = _tstore;
+			__all__.get_timer = get_timer;
+			__all__.get_timers = get_timers;
+			__all__.remove_timer = remove_timer;
+			__all__.set_timer = set_timer;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;
 }
-dev ();
-
-//# sourceMappingURL=extra/sourcemap/dev.js.map
+storage ();

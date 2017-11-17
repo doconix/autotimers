@@ -10,37 +10,38 @@
 							if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
 								var elem_tag = 'div';
 							};
+							var e = document.getElementById ('#' + elem_id);
+							if (e) {
+								e.remove ();
+							}
 							var e = document.createElement (elem_tag);
 							e.id = elem_id;
 							document.body.appendChild (e);
 							return e;
 						});},
-						get setUp () {return __get__ (this, function (self) {
+						get startTest () {return __get__ (this, function (self) {
 							self.div = self.make ('test1');
-						});},
-						get tearDown () {return __get__ (this, function (self) {
-							self.div.remove ();
-						});},
-						get promise_start () {return __get__ (this, function (self) {
-							var promise = function (resolve, reject) {
-								var __left0__ = tuple ([resolve, reject]);
-								self.resolve = __left0__ [0];
-								self.reject = __left0__ [1];
-								self.begin ();
-								window.setTimeout (self.promise_end, self.NEEDED_TIME);
-							};
-							return new Promise (promise);
-						});},
-						get promise_end () {return __get__ (this, function (self) {
 							try {
-								self.end ();
-								self.resolve ();
+								self.begin ();
 							}
 							catch (__except0__) {
 								if (isinstance (__except0__, Error)) {
 									var err = __except0__;
 									console.error (err);
-									self.reject ();
+								}
+								else {
+									throw __except0__;
+								}
+							}
+						});},
+						get endTest () {return __get__ (this, function (self) {
+							try {
+								self.end ();
+							}
+							catch (__except0__) {
+								if (isinstance (__except0__, Error)) {
+									var err = __except0__;
+									console.error (err);
 								}
 								else {
 									throw __except0__;

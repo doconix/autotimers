@@ -10,7 +10,7 @@ class TestInterval(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.autotimer().IntervalTimer({
+        Timers.IntervalTimer(self.div, {
             'millis': 400,
         }).do(func)
         
@@ -29,7 +29,7 @@ class TestIntervalAfter(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.autotimer().IntervalAfterTimer({
+        Timers.IntervalAfterTimer(self.div, {
             'millis': 400,
         }).do(func)
         
@@ -40,21 +40,6 @@ document.TESTS.append(TestIntervalAfter)
     
     
 
-class TestMillisShortcut(TestBase):
-    NEEDED_TIME = 1000
-
-    def begin(self):
-        self.counter = 0
-        self.start_time = __new__(Date())
-        def func():
-            self.counter += 1
-        self.div.autotimer().IntervalTimer(400).do(func)
-        
-    def end(self):
-        self.assertTrue(self.counter == 2)
-        
-document.TESTS.append(TestMillisShortcut)
-    
     
     
     

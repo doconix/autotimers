@@ -4,8 +4,8 @@ from storage import get_timers, set_timer, remove_timer
 
 class BaseTimer(object):
     '''The base timer class.'''
-    def __init__(self, elem, options):
-        self.elem = elem
+    def __init__(self, options):
+        self.elem = options['elem']
         self.millis = options['millis']
         self.maxRuns = options['maxRuns']
         self.tname = options['name']

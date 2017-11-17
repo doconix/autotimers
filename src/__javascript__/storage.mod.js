@@ -26,13 +26,13 @@
 						var tmap = _tstore (elem);
 						for (var key of tmap.keys ()) {
 							if (tname === null || tname === undefined || tname == key) {
-								tlist.push (tmap [key]);
+								tlist.append (tmap.get (key));
 							}
 						}
 						return tlist;
 					};
 					var get_timer = function (elem, tname) {
-						var timer = _tstore (elem) [tname];
+						var timer = _tstore (elem).get (tname);
 						return (timer !== undefined ? timer : null);
 					};
 					__pragma__ ('<all>')

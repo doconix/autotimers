@@ -10,7 +10,7 @@ class TestSleep(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.autotimer().SleepTimer({
+        Timers.SleepTimer(self.div, {
             'millis': 400,
         }).do(func)
         
@@ -29,38 +29,13 @@ class TestSleepAfter(TestBase):
         self.start_time = __new__(Date())
         def func():
             self.counter += 1
-        self.div.autotimer().SleepAfterTimer({
+        Timers.SleepAfterTimer(self.div, {
             'millis': 400,
         }).do(func)
         
     def end(self):
         # immediate run, plus two after timer runs
         self.assertTrue(self.counter == 3)
-        
-document.TESTS.append(TestSleepAfter)
-    
-    
-    
-class TestSleepAfter(TestBase):
-    NEEDED_TIME = 1000
-
-    def begin(self):
-        self.counter = 0
-        self.start_time = __new__(Date())
-        def func():
-            self.counter += 1
-        promise = self.div.autotimer().SleepAfterTimer({
-            'millis': 10000, 
-        })
-        # wait 400ms to attach the do
-        # this is after the first run of func would have happened
-        # the timer should still run immediately when .do is added
-        def attach():
-            promise.do(func)
-        window.setTimeout(attach, 400)
-        
-    def end(self):
-        self.assertTrue(self.counter == 1)
         
 document.TESTS.append(TestSleepAfter)
     

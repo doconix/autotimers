@@ -12,32 +12,26 @@ class TestBase(object):
     NEEDED_TIME = 3000  # time from begin() to end()
     
     def make(self, elem_id, elem_tag='div'):
+        e = document.getElementById('#' + elem_id)
+        if e:
+            e.remove()
         e = document.createElement(elem_tag)
         e.id = elem_id
         document.body.appendChild(e)
         return e
     
-    def setUp(self):
+    def startTest(self):
         self.div = self.make('test1')
-
-    def tearDown(self):
-        self.div.remove()
-        
-    def promise_start(self):
-        def promise(resolve, reject):
-            self.resolve, self.reject = resolve, reject
-            self.begin()
-            window.setTimeout(self.promise_end, self.NEEDED_TIME)
-        return __new__(Promise(promise))
-        
-    def promise_end(self):
         try:
-            self.end()
-            self.resolve()
+            self.begin()
         except Error as err:
             console.error(err)
-            self.reject()
-        # cancel any timers till running
+        
+    def endTest(self):
+        try:
+            self.end()
+        except Error as err:
+            console.error(err)
         self.div.remove()  
 
     def begin(self):

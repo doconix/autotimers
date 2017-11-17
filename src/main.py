@@ -2,7 +2,7 @@
 # Version: 2.0.9
 # License: MIT
 from storage import get_timers
-import timer_once, timer_sleep, timer_interval
+import timer_concrete
 
 
 ############################################
@@ -25,70 +25,74 @@ class Timers(object):
         
     def cancel(self, elem, tname):
         '''Cancels the timers on the given element, optionally filtered by name'''
+        if not elem:
+            elem = document
         for timer in get_timers(elem, tname):
             timer.cancel()
         
 
     def timers(self, elem, tname):
         '''Returns an array of timers on the given element, optionally filtered by name'''
+        if not elem:
+            elem = document
         return get_timers(elem, tname)
         
     
-    def Timer(self, elem, options):
+    def Timer(self, *args):
         '''Starts a one-time timer'''
-        return self._create(timer_once.OnceTimer, elem, options)
+        return self._create(timer_concrete.OnceTimer, args)
         
 
-    def SleepTimer(self, elem, options):
+    def SleepTimer(self, *args):
         '''
         Starts a repeating timer with an exact time between the 
         end of previous run and start of next run.
         '''
-        return self._create(timer_sleep.SleepTimer, elem, options)
+        return self._create(timer_concrete.SleepTimer, args)
 
 
-    def SleepAfterTimer(self, elem, options):
+    def SleepAfterTimer(self, *args):
         '''
         Runs the do() function, then starts a repeating timer with 
         an exact time between the end of previous run and start of next run.
         '''
-        return self._create(timer_sleep.SleepAfterTimer, elem, options)
+        return self._create(timer_concrete.SleepAfterTimer, args)
 
 
-    def IntervalTimer(self, elem, options):
+    def IntervalTimer(self, *args):
         '''
         Starts a repeating timer with an exact time between the
         start of previous run and start of next run.
         '''
-        return self._create(timer_interval.IntervalTimer, elem, options)
+        return self._create(timer_concrete.IntervalTimer, args)
 
 
-    def IntervalAfterTimer(self, elem, options):
+    def IntervalAfterTimer(self, *args):
         '''
         Runs the do() function, then starts a repeating timer with 
         an exact time between the start of previous run and start of next run.
         '''
-        return self._create(timer_interval.IntervalAfterTimer, elem, options)
+        return self._create(timer_concrete.IntervalAfterTimer, args)
 
 
-    def _create(self, timer_class, elem, options):
-        # checks
-        if not elem:
-            console.warn('Timer set on undefined element. Setting on document instead.')
-            elem = document
-        
-        # shortcuts
-        if typeof(options) == 'number':
-            options = { 'millis': options }
-    
-        # options
+    def _create(self, timer_class, args):
+        # since args are all different types, any order is fine
         combined = {}
-        combined.update(self.defaults)
-        if options is not None:
-            combined.update(options)
-        
+        combined.update(self.defaults)    # set up defaults
+        for arg in args:
+            if typeof(arg) == 'number':   # assume millis
+                combined['millis'] = arg
+            elif arg['nodeType']:         # assume element
+                combined['elem'] = arg
+            elif not arg:                 # undefined or null?
+                pass
+            else:                         # assume options dict
+                combined.update(arg)
+        if not combined['elem']:          # default elem to document
+            combined['elem'] = document
+                
         # create and return the timer
-        return timer_class(elem, combined)
+        return timer_class(combined)
         
 
 
