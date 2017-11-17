@@ -4,18 +4,25 @@
     <title>Autotimers Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="index.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="autotimers.js"></script>
 </head>
 <body>
     <h1>Autotimers Demos</h1>
-    <h2>Javascript timers on steroids (and easier to boot)!</h2>
-    <h3><a href="https://github.com/doconix/autotimers.js">Return to autotimers.js</a></h3>
+    <h2>
+        Zero-dependency replacement for setTimeout() with five types of repeating timer objects, timers on elements, easier cancellation, unit tests, and promise-syntax.
+    </h2>
+    <h3><a href="https://github.com/doconix/autotimers">Return to Autotimers GitHub Page</a></h3>
 
     <script>
         function log_msg(elem, msg) {
             elem.html(elem.html() + "<div>" + msg + "</div>")
         }
     </script>
+        
+    <div class="jquery_note">
+        (note that Autotimers has no dependencies; jQuery below isn't related to the timer library)
+    </div>
 
     <div class="example">
         <div class="title">Example 1: Run once, 2 seconds from now.</div>
@@ -24,22 +31,20 @@
             <button class="cancel_btn">Cancel</button>
         </div>
         <div class="code">
-            <div id="someid" class="message">Not yet run</div>
+            <div id="someid" class="message"></div>
             <script>
-                $(function() {
-                    $('#someid').closest('.example').find('.start_btn').click(function() {
-                        log_msg($('#someid'), "Starting 2 second, single-run Timer().")
-                        
-                        // TIMER CALL:
-                        $('#someid').autotimer().Timer(2000).do(function(timer) {
-                            log_msg($(this), "Timer is up!")
-                        })
+                $('#someid').closest('.example').find('.start_btn').click(function() {
+                    log_msg($('#someid'), "Starting 2 second, single-run Timer().")
+                    
+                    // TIMER CALL:
+                    Timers.Timer($('#someid')[0], 2000).do(function(timer) {
+                        log_msg($(this), "Timer is up!")
+                    })
 
-                    })
-                    $('#someid').closest('.example').find('.cancel_btn').click(function() {
-                        $('#someid').autotimer('cancel')
-                        log_msg($('#someid'), "Cancelled!")
-                    })
+                })
+                $('#someid').closest('.example').find('.cancel_btn').click(function() {
+                    Timers.cancel($('#someid')[0])
+                    log_msg($('#someid'), "Cancelled!")
                 })
             </script>
         </div>
@@ -63,13 +68,13 @@
             <input id="someid2_input" type="text" placeholder="Type something here" />
         </div>
         <div class="code">
-            <div id="someid2" class="message">Not yet run</div>
+            <div id="someid2" class="message"></div>
             <script>
                 $(function() {
                     $('#someid2_input').keyup(function() {
                         
                         // TIMER CALL:
-                        $('#someid2').autotimer().Timer({
+                        Timers.Timer($('#someid2')[0], {
                             millis: 1000,
                             name: 'input-watcher'
                         }).do(function(timer) {
@@ -128,14 +133,14 @@
             <button class="cancel_btn">Cancel</button>
         </div>
         <div class="code">
-            <div id="someid3" class="message">Element here</div>
+            <div id="someid3" class="message"></div>
             <script>
                 $(function() {
                     $('#someid3').closest('.example').find('.start_btn').click(function(timer) {
                         log_msg($('#someid3'), "Starting IntervalTimer()")
 
                         // TIMER CALL:
-                        $('#someid3').autotimer().IntervalTimer({
+                        Timers.IntervalTimer($('#someid3')[0], {
                             millis: 1000,
                             maxRuns: 4
                         }).do(function (timer) {
@@ -150,7 +155,7 @@
 
                     })
                     $('#someid3').closest('.example').find('.cancel_btn').click(function() {
-                        $('#someid3').autotimer('cancel')
+                        Timers.cancel($('#someid3')[0])
                         log_msg($('#someid3'), "Cancelled!")
                     })
                 })
@@ -177,7 +182,7 @@
             <button class="cancel_btn">Cancel</button>
         </div>
         <div class="code">
-            <div id="someid4" class="message">Element here</div>
+            <div id="someid4" class="message"></div>
             <script>
                 $(function() {
                     var index = 1;
@@ -186,14 +191,14 @@
                         var index = 1;
 
                         // TIMER CALL:
-                        $('#someid4').autotimer().SleepAfterTimer(2000).do(function (timer) {
+                        Timers.SleepAfterTimer($('#someid4')[0], 2000).do(function(timer) {
                             log_msg($(this), 'Run #' + index);
                             index++;
                         })
 
                     })
                     $('#someid4').closest('.example').find('.cancel_btn').click(function() {
-                        $('#someid4').autotimer('cancel')
+                        Timers.cancel($('#someid4')[0])
                         log_msg($('#someid4'), "Cancelled!")
                     })
                 })

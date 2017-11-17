@@ -2,6 +2,21 @@ h1, h2, h3 {
     text-align: center;
 }
 
+h2 {
+    font-size: 1.1em;
+    color: #777;
+    max-width: 600px;
+    margin: 10px auto;
+}
+
+.jquery_note {
+    padding-top: 30px;
+    font-style: italic;
+    font-size: 1.1em;
+    color: #888888;
+    text-align: center;
+}
+
 table {
     margin: auto;
 }
@@ -11,6 +26,10 @@ table {
     padding: 36px 12px;
     border-top: 1px inset #999;
     clear: both;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .title {

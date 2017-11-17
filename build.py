@@ -2,7 +2,7 @@
 import os, shutil, glob, sys, subprocess, re
 from os.path import join as j
 
-VERSION = "2.0.11"
+VERSION = "2.0.12"
 SROOT = 'src'
 DROOT = 'dist'
 DEMOROOT = 'demo'
