@@ -1,5 +1,4 @@
-__pragma__('alias', 'js_finally', 'finally')
-from storage import get_timers, set_timer, remove_timer
+from storage import get_timers, store_timer, remove_timer
 
 
 class BaseTimer(object):
@@ -20,10 +19,9 @@ class BaseTimer(object):
         for other_timer in get_timers(self.elem, self.tname):
             if other_timer is not self:
                 other_timer.cancel()
-        set_timer(self.elem, self.tname, self)
+        store_timer(self.elem, self.tname, self)
         
-        # set up the observer lists
-        # this is set to None when the timer is finished
+        # set up the observer lists (this is set to None when the timer is finished)
         self.observers = {
             'do': [],
             'then': [],

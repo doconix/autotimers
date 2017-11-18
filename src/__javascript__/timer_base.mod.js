@@ -5,7 +5,7 @@
 				__inited__: false,
 				__init__: function (__all__) {
 					var get_timers = __init__ (__world__.storage).get_timers;
-					var set_timer = __init__ (__world__.storage).set_timer;
+					var store_timer = __init__ (__world__.storage).store_timer;
 					var remove_timer = __init__ (__world__.storage).remove_timer;
 					var BaseTimer = __class__ ('BaseTimer', [object], {
 						get __init__ () {return __get__ (this, function (self, options) {
@@ -22,7 +22,7 @@
 									other_timer.cancel ();
 								}
 							}
-							set_timer (self.elem, self.tname, self);
+							store_timer (self.elem, self.tname, self);
 							self.observers = dict ({'do': list ([]), 'then': list ([]), 'catch': list ([])});
 							self._renewTimer ();
 						});},
@@ -113,7 +113,7 @@
 						__all__.BaseTimer = BaseTimer;
 						__all__.get_timers = get_timers;
 						__all__.remove_timer = remove_timer;
-						__all__.set_timer = set_timer;
+						__all__.store_timer = store_timer;
 					__pragma__ ('</all>')
 				}
 			}

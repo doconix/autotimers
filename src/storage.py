@@ -17,7 +17,7 @@ def remove_timer(elem, tname):
         TIMERS.delete(elem)
 
 
-def set_timer(elem, tname, timer):
+def store_timer(elem, tname, timer):
     '''Stores tname=timer in the storage for the given element'''
     _tstore(elem).set(tname, timer)
 

@@ -209,6 +209,59 @@
     </div>
   
 
+    <div class="example">
+        <div class="title">Example 5: Start timers on jQuery object.</div>
+        <div class="description">
+            In this example, a jQuery object is sent to the Timer constructor.  A timer is placed on each
+            element in the array. 
+        </div>
+        <div class="description">
+            This works on any thing that looks like an array: jQuery, Array, NodeList, etc.  The returned object is a
+            TimerArray, which mimics the Timer interface so you can chain .do functions to it.
+        </div>
+        <div class="buttons">
+            <button class="start_btn" data-kind="jQuery">Start jQuery</button>
+            <button class="start_btn" data-kind="NodeList">Start NodeList</button>
+            <button class="start_btn" data-kind="Array">Start Array</button>
+            <button class="cancel_btn">Cancel</button>
+        </div>
+        <div class="code">
+            <div id="someid5" class="someclass5 message"></div>
+            <hr/>
+            <div id="someid5b" class="someclass5 message"></div>
+            <script>
+                $(function() {
+                    $('#someid5').closest('.example').find('.start_btn').click(function() {
+                        log_msg($('.someclass5'), "Starting timers on two divs with maxRuns=3")
+                        
+                        var elem_array = $('.someclass5')
+                        if ($(this).attr('data-kind') == 'NodeList') {
+                            elem_array = document.querySelectorAll('.someclass5')
+                        }else if ($(this).attr('data-kind') == 'Array') {
+                            elem_array = [ document.getElementById('someid5'), document.getElementById('someid5b') ]
+                        }
+                        
+                        // TIMER CALL on an array of elements
+                        Timers.SleepTimer(elem_array, {
+                            'millis': 1000,
+                            'maxRuns': 3
+                        }).do(function(timer) {
+                            log_msg($(this), ".do() run #" + timer.runIndex)
+                        }).then(function(timer) {
+                            log_msg($(this), ".then() is called on cancel, restart, or maxRuns.")
+                        })
+
+                    })
+                    $('#someid5').closest('.example').find('.cancel_btn').click(function() {
+                        Timers.cancel($('.someclass5')[0])
+                        log_msg($('.someclass5'), "Cancelled!")
+                    })
+                })
+            </script>
+        </div>
+    </div>
+    
+    
 
     <script>
         $(function() {

@@ -2,7 +2,7 @@
 # Version: 2.0.9
 # License: MIT
 from storage import get_timers
-import timer_concrete
+import timer_concrete, timer_array
 
 
 ############################################
@@ -11,7 +11,7 @@ import timer_concrete
 class Timers(object):
     def __init__(self):
         self.defaults = {
-            # the element to attach to
+            # the element to attach to (can be an array, even jQuery array)
             'elem': document,
             
             # timer duration in milliseconds
@@ -83,18 +83,38 @@ class Timers(object):
         combined = {}
         combined.update(self.defaults)    # set up defaults
         for arg in args:
-            if typeof(arg) == 'number':   # assume millis
-                combined['millis'] = arg
-            elif arg['nodeType']:         # assume element
-                combined['elem'] = arg
-            elif not arg:                 # undefined or null?
+            # undefined or null?
+            if not arg:                   
                 pass
-            else:                         # assume options dict
+                
+            # millis?
+            elif typeof(arg) == 'number': 
+                combined['millis'] = arg
+                
+            # element?
+            elif arg['nodeType']:         
+                combined['elem'] = arg
+                
+            # array-like? (including jQuery)
+            elif arg.length and arg[0] and arg[0]['nodeType']:    
+                timers = []
+                for elem in arg:
+                    newargs = [ a for a in args if a is not arg ]
+                    newargs.append(elem)
+                    timers.append(self._create(timer_class, newargs))
+                return timer_array.TimerArray(timers)
+                                
+            # must be options object
+            else:                         
                 combined.update(arg)
                 
         # create and return the timer
         return timer_class(combined)
         
+        
+# our singleton instance of the object
+timers_instance = Timers()
+
 
 
 
@@ -115,10 +135,10 @@ def in_amd():
     
     
 if in_commonjs():
-    module.exports = Timers()
+    module.exports = timers_instance
     
 elif in_browser():
-    window['Timers'] = Timers()
+    window['Timers'] = timers_instance
 
 
     

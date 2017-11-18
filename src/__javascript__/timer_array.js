@@ -1,6 +1,6 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 19:27:01
-function test_base () {
+// Transcrypt'ed from Python, 2017-11-17 19:26:51
+function timer_array () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
     var __world__ = __all__;
@@ -2494,78 +2494,39 @@ function test_base () {
     };
     __all__.__setslice__ = __setslice__;
 	(function () {
-		var TestBase = __class__ ('TestBase', [object], {
-			NEEDED_TIME: 3000,
-			get make () {return __get__ (this, function (self, elem_id, elem_tag) {
-				if (typeof elem_tag == 'undefined' || (elem_tag != null && elem_tag .hasOwnProperty ("__kwargtrans__"))) {;
-					var elem_tag = 'div';
-				};
-				var e = document.getElementById ('#' + elem_id);
-				if (e) {
-					e.remove ();
-				}
-				var e = document.createElement (elem_tag);
-				e.id = elem_id;
-				document.body.appendChild (e);
-				return e;
+		var TimerArray = __class__ ('TimerArray', [object], {
+			get __init__ () {return __get__ (this, function (self, timers) {
+				self.timers = timers;
 			});},
-			get startTest () {return __get__ (this, function (self) {
-				self.div = self.make ('test1');
-				try {
-					self.begin ();
+			get cancel () {return __get__ (this, function (self) {
+				for (var timer of self.timers) {
+					timer.cancel ();
 				}
-				catch (__except0__) {
-					if (isinstance (__except0__, Error)) {
-						var err = __except0__;
-						console.error (err);
-					}
-					else {
-						throw __except0__;
-					}
-				}
+				return self;
 			});},
-			get endTest () {return __get__ (this, function (self) {
-				try {
-					self.end ();
+			get do () {return __get__ (this, function (self, onAlarm) {
+				for (var timer of self.timers) {
+					timer.do (onAlarm);
 				}
-				catch (__except0__) {
-					if (isinstance (__except0__, Error)) {
-						var err = __except0__;
-						console.error (err);
-					}
-					else {
-						throw __except0__;
-					}
+				return self;
+			});},
+			get catch () {return __get__ (this, function (self, onError) {
+				for (var timer of self.timers) {
+					timer.catch (onError);
 				}
-				self.div.remove ();
+				return self;
 			});},
-			get begin () {return __get__ (this, function (self) {
-				var __except0__ = Error ('Subclass needs to implement begin()');
-				__except0__.__cause__ = null;
-				throw __except0__;
-			});},
-			get end () {return __get__ (this, function (self) {
-				var __except0__ = Error ('Subclass needs to implement end()');
-				__except0__.__cause__ = null;
-				throw __except0__;
-			});},
-			get assertTrue () {return __get__ (this, function (self, cond, msg) {
-				if (typeof msg == 'undefined' || (msg != null && msg .hasOwnProperty ("__kwargtrans__"))) {;
-					var msg = 'assertTrue condition was false';
-				};
-				if (!(cond)) {
-					var __except0__ = Error (msg);
-					__except0__.__cause__ = null;
-					throw __except0__;
+			get then () {return __get__ (this, function (self, onFinish) {
+				for (var timer of self.timers) {
+					timer.then (onFinish);
 				}
+				return self;
 			});}
 		});
 		__pragma__ ('<all>')
-			__all__.TestBase = TestBase;
+			__all__.TimerArray = TimerArray;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;
 }
-test_base ();
-
-//# sourceMappingURL=extra/sourcemap/test_base.js.map
+timer_array ();

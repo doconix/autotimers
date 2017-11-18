@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 14:57:21
+// Transcrypt'ed from Python, 2017-11-17 19:27:00
 function dev () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2495,21 +2495,11 @@ function dev () {
     __all__.__setslice__ = __setslice__;
 	(function () {
 		var main = function () {
-			var elem = document.querySelector ('#div1');
 			var func = function () {
 				console.log ('timer do!');
-				var __except0__ = new Error ('asdf');
-				__except0__.__cause__ = null;
-				throw __except0__;
 			};
-			var then = function () {
-				console.log ('then!');
-			};
-			var err = function (timer, error) {
-				console.log ('error');
-				console.log (error);
-			};
-			Timers.SleepTimer (elem, dict ({'millis': 1000, 'maxRuns': 2})).do (func).then (then).catch (err);
+			var t = Timers.SleepTimer (jQuery ('div'), dict ({'millis': 1000, 'maxRuns': 2})).do (func);
+			console.log (t);
 		};
 		document.addEventListener ('DOMContentLoaded', main);
 		__pragma__ ('<all>')

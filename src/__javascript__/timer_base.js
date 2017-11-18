@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 14:57:15
+// Transcrypt'ed from Python, 2017-11-17 19:26:54
 function timer_base () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2513,7 +2513,7 @@ function timer_base () {
 							TIMERS.delete (elem);
 						}
 					};
-					var set_timer = function (elem, tname, timer) {
+					var store_timer = function (elem, tname, timer) {
 						_tstore (elem).set (tname, timer);
 					};
 					var get_timers = function (elem, tname) {
@@ -2536,7 +2536,7 @@ function timer_base () {
 						__all__.get_timer = get_timer;
 						__all__.get_timers = get_timers;
 						__all__.remove_timer = remove_timer;
-						__all__.set_timer = set_timer;
+						__all__.store_timer = store_timer;
 					__pragma__ ('</all>')
 				}
 			}
@@ -2544,7 +2544,7 @@ function timer_base () {
 	);
 	(function () {
 		var get_timers = __init__ (__world__.storage).get_timers;
-		var set_timer = __init__ (__world__.storage).set_timer;
+		var store_timer = __init__ (__world__.storage).store_timer;
 		var remove_timer = __init__ (__world__.storage).remove_timer;
 		var BaseTimer = __class__ ('BaseTimer', [object], {
 			get __init__ () {return __get__ (this, function (self, options) {
@@ -2561,7 +2561,7 @@ function timer_base () {
 						other_timer.cancel ();
 					}
 				}
-				set_timer (self.elem, self.tname, self);
+				store_timer (self.elem, self.tname, self);
 				self.observers = dict ({'do': list ([]), 'then': list ([]), 'catch': list ([])});
 				self._renewTimer ();
 			});},
@@ -2652,7 +2652,7 @@ function timer_base () {
 			__all__.BaseTimer = BaseTimer;
 			__all__.get_timers = get_timers;
 			__all__.remove_timer = remove_timer;
-			__all__.set_timer = set_timer;
+			__all__.store_timer = store_timer;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;

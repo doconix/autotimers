@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 14:57:09
+// Transcrypt'ed from Python, 2017-11-17 19:26:45
 function main () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2513,7 +2513,7 @@ function main () {
 							TIMERS.delete (elem);
 						}
 					};
-					var set_timer = function (elem, tname, timer) {
+					var store_timer = function (elem, tname, timer) {
 						_tstore (elem).set (tname, timer);
 					};
 					var get_timers = function (elem, tname) {
@@ -2536,7 +2536,49 @@ function main () {
 						__all__.get_timer = get_timer;
 						__all__.get_timers = get_timers;
 						__all__.remove_timer = remove_timer;
-						__all__.set_timer = set_timer;
+						__all__.store_timer = store_timer;
+					__pragma__ ('</all>')
+				}
+			}
+		}
+	);
+	__nest__ (
+		__all__,
+		'timer_array', {
+			__all__: {
+				__inited__: false,
+				__init__: function (__all__) {
+					var TimerArray = __class__ ('TimerArray', [object], {
+						get __init__ () {return __get__ (this, function (self, timers) {
+							self.timers = timers;
+						});},
+						get cancel () {return __get__ (this, function (self) {
+							for (var timer of self.timers) {
+								timer.cancel ();
+							}
+							return self;
+						});},
+						get do () {return __get__ (this, function (self, onAlarm) {
+							for (var timer of self.timers) {
+								timer.do (onAlarm);
+							}
+							return self;
+						});},
+						get catch () {return __get__ (this, function (self, onError) {
+							for (var timer of self.timers) {
+								timer.catch (onError);
+							}
+							return self;
+						});},
+						get then () {return __get__ (this, function (self, onFinish) {
+							for (var timer of self.timers) {
+								timer.then (onFinish);
+							}
+							return self;
+						});}
+					});
+					__pragma__ ('<all>')
+						__all__.TimerArray = TimerArray;
 					__pragma__ ('</all>')
 				}
 			}
@@ -2549,7 +2591,7 @@ function main () {
 				__inited__: false,
 				__init__: function (__all__) {
 					var get_timers = __init__ (__world__.storage).get_timers;
-					var set_timer = __init__ (__world__.storage).set_timer;
+					var store_timer = __init__ (__world__.storage).store_timer;
 					var remove_timer = __init__ (__world__.storage).remove_timer;
 					var BaseTimer = __class__ ('BaseTimer', [object], {
 						get __init__ () {return __get__ (this, function (self, options) {
@@ -2566,7 +2608,7 @@ function main () {
 									other_timer.cancel ();
 								}
 							}
-							set_timer (self.elem, self.tname, self);
+							store_timer (self.elem, self.tname, self);
 							self.observers = dict ({'do': list ([]), 'then': list ([]), 'catch': list ([])});
 							self._renewTimer ();
 						});},
@@ -2657,7 +2699,7 @@ function main () {
 						__all__.BaseTimer = BaseTimer;
 						__all__.get_timers = get_timers;
 						__all__.remove_timer = remove_timer;
-						__all__.set_timer = set_timer;
+						__all__.store_timer = store_timer;
 					__pragma__ ('</all>')
 				}
 			}
@@ -2720,9 +2762,11 @@ function main () {
 		}
 	);
 	(function () {
+		var timer_array = {};
 		var timer_concrete = {};
 		var get_timers = __init__ (__world__.storage).get_timers;
 		__nest__ (timer_concrete, '', __init__ (__world__.timer_concrete));
+		__nest__ (timer_array, '', __init__ (__world__.timer_array));
 		var Timers = __class__ ('Timers', [object], {
 			get __init__ () {return __get__ (this, function (self) {
 				self.defaults = dict ({'elem': document, 'millis': 1000, 'maxRuns': 0, 'name': 'default'});
@@ -2765,14 +2809,31 @@ function main () {
 				var combined = dict ({});
 				combined.py_update (self.defaults);
 				for (var arg of args) {
-					if (typeof (arg) == 'number') {
+					if (!(arg)) {
+						// pass;
+					}
+					else if (typeof (arg) == 'number') {
 						combined ['millis'] = arg;
 					}
 					else if (arg ['nodeType']) {
 						combined ['elem'] = arg;
 					}
-					else if (!(arg)) {
-						// pass;
+					else if (arg.length && arg [0] && arg [0] ['nodeType']) {
+						var timers = list ([]);
+						for (var elem of arg) {
+							var newargs = function () {
+								var __accu0__ = [];
+								for (var a of args) {
+									if (a !== arg) {
+										__accu0__.append (a);
+									}
+								}
+								return __accu0__;
+							} ();
+							newargs.append (elem);
+							timers.append (self._create (timer_class, newargs));
+						}
+						return timer_array.TimerArray (timers);
 					}
 					else {
 						combined.py_update (arg);
@@ -2781,6 +2842,7 @@ function main () {
 				return timer_class (combined);
 			});}
 		});
+		var timers_instance = Timers ();
 		var in_browser = function () {
 			return typeof (window) !== 'undefined';
 		};
@@ -2791,13 +2853,14 @@ function main () {
 			return typeof (define) === 'function' && define.amd;
 		};
 		if (in_commonjs ()) {
-			module.exports = Timers ();
+			module.exports = timers_instance;
 		}
 		else if (in_browser ()) {
-			window ['Timers'] = Timers ();
+			window ['Timers'] = timers_instance;
 		}
 		__pragma__ ('<use>' +
 			'storage' +
+			'timer_array' +
 			'timer_concrete' +
 		'</use>')
 		__pragma__ ('<all>')
@@ -2806,6 +2869,7 @@ function main () {
 			__all__.in_amd = in_amd;
 			__all__.in_browser = in_browser;
 			__all__.in_commonjs = in_commonjs;
+			__all__.timers_instance = timers_instance;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;

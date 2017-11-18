@@ -2,21 +2,12 @@
 import os, shutil, glob, sys, subprocess, re
 from os.path import join as j
 
-VERSION = "2.0.12"
 SROOT = 'src'
 DROOT = 'dist'
 DEMOROOT = 'demo'
 TROOT = 'tests'
 
 def main():
-    # update the version number
-    log('Set version to {}'.format(VERSION))
-    with open('package.json', 'r') as fin:
-        content = fin.readlines()
-    with open('package.json', 'w') as fout:
-        for line in content:
-            line = re.sub('"version": "\d+\.\d+\.\d+"', '"version": "{}"'.format(VERSION), line)
-            fout.write(line)
 
     # dist folder
     log('Initialize {} folder'.format(DROOT))
