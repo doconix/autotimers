@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 19:27:00
+// Transcrypt'ed from Python, 2017-11-17 21:13:30
 function dev () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2498,7 +2498,7 @@ function dev () {
 			var func = function () {
 				console.log ('timer do!');
 			};
-			var t = Timers.SleepTimer (jQuery ('div'), dict ({'millis': 1000, 'maxRuns': 2})).do (func);
+			var t = Timers.SleepTimer (document.getElementById ('#div1'), dict ({'millis': 1000, 'maxRuns': 2})).do (func);
 			console.log (t);
 		};
 		document.addEventListener ('DOMContentLoaded', main);

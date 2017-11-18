@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 19:26:45
+// Transcrypt'ed from Python, 2017-11-17 21:13:15
 function main () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2842,21 +2842,14 @@ function main () {
 				return timer_class (combined);
 			});}
 		});
-		var timers_instance = Timers ();
-		var in_browser = function () {
-			return typeof (window) !== 'undefined';
-		};
-		var in_commonjs = function () {
-			return typeof (module) === 'object' && module.exports;
-		};
-		var in_amd = function () {
-			return typeof (define) === 'function' && define.amd;
-		};
-		if (in_commonjs ()) {
-			module.exports = timers_instance;
+		if (typeof (module) === 'object' && module.exports) {
+			module.exports = Timers ();
 		}
-		else if (in_browser ()) {
-			window ['Timers'] = timers_instance;
+		else if (typeof (define) === 'function' && define.amd) {
+			define (list ([]), Timers);
+		}
+		else {
+			window ['Timers'] = Timers ();
 		}
 		__pragma__ ('<use>' +
 			'storage' +
@@ -2866,10 +2859,6 @@ function main () {
 		__pragma__ ('<all>')
 			__all__.Timers = Timers;
 			__all__.get_timers = get_timers;
-			__all__.in_amd = in_amd;
-			__all__.in_browser = in_browser;
-			__all__.in_commonjs = in_commonjs;
-			__all__.timers_instance = timers_instance;
 		__pragma__ ('</all>')
 	}) ();
    return __all__;

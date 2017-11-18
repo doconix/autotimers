@@ -6,6 +6,7 @@ WATCHERS = [
     ( 'src/*.py', 'transcrypt --map --build --nomin --esv=6 --parent=.none src/main.py' ),
     ( 'tests/*.py', 'transcrypt --map --build --nomin --esv=6 --parent=.none tests/run_tests.py' ),
     ( 'tests/*.py', 'transcrypt --map --build --nomin --esv=6 --parent=.none tests/dev.py' ),
+    ( 'tests/test_amd/*.py', 'transcrypt --map --build --nomin --esv=6 --parent=.none tests/test_amd/amd.py' ),
 ]
 
 if os.path.exists('src/__javascript__'):

@@ -112,33 +112,23 @@ class Timers(object):
         return timer_class(combined)
         
         
-# our singleton instance of the object
-timers_instance = Timers()
-
-
 
 
 ######################################################
 ###  Export the library, depending on the environment
 
-def in_browser():
-    '''Returns true if running in a browser environment'''
-    return typeof(window) is not 'undefined'
     
-def in_commonjs():
-    '''Returns true if running in CommonJS with require(), such as node/npm'''
-    return typeof(module) is 'object' and module.exports
+# CommonJS
+if typeof(module) is 'object' and module.exports:
+    module.exports = Timers()
     
-def in_amd():
-    '''Returns true if running in Asynchronous module definition environment'''
-    return typeof(define) is 'function' and define.amd
+# AMD / requirejs
+elif typeof(define) is 'function' and define.amd:
+    define([], Timers)
     
-    
-if in_commonjs():
-    module.exports = timers_instance
-    
-elif in_browser():
-    window['Timers'] = timers_instance
+# assume browser
+else:
+    window['Timers'] = Timers()
 
 
     

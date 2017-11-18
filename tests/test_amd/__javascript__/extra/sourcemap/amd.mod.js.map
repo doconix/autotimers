@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "tests/test_amd/__javascript__/amd.mod.js",
+	"sources": [
+		"tests/test_amd/amd.py"
+	],
+	"sourcesContent": [
+		"\ndef amd_test(Timers):\n    console.log(\"Starting timer...\")\n    def func():\n        console.log('timer do!')\n    Timers.SleepTimer(document.getElementById('#div1'), {\n        'millis': 1000,\n        'maxRuns': 2,\n    }).do(func)\n\n\ndef main():\n    requirejs([\"../../src/__javascript__/main.js\"], amd_test)\ndocument.addEventListener('DOMContentLoaded', main)\n"
+	],
+	"mappings": "AAAA;AACA;AACA;AACA;AACA;AAAA;AACA;AAAA;AAMA;AACA;AAAA;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA"
+}

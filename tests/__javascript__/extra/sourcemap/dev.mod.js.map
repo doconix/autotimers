@@ -5,7 +5,7 @@
 		"tests/dev.py"
 	],
 	"sourcesContent": [
-		"def main():\n    def func():\n        console.log('timer do!')\n        \n        \n    t = Timers.SleepTimer(jQuery('div'), {\n        'millis': 1000,\n        'maxRuns': 2,\n    }).do(func)\n    console.log(t)\n\n\ndocument.addEventListener('DOMContentLoaded', main)\n"
+		"\ndef main():\n    def func():\n        console.log('timer do!')\n    t = Timers.SleepTimer(document.getElementById('#div1'), {\n        'millis': 1000,\n        'maxRuns': 2,\n    }).do(func)\n    console.log(t)\n\n\ndocument.addEventListener('DOMContentLoaded', main)\n"
 	],
-	"mappings": "AAAA;AAAA;AACA;AACA;AAAA;AAGA;AAIA;AAAA;AAGA;AAAA;AAAA;AAAA;AAAA;AAAA"
+	"mappings": "AAAA;AACA;AACA;AACA;AAAA;AACA;AAIA;AAAA;AAGA;AAAA;AAAA;AAAA;AAAA;AAAA"
 }
