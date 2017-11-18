@@ -98,9 +98,9 @@ class Timers(object):
             # array-like? (including jQuery)
             elif arg.length and arg[0] and arg[0]['nodeType']:    
                 timers = []
-                for elem in arg:
+                for i in range(len(arg)):
                     newargs = [ a for a in args if a is not arg ]
-                    newargs.append(elem)
+                    newargs.append(arg[i])
                     timers.append(self._create(timer_class, newargs))
                 return timer_array.TimerArray(timers)
                                 

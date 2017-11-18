@@ -1,5 +1,5 @@
 "use strict";
-// Transcrypt'ed from Python, 2017-11-17 21:13:15
+// Transcrypt'ed from Python, 2017-11-17 21:44:21
 function main () {
    var __symbols__ = ['__py3.6__', '__esv6__'];
     var __all__ = {};
@@ -2820,7 +2820,7 @@ function main () {
 					}
 					else if (arg.length && arg [0] && arg [0] ['nodeType']) {
 						var timers = list ([]);
-						for (var elem of arg) {
+						for (var i = 0; i < len (arg); i++) {
 							var newargs = function () {
 								var __accu0__ = [];
 								for (var a of args) {
@@ -2830,7 +2830,7 @@ function main () {
 								}
 								return __accu0__;
 							} ();
-							newargs.append (elem);
+							newargs.append (arg [i]);
 							timers.append (self._create (timer_class, newargs));
 						}
 						return timer_array.TimerArray (timers);

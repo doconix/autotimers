@@ -57,7 +57,7 @@
 					}
 					else if (arg.length && arg [0] && arg [0] ['nodeType']) {
 						var timers = list ([]);
-						for (var elem of arg) {
+						for (var i = 0; i < len (arg); i++) {
 							var newargs = function () {
 								var __accu0__ = [];
 								for (var a of args) {
@@ -67,7 +67,7 @@
 								}
 								return __accu0__;
 							} ();
-							newargs.append (elem);
+							newargs.append (arg [i]);
 							timers.append (self._create (timer_class, newargs));
 						}
 						return timer_array.TimerArray (timers);
