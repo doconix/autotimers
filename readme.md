@@ -1,5 +1,7 @@
 # autotimers
 
+**Note: I wouldn't recommend this package anymore. It does work, but it's programmed with "older" JS methods. YMMV.**
+
 [Visit the Demo Page](https://rawgit.com/doconix/autotimers/master/demo/index.html)
 
 Why not just use `window.setTimeout`?  Because these timers provide:
