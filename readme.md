@@ -1,6 +1,6 @@
 # autotimers
 
-**Note: I wouldn't recommend this package anymore. It does work, but it's programmed with "older" JS methods. YMMV.**
+**Note: I wouldn't recommend this package anymore. It does work, but it's programmed with "older" JS methods. YMMV.  I'll update it at some point with full ES6.**
 
 [Visit the Demo Page](https://rawgit.com/doconix/autotimers/master/demo/index.html)
 
